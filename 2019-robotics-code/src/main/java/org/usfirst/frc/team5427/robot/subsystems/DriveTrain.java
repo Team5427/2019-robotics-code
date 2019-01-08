@@ -1,77 +1,79 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PIDController;
+import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-/**
- * This subsystem controls the movements of the drive train.
- * 
- * @author Akshat Jain
- */
-public class DriveTrain extends Subsystem {
+public class DriveTrain extends Subsystem implements PIDOutput{
 
-	/**
-	 * The drive train subsystem we implement from WPILib.
-	 */
 	public DifferentialDrive drive;
 
-	/**
-	 * The SpeedControllers on the left side of the robot's drive train.
-	 */
-	public SpeedControllerGroup drive_Left;
+	public SpeedControllerGroup driveLeft;
 
-	/**
-	 * The SpeedControllers on the right side of the robot's drive train.
-	 */
-	public SpeedControllerGroup drive_Right;
+	public SpeedControllerGroup driveRight;
 
-	/**
-	 * Assigns each of the components of the drive train based off of the
-	 * subsystem's parameters.
-	 * 
-	 * @param drive_Left
-	 *            the SpeedControllers on the left side of the robot's drive train.
-	 * @param drive_Right
-	 *            the SpeedControllers on the right side of the robot's drive train.
-	 * @param drive
-	 *            the Drive Train that is created inside of Robot.java.
-	 */
+	public PIDController turnController;
+
+	public AHRS ahrs;
+
+	public double turnTolerance = 2.0f;
+
+	public double p = 0;
+	public double i = 0;
+	public double d = 0;
+
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
 
 		this.drive = drive;
-		this.drive_Left = drive_Left;
-		this.drive_Right = drive_Right;
+		this.driveLeft = drive_Left;
+		this.driveRight = drive_Right;
+
+		turnController = new PIDController(p,i,d,ahrs,this);
+		turnController.setInputRange(-180.0f,180.0f);
+		turnController.setContinuous();
+		turnController.setOutputRange(-0.5f,0.5f);
+		turnController.setAbsoluteTolerance(turnTolerance);
 	}
 
-	/**
-	 * Initializes the DriveWithJoystick command.
-	 */
+	public void turnDegrees(double angle)
+	{
+		ahrs.reset();
+		turnController.reset();
+		turnController.setPID(p,i,d);
+		turnController.setSetpoint(angle);
+		turnController.enable();
+	}
+
 	@Override
 	protected void initDefaultCommand() {
 		setDefaultCommand(new DriveWithJoystick());
 	}
 
-	/**
-	 * Receives information from the joy stick and uses it to control the robot's
-	 * speed and direction
-	 * 
-	 * @param joy
-	 *            the joystick we utilize to drive the robot.
-	 */
 	public void takeJoystickInputs(Joystick joy) {
 		double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
 
 	}
 
-	/**
-	 * Stops the robot's motors.
-	 */
+	public void tankDrive(double rightSpeed,double leftSpeed)
+	{
+		driveRight.set(rightSpeed);
+		driveLeft.set(leftSpeed);
+	}
+
 	public void stop() {
 		drive.stopMotor();
+	}
+
+	@Override
+	public void pidWrite(double output) {
+		tankDrive(output,-output);
 	}
 }
