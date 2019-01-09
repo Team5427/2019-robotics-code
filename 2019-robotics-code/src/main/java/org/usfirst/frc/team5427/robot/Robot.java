@@ -9,6 +9,8 @@ package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 
+import edu.wpi.cscore.AxisCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -18,10 +20,16 @@ public class Robot extends IterativeRobot {
 	public static DriveTrain driveTrain;
   public static OI oi;
 
+  public static CameraServer cameraServer;
+  public static AxisCamera cam;
+
   @Override
   public void robotInit() {
-	  
-	  
+    
+    cameraServer = CameraServer.getInstance();
+    cam = new AxisCamera("Drive Camera", "10.54.27.62");//TODO: change this port to the correct one
+    cameraServer.addCamera(cam);
+    cameraServer.startAutomaticCapture();
   }
 
   @Override
