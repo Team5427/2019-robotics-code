@@ -58,9 +58,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
-		double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
-
 	}
 
 	public void tankDrive(double rightSpeed,double leftSpeed)
