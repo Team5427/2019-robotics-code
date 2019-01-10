@@ -1,6 +1,8 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 
+import java.awt.Robot;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
@@ -21,21 +23,24 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	public SpeedControllerGroup driveRight;
 
 	public PIDController turnController;
-
 	public AHRS ahrs;
+	public double turnTolerance = 1.0f;
 
-	public double turnTolerance = 2.0f;
+	/**
+	 * Ku = 0.12
+	 * Tu = 0.62830187
+	 */
+	public static final double Ku = 0.12;
+	public static final double Tu = 0.62830187;
+	public double p = 0.101;
+	public double i = 0.0;
+	public double d = 0.1375;
 
-	public double p = 0;
-	public double i = 0;
-	public double d = 0;
-
-	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
-
+	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive, AHRS ahrs) {
+		this.ahrs = ahrs;
 		this.drive = drive;
 		this.driveLeft = drive_Left;
 		this.driveRight = drive_Right;
-
 		turnController = new PIDController(p,i,d,ahrs,this);
 		turnController.setInputRange(-180.0f,180.0f);
 		turnController.setContinuous();
@@ -60,7 +65,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	public void takeJoystickInputs(Joystick joy) {
 		double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
-
+		
 	}
 
 	public void tankDrive(double rightSpeed,double leftSpeed)
@@ -75,6 +80,6 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 
 	@Override
 	public void pidWrite(double output) {
-		tankDrive(output,-output);
+		tankDrive(output,output);
 	}
 }

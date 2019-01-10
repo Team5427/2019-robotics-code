@@ -5,7 +5,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 import edu.wpi.first.wpilibj.command.Command;
 
 public class TurnToAngle extends Command
-{
+{ 
     public boolean isFinished;
     public boolean inErrorRange;
     public double error;
@@ -13,7 +13,7 @@ public class TurnToAngle extends Command
     public int countInErrorRange;
     public int desiredCountInErrorRange = 5;
 
-    protected TurnToAngle(double angle) {
+    public TurnToAngle(double angle) {
         requires(Robot.driveTrain);
         this.angle = angle;
     }
@@ -34,8 +34,9 @@ public class TurnToAngle extends Command
             countInErrorRange = 0;
     }
     @Override
-    protected boolean isFinished() {
+	public boolean isFinished() {
         return isFinished;
+        // return false;
     }
 
     protected void isInterrupted() {
@@ -44,6 +45,5 @@ public class TurnToAngle extends Command
 
     protected void end() {
         Robot.driveTrain.turnController.disable();
-        Robot.driveTrain.turnController.free();
     }
 }
