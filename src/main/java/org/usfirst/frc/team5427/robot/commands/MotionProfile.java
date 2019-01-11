@@ -1,17 +1,17 @@
 package org.usfirst.frc.team5427.robot.commands;
 
 
+import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.*;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 
 
-public class MotionProfile extends Command {
+public class MotionProfile extends AutoAction {
 
     public Trajectory left;
     public Trajectory right;

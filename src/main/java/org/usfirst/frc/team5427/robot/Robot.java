@@ -9,6 +9,7 @@ package org.usfirst.frc.team5427.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import org.usfirst.frc.team5427.AutoPath;
 import org.usfirst.frc.team5427.robot.commands.MotionProfile;
 import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
@@ -48,6 +49,7 @@ public class Robot extends TimedRobot {
 
   public static MotionProfile mp;
 
+  public AutoPath p;
 
   @Override
   public void robotInit() {
@@ -79,6 +81,8 @@ public class Robot extends TimedRobot {
         new Waypoint(0, 5, 0)                           // Waypoint @ x=0, y=5,   exit angle=0 radians
       });
 
+      p = new AutoPath("Autonomous Path");
+
       oi = new OI();
   }
 
@@ -90,6 +94,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     turnCommand.start();
+    
     mp.start();
   }
 

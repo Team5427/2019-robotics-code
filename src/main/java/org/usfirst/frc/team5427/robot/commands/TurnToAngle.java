@@ -1,10 +1,9 @@
 package org.usfirst.frc.team5427.robot.commands;
 
+import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.Robot;
 
-import edu.wpi.first.wpilibj.command.Command;
-
-public class TurnToAngle extends Command
+public class TurnToAngle extends AutoAction
 { 
     public boolean isFinished;
     public boolean inErrorRange;
