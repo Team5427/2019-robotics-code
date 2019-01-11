@@ -2,6 +2,7 @@ package org.usfirst.frc.team5427.robot.commands;
 
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
@@ -10,14 +11,7 @@ import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
 
 
-public class MotionProfile extends Command{
-
-    public static final double KV = 0.5714; //1.75 m/s is max
-    public static final double KA = 0.3; //2 m/s is max
-    public static final double KP = 0;
-    public static final double KD = 0;
-    public static final double KPHeading = 0;
-    public static final double KDHeading = 0;
+public class MotionProfile extends Command {
 
     public Trajectory left;
     public Trajectory right;
@@ -59,8 +53,8 @@ public class MotionProfile extends Command{
         followerL.configureEncoder(0, 1120, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
         followerR.configureEncoder(0, 1120, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
 
-        followerL.configurePIDVA(KP, 0, KD, KV, KA);
-        followerR.configurePIDVA(KP, 0, KD, KV, KA);
+        followerL.configurePIDVA(Config.KP, 0, Config.KD, Config.KV, Config.KA);
+        followerR.configurePIDVA(Config.KP, 0, Config.KD, Config.KV, Config.KA);
 	}
 
 	// Called repeatedly when this Command is scheduled to run
@@ -76,10 +70,10 @@ public class MotionProfile extends Command{
         double error_derivR = (errorR - last_errorR)/(time - last_time);
         last_errorR = errorR; last_time = time;
         
-        speedL += KPHeading * errorL
-                  + KDHeading * error_derivL;
-        speedR += KPHeading * errorR
-                  + KDHeading * error_derivR;
+        speedL += Config.KPHeading * errorL
+                  + Config.KDHeading * error_derivL;
+        speedR += Config.KPHeading * errorR
+                  + Config.KDHeading * error_derivR;
 
         
 
