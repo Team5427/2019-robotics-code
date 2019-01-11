@@ -32,9 +32,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	 */
 	public static final double Ku = 0.12;
 	public static final double Tu = 0.62830187;
-	public double p = 0.101;
+	public double p = 0.097;
 	public double i = 0.0;
-	public double d = 0.1375;
+	public double d = 0.18;
+	// public double f = 0.02;
 
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive, AHRS ahrs) {
 		this.ahrs = ahrs;
@@ -46,6 +47,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		turnController.setContinuous();
 		turnController.setOutputRange(-0.5f,0.5f);
 		turnController.setAbsoluteTolerance(turnTolerance);
+		
 	}
 
 	public void turnDegrees(double angle)

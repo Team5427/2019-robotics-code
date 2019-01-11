@@ -61,6 +61,7 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     Scheduler.getInstance().run();
     SmartDashboard.putNumber("Angle",ahrs.getYaw());
+    SmartDashboard.putNumber("Angle G",ahrs.getYaw());
   }
 
   @Override
