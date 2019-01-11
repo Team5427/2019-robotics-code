@@ -25,7 +25,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	public PIDController turnController;
 	public AHRS ahrs;
 	public double turnTolerance = 1.0f;
-
+	
 	/**
 	 * Ku = 0.12
 	 * Tu = 0.62830187
@@ -63,7 +63,6 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
-		double speed = Math.abs(joy.getY()) > 0.05 ? joy.getY() : 0f;
 		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
 		
 	}

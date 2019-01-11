@@ -45,5 +45,6 @@ public class TurnToAngle extends Command
 
     protected void end() {
         Robot.driveTrain.turnController.disable();
+        Robot.driveTrain.turnController.close();
     }
 }
