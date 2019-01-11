@@ -11,6 +11,7 @@ import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5427.robot.subsystems.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -20,7 +21,6 @@ import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
@@ -38,6 +38,7 @@ public class Robot extends TimedRobot {
   public static SpeedControllerGroup driveRight;
 
   public TurnToAngle turnCommand;
+  public static PIDTurn pidTurn;
 
   @Override
   public void robotInit() {
@@ -51,17 +52,16 @@ public class Robot extends TimedRobot {
 
       drive = new DifferentialDrive(driveLeft, driveRight);
       ahrs = new AHRS(SPI.Port.kMXP);
-      driveTrain = new DriveTrain(driveLeft, driveRight, drive, ahrs);
+      driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
       turnCommand = new TurnToAngle(90);
+      pidTurn = new PIDTurn(ahrs);
       oi = new OI();
   }
 
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putNumber("Angle",ahrs.getYaw());
-    SmartDashboard.putNumber("Angle G",ahrs.getYaw());
   }
 
   @Override
@@ -72,18 +72,10 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
-    if(turnCommand.isFinished())
-    {
-      driveTrain.stop();
-    }
   }
 
   @Override
   public void teleopPeriodic() {
-    if(turnCommand.isRunning())
-    {
-      turnCommand.cancel();
-    }
     Scheduler.getInstance().run();
   }
 

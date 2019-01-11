@@ -14,17 +14,17 @@ public class TurnToAngle extends Command
     public int desiredCountInErrorRange = 5;
 
     public TurnToAngle(double angle) {
-        requires(Robot.driveTrain);
+        requires(Robot.pidTurn);
         this.angle = angle;
     }
 
     protected void initialize() {
-        Robot.driveTrain.turnDegrees(angle);
+        Robot.pidTurn.turnDegrees(angle);
     }
 
     protected void execute() {
-        this.error = Robot.driveTrain.turnController.getError();
-        this.inErrorRange = Math.abs(error) < Robot.driveTrain.turnTolerance;
+        this.error = Robot.pidTurn.turnController.getError();
+        this.inErrorRange = Math.abs(error) < Robot.pidTurn.turnTolerance;
 
         if(inErrorRange) {
             countInErrorRange++;
@@ -44,7 +44,7 @@ public class TurnToAngle extends Command
     }
 
     protected void end() {
-        Robot.driveTrain.turnController.disable();
+        Robot.pidTurn.turnController.disable();
         isFinished = false;
         Robot.ahrs.reset();
         // Robot.driveTrain.turnController.close();
