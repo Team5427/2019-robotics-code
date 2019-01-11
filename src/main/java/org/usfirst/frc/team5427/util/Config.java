@@ -72,4 +72,7 @@ public class Config {
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
 	/*********************************************************/
 
+	public static final double ENCODER_DISTANCE_OFFSET = 0.9752;
+
+
 }
