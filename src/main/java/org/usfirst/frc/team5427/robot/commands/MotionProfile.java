@@ -43,6 +43,7 @@ public class MotionProfile extends AutoAction {
 
         followerL = new EncoderFollower(left);
         followerR = new EncoderFollower(right);
+        System.out.println(left.length());
     }
 
     // Called just before this Command runs the first time
@@ -65,15 +66,15 @@ public class MotionProfile extends AutoAction {
         double heading_desiredL = followerL.getHeading(), heading_desiredR = followerR.getHeading(), heading_current = Robot.ahrs.getYaw();
             
         double errorL = heading_desiredL - heading_current; double errorR = heading_desiredR - heading_current; double time = Timer.getFPGATimestamp();
-        double error_derivL = (errorL - last_errorL)/(time - last_time);
+        // double error_derivL = (errorL - last_errorL)/(time - last_time);
         last_errorL = errorL; last_time = time;
-        double error_derivR = (errorR - last_errorR)/(time - last_time);
+        // double error_derivR = (errorR - last_errorR)/(time - last_time);
         last_errorR = errorR; last_time = time;
         
-        speedL += Config.KPHeading * errorL
-                  + Config.KDHeading * error_derivL;
-        speedR += Config.KPHeading * errorR
-                  + Config.KDHeading * error_derivR;
+        speedL += Config.KPHeading * errorL;
+                //   + Config.KDHeading * error_derivL;
+        speedR += Config.KPHeading * errorR;
+                //   + Config.KDHeading * error_derivR;
 
         
 

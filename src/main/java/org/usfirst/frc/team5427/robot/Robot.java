@@ -7,11 +7,11 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import java.io.IOException;
+
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.AutoPath;
-import org.usfirst.frc.team5427.robot.commands.MotionProfile;
-import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
@@ -24,7 +24,6 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import jaci.pathfinder.Waypoint;
 
 
 public class Robot extends TimedRobot {
@@ -44,12 +43,9 @@ public class Robot extends TimedRobot {
   public static Encoder encLeft;
   public static Encoder encRight;
 
-  public TurnToAngle turnCommand;
   public static PIDTurn pidTurn;
 
-  public static MotionProfile mp;
-
-  public AutoPath p;
+  public AutoPath path;
 
   @Override
   public void robotInit() {
@@ -72,16 +68,15 @@ public class Robot extends TimedRobot {
       encRight = new Encoder(2, 3, false, Encoder.EncodingType.k4X);
       encRight.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360)); 
       encRight.reset();
-  
-      turnCommand = new TurnToAngle(90);
+
       pidTurn = new PIDTurn(ahrs);
-
-      mp = new MotionProfile(new Waypoint[] {
-        new Waypoint(0, 0, 0),                        // Waypoint @ x=0, y=0, exit angle=0 radians
-        new Waypoint(0, 5, 0)                           // Waypoint @ x=0, y=5,   exit angle=0 radians
-      });
-
-      p = new AutoPath("Autonomous Path");
+      
+    try {
+      path = new AutoPath("Autonomous Path");
+      path.parseDataIntoActions();
+    } catch (IOException e) {
+      e.printStackTrace();
+  	}
 
       oi = new OI();
   }
@@ -93,9 +88,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
-    turnCommand.start();
-    
-    mp.start();
+    path.executeAutoActions();
   }
 
   @Override
