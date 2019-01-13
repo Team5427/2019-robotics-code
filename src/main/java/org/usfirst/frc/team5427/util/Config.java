@@ -74,11 +74,20 @@ public class Config {
 
 	public static final double ENCODER_DISTANCE_OFFSET = 0.9752;
 	
-	public static final double KV = 0.5714; //1.75 m/s is max
-    public static final double KA = 0; //2 m/s is max
+	public static final double DT = 0.02; //s
+	public static final double MAX_VELOCITY = 1.75; // m/s
+	public static final double MAX_ACCEL = 2; // m/s
+	public static final double MAX_JERK = 2; // m/s
+
+	public static final double WHEELBASE_WIDTH = 2; //feet
+
     public static final double KP = 0;
-    public static final double KD = 0;
-    public static final double KPHeading = 0;
-    public static final double KDHeading = 0;
+	public static final double KD = 0;
+	public static final double KV = 0.5714; //1.75 m/s is max
+	public static final double KA = 0; 
+	
+	public static double ftm(double feet) {
+		return feet/3.2808;
+	}
 
 }

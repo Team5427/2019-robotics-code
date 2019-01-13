@@ -7,8 +7,6 @@
 
 package org.usfirst.frc.team5427.robot;
 
-import java.io.IOException;
-
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.AutoPath;
@@ -24,6 +22,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
@@ -81,6 +80,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Velocity X", ahrs.getVelocityX());
+    SmartDashboard.putNumber("Velocity Y", ahrs.getVelocityY());
+    
   }
 
   @Override

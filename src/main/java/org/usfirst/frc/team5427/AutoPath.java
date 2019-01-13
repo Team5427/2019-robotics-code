@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
+import org.usfirst.frc.team5427.util.Config;
 
 import jaci.pathfinder.Waypoint;
 
@@ -33,7 +34,7 @@ public class AutoPath {
                 String line = kb.nextLine(); 
                 Scanner k = new Scanner(line);
                 while(k.hasNextDouble()) {
-                    w.add(new Waypoint(k.nextDouble(), k.nextDouble(), k.nextDouble()));
+                    w.add(new Waypoint(Config.ftm(k.nextDouble()), Config.ftm(k.nextDouble()), k.nextDouble()));
                 }
                 k.close();
                 

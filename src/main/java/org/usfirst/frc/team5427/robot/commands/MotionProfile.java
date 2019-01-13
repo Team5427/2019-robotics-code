@@ -5,10 +5,13 @@ import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
-import edu.wpi.first.wpilibj.Timer;
-import jaci.pathfinder.*;
+import jaci.pathfinder.Pathfinder;
+import jaci.pathfinder.Trajectory;
+import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
 import jaci.pathfinder.modifiers.TankModifier;
+
+
 
 
 public class MotionProfile extends AutoAction {
@@ -25,11 +28,12 @@ public class MotionProfile extends AutoAction {
     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
     public MotionProfile(Waypoint[] points){
 
-        Trajectory.Config config =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 0.02, 1.75, 2, 2);
+        Trajectory.Config config =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
+        Config.DT, Config.MAX_VELOCITY, Config.MAX_ACCEL, Config.MAX_JERK);
 
         Trajectory trajectory = Pathfinder.generate(points, config);
         // The distance between the left and right sides of the wheelbase is 0.6m
-        double wheelbase_width = 0.6;
+        double wheelbase_width = Config.ftm(Config.WHEELBASE_WIDTH);
 
         // Create the Modifier Object
         TankModifier modifier = new TankModifier(trajectory);
@@ -62,11 +66,10 @@ public class MotionProfile extends AutoAction {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-        double speedL = followerL.calculate(Robot.encLeft.get()), speedR = followerR.calculate(Robot.encRight.get());
+        double speedL = followerL.calculate(Robot.encLeft.get());
+        double speedR = followerR.calculate(Robot.encRight.get());
         
-        double heading_current = Robot.ahrs.getYaw();
-            
-        double gyro_heading = heading_current;    // Assuming the gyro is giving a value in degrees
+        double gyro_heading = Robot.ahrs.getYaw();    // Assuming the gyro is giving a value in degrees
         double desired_heading = Pathfinder.r2d(followerL.getHeading());  // Should also be in degrees
         
         double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
