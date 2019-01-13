@@ -75,7 +75,7 @@ public class Config {
 	public static final double ENCODER_DISTANCE_OFFSET = 0.9752;
 	
 	public static final double KV = 0.5714; //1.75 m/s is max
-    public static final double KA = 0.3; //2 m/s is max
+    public static final double KA = 0; //2 m/s is max
     public static final double KP = 0;
     public static final double KD = 0;
     public static final double KPHeading = 0;

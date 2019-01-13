@@ -43,16 +43,17 @@ public class MotionProfile extends AutoAction {
 
         followerL = new EncoderFollower(left);
         followerR = new EncoderFollower(right);
-        System.out.println(left.length());
     }
 
     // Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
-        Robot.encLeft.reset(); Robot.encRight.reset(); followerL.reset(); followerR.reset();
+        Robot.encLeft.reset(); 
+        Robot.encRight.reset(); 
+        followerL.reset(); followerR.reset();
 
-        followerL.configureEncoder(0, 1120, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
-        followerR.configureEncoder(0, 1120, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
+        followerL.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
+        followerR.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
 
         followerL.configurePIDVA(Config.KP, 0, Config.KD, Config.KV, Config.KA);
         followerR.configurePIDVA(Config.KP, 0, Config.KD, Config.KV, Config.KA);
@@ -63,22 +64,16 @@ public class MotionProfile extends AutoAction {
 	protected void execute() {
         double speedL = followerL.calculate(Robot.encLeft.get()), speedR = followerR.calculate(Robot.encRight.get());
         
-        double heading_desiredL = followerL.getHeading(), heading_desiredR = followerR.getHeading(), heading_current = Robot.ahrs.getYaw();
+        double heading_current = Robot.ahrs.getYaw();
             
-        double errorL = heading_desiredL - heading_current; double errorR = heading_desiredR - heading_current; double time = Timer.getFPGATimestamp();
-        // double error_derivL = (errorL - last_errorL)/(time - last_time);
-        last_errorL = errorL; last_time = time;
-        // double error_derivR = (errorR - last_errorR)/(time - last_time);
-        last_errorR = errorR; last_time = time;
+        double gyro_heading = heading_current;    // Assuming the gyro is giving a value in degrees
+        double desired_heading = Pathfinder.r2d(followerL.getHeading());  // Should also be in degrees
         
-        speedL += Config.KPHeading * errorL;
-                //   + Config.KDHeading * error_derivL;
-        speedR += Config.KPHeading * errorR;
-                //   + Config.KDHeading * error_derivR;
-
+        double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
+        double turn = 0.8 * (-1.0/80.0) * angleDifference;
         
 
-        Robot.driveTrain.tankDrive(speedL, speedR);
+        Robot.driveTrain.tankDrive(speedL+turn, speedR-turn);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

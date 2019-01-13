@@ -29,14 +29,13 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
-		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
+		drive.arcadeDrive(joy.getY(), joy.getZ() * .75);
 		
 	}
 
 	public void tankDrive(double rightSpeed,double leftSpeed)
 	{
-		driveRight.set(rightSpeed);
-		driveLeft.set(leftSpeed);
+		drive.tankDrive(leftSpeed, rightSpeed);
 	}
 
 	public void stop() {

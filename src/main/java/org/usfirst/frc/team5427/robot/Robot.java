@@ -71,12 +71,9 @@ public class Robot extends TimedRobot {
 
       pidTurn = new PIDTurn(ahrs);
       
-    try {
-      path = new AutoPath("Autonomous Path");
+      //OPTIONS: Motion(set of points -> x,y,heading), TurnToAngle (angle)
+      path = new AutoPath("Motion "+"0 0 0 "+ "0 5 0 ");
       path.parseDataIntoActions();
-    } catch (IOException e) {
-      e.printStackTrace();
-  	}
 
       oi = new OI();
   }
