@@ -16,48 +16,43 @@ import jaci.pathfinder.modifiers.TankModifier;
 
 public class MotionProfile extends AutoAction {
 
-    public Trajectory left;
-    public Trajectory right;
 
     public EncoderFollower followerL;
     public EncoderFollower followerR;
 
-    public double last_errorL, last_errorR, last_time;
-
 
     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
     public MotionProfile(Waypoint[] points){
-
+        //set up config variables for profile
         Trajectory.Config config =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
         Config.DT, Config.MAX_VELOCITY, Config.MAX_ACCEL, Config.MAX_JERK);
 
+        //generate the trajectory
         Trajectory trajectory = Pathfinder.generate(points, config);
-        // The distance between the left and right sides of the wheelbase is 0.6m
-        double wheelbase_width = Config.ftm(Config.WHEELBASE_WIDTH);
+        
 
-        // Create the Modifier Object
+        // Create the Modifier Object (tank drive train)
         TankModifier modifier = new TankModifier(trajectory);
+        modifier.modify(Config.ftm(Config.WHEELBASE_WIDTH));
 
-        // Generate the Left and Right trajectories using the original trajectory
-        // as the centre
-        modifier.modify(wheelbase_width);
-
-        left  = modifier.getLeftTrajectory();       // Get the Left Side
-        right = modifier.getRightTrajectory();      // Get the Right Side
-
-        followerL = new EncoderFollower(left);
-        followerR = new EncoderFollower(right);
+        //create followers to manage input+output
+        followerL = new EncoderFollower(modifier.getLeftTrajectory());
+        followerR = new EncoderFollower(modifier.getRightTrajectory());
     }
 
     // Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+        //reset all sensors/ control loops
         Robot.encLeft.reset(); 
-        Robot.encRight.reset(); 
-        followerL.reset(); followerR.reset();
+        Robot.encRight.reset();
+        followerL.reset(); 
+        followerR.reset();
+        Robot.ahrs.reset();
 
-        followerL.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
-        followerR.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revoltion, wheel diameter meters
+        //value configuration
+        followerL.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+        followerR.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
 
         followerL.configurePIDVA(Config.KP, 0, Config.KD, Config.KV, Config.KA);
         followerR.configurePIDVA(Config.KP, 0, Config.KD, Config.KV, Config.KA);
@@ -66,23 +61,26 @@ public class MotionProfile extends AutoAction {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+        //calulate speed of each side of drive train based on encoder position
         double speedL = followerL.calculate(Robot.encLeft.get());
         double speedR = followerR.calculate(Robot.encRight.get());
         
         double gyro_heading = Robot.ahrs.getYaw();    // Assuming the gyro is giving a value in degrees
         double desired_heading = Pathfinder.r2d(followerL.getHeading());  // Should also be in degrees
         
+        //calculate heading curvature
         double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
         double turn = 0.8 * (-1.0/80.0) * angleDifference;
         
-
+        //apply to motors
         Robot.driveTrain.tankDrive(speedL+turn, speedR-turn);
 	}
 
 	// Make this return true when this Command no longer needs to run execute()
 	@Override
 	protected boolean isFinished() {
-          return followerL.isFinished() && followerR.isFinished();
+        //finish when both sides are done with data
+        return followerL.isFinished() && followerR.isFinished();
 	}
 
 	// Called once after isFinished returns true
