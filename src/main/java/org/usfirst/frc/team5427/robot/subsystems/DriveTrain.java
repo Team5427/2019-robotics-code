@@ -20,37 +20,12 @@ public class DriveTrain extends Subsystem {
 
 	public SpeedControllerGroup driveRight;
 
-	public PIDController turnController;
-
-	// public AHRS ahrs;
-
-	public double turnTolerance = 2.0f;
-
-	public double p = 0;
-	public double i = 0;
-	public double d = 0;
-
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
 
 		this.drive = drive;
 		this.driveLeft = drive_Left;
 		this.driveRight = drive_Right;
-
-		// turnController = new PIDController(p,i,d,ahrs,this);
-		// turnController.setInputRange(-180.0f,180.0f);
-		// turnController.setContinuous();
-		// turnController.setOutputRange(-0.5f,0.5f);
-		// turnController.setAbsoluteTolerance(turnTolerance);
 	}
-
-	// public void turnDegrees(double angle)
-	// {
-	// 	ahrs.reset();
-	// 	turnController.reset();
-	// 	turnController.setPID(p,i,d);
-	// 	turnController.setSetpoint(angle);
-	// 	turnController.enable();
-	// }
 
 	@Override
 	protected void initDefaultCommand() {
@@ -70,9 +45,4 @@ public class DriveTrain extends Subsystem {
 	public void stop() {
 		drive.stopMotor();
 	}
-
-	// @Override
-	// public void pidWrite(double output) {
-	// 	tankDrive(output,-output);
-	// }
 }

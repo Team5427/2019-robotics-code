@@ -11,11 +11,13 @@ import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
@@ -23,6 +25,7 @@ public class Robot extends TimedRobot {
   public static DriveTrain driveTrain;
   public static DifferentialDrive drive;
   public static OI oi;
+  public static AnalogPotentiometer rotationPotentiometer;
 
   public static SpeedController driveFrontLeft;
   public static SpeedController driveFrontRight;
@@ -46,12 +49,15 @@ public class Robot extends TimedRobot {
 
       driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
+      rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
+
       oi = new OI();
   }
 
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
+    SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
   }
 
   @Override
