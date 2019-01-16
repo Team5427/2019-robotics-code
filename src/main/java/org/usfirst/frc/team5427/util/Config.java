@@ -34,7 +34,7 @@ public class Config {
 
 	public static final int ROTATION_POTENTIOMETER_PORT = 0;
 
-	public static final int ROTATION_POTENTIOMETER_RANGE = 312;
+	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
 	/* CONTROLLER PORTS */
 
