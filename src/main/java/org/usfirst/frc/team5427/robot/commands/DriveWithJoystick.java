@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Utilizes the joystick inputs in order to drive the robot.
- * 
+ *
  * @author Varsha Kumar
  */
 public class DriveWithJoystick extends Command {
@@ -45,7 +45,7 @@ public class DriveWithJoystick extends Command {
 	/**
 	 * Called periodically while the command is running to check when the command is
 	 * finished.
-	 * 
+	 *
 	 * @return false
 	 */
 	@Override

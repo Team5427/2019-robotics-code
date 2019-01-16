@@ -14,11 +14,11 @@ import edu.wpi.first.wpilibj.Joystick;
  * interface to the commands and command groups that allow control of the robot.
  *
  * This file creates the joy stick and assigns functions to its buttons.
- * 
+ *
  * @author Varsha Kumar
  */
 public class OI {
-	
+
 	public Joystick joy1;
 
 	public OI() {
@@ -27,11 +27,10 @@ public class OI {
 
 	/**
 	 * Accessor for the joystick we use.
-	 * 
+	 *
 	 * @return the current joystick.
 	 */
 	public Joystick getJoy() {
 		return joy1;
 	}
-
 }
