@@ -21,22 +21,32 @@ public class Config {
 	/* PWM PORTS */
 
 	/* The PWM value for the front right motor of the drive train. */
-	public static final int FRONT_RIGHT_MOTOR = 0;
+	public static final int FRONT_RIGHT_MOTOR = 3;
 
 	/* The PWM value for the rear right motor of the drive train. */
-	public static final int REAR_RIGHT_MOTOR = 1;
+	public static final int REAR_RIGHT_MOTOR = 6;
 
 	/* The PWM value for the front left motor of the drive train. */
-	public static final int FRONT_LEFT_MOTOR = 2;
+	public static final int FRONT_LEFT_MOTOR = 1;
 
 	/* The PWM value for the rear left motor of the drive train. */
-	public static final int REAR_LEFT_MOTOR = 3;
+	public static final int REAR_LEFT_MOTOR = 0;
+
+	public static final int INTAKE_TOP_MOTOR = 7;
+
+	public static final int INTAKE_BOTTOM_MOTOR = 8;
 
 	public static final int ROTATION_POTENTIOMETER_PORT = 0;
 
 	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
-	/* CONTROLLER PORTS */
+	public static final double INTAKE_SPEED_IN = .5;
+
+	public static final double INTAKE_SPEED_OUT = -.5;
+
+	public static final int BUTTON_INTAKE_IN = 3;
+	
+	public static final int BUTTON_INTAKE_OUT = 5;
 
 	/* The port associated with the main joystick. */
 	public static final int JOYSTICK_PORT = 0;

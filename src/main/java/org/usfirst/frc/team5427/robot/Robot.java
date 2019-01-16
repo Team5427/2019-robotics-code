@@ -8,10 +8,13 @@
 package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
+import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.VictorSP;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -24,7 +27,7 @@ public class Robot extends TimedRobot {
     public static DriveTrain driveTrain;
     public static DifferentialDrive drive;
     public static OI oi;
-    public static AnalogPotentiometer rotationPotentiometer;
+    // public static AnalogPotentiometer rotationPotentiometer;
 
     public static SpeedController driveFrontLeft;
     public static SpeedController driveFrontRight;
@@ -34,21 +37,29 @@ public class Robot extends TimedRobot {
     public static SpeedControllerGroup driveLeft;
     public static SpeedControllerGroup driveRight;
 
+    public static SpeedController intakeTop;
+    public static SpeedController intakeBottom;
+
+    public static Intake intake;
+
     @Override
     public void robotInit() {
-        driveFrontLeft = new Talon(Config.FRONT_LEFT_MOTOR);
-        driveFrontRight = new Talon(Config.FRONT_RIGHT_MOTOR);
-        driveRearLeft = new Talon(Config.REAR_LEFT_MOTOR);
-        driveRearRight = new Talon(Config.REAR_RIGHT_MOTOR);
+        driveFrontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
+        driveFrontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
+        driveRearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
+        driveRearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 
         driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
         driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
         drive = new DifferentialDrive(driveLeft, driveRight);
-
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
-        rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
+        intakeTop = new PWMVictorSPX(Config.INTAKE_TOP_MOTOR);
+        intakeBottom = new PWMVictorSPX(Config.INTAKE_BOTTOM_MOTOR);
+        intake = new Intake(intakeTop,intakeBottom);
+
+        // rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
 
         oi = new OI();
     }
@@ -56,7 +67,7 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
+        // SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
     }
 
     @Override

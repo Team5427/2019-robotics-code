@@ -5,9 +5,14 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
+
+import org.usfirst.frc.team5427.robot.commands.EjectCargo;
+import org.usfirst.frc.team5427.robot.commands.IntakeCargo;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -21,8 +26,17 @@ public class OI {
 
 	public Joystick joy1;
 
+	Button intakeIn;
+
+	Button intakeOut;
+
 	public OI() {
 		joy1 = new Joystick(Config.JOYSTICK_PORT);
+		intakeIn = new JoystickButton(joy1,Config.BUTTON_INTAKE_IN);
+		intakeOut = new JoystickButton(joy1,Config.BUTTON_INTAKE_OUT);
+	
+		intakeIn.whenPressed(new IntakeCargo());
+		intakeOut.whenPressed(new EjectCargo());
 	}
 
 	/**
