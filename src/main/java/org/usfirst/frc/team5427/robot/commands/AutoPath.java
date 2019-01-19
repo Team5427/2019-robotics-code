@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
+import org.usfirst.frc.team5427.util.Config;
 
 import jaci.pathfinder.Waypoint;
 
@@ -37,7 +38,7 @@ public class AutoPath {
                 String line = kb.nextLine(); 
                 Scanner k = new Scanner(line);
                 while(k.hasNextDouble()) {
-                    w.add(new Waypoint((k.nextDouble()), (k.nextDouble()), k.nextDouble()));
+                    w.add(new Waypoint((k.nextDouble()), (k.nextDouble()), Config.dtr(k.nextDouble())));
                 }
                 k.close();
                 
@@ -46,29 +47,36 @@ public class AutoPath {
                 for(int i = 0; i < w.size(); i++) {
                     way[i] = w.get(i);
                 }
-
+                int newIndex = autoActions.size();
                 //add motion profile with points into list of tasks
                 autoActions.add(new MotionProfile(way));
+                if(autoActions.size()>1) {
+                    autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
+                }
             }
             else if(action.equals("TurnToAngle")) {
+                int newIndex = autoActions.size();
                 //add turn to angle with angle (in degrees) into list of tasks
-                autoActions.add(new TurnToAngle(kb.nextDouble()));
+                autoActions.add(new TurnToAngle(Double.parseDouble(kb.nextLine())));
+                if(autoActions.size()>1) {
+                    autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
+                }
+            }
+            else if(action.equals("Buffer")) {
+                int newIndex = autoActions.size();
+                //add turn to angle with angle (in degrees) into list of tasks
+                autoActions.add(new Buffer(Double.parseDouble(kb.nextLine())));
+                if(autoActions.size()>1) {
+                    autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
+                }
             }
             //continue adding commands if more
-            if(kb.hasNextLine())
-                kb.nextLine();
         }
         kb.close();
     }
 
     public void executeAutoActions() {
         //start first task immediately
-        autoActions.get(0).start();
-
-        //for each next task, wait to start until previous task stops running
-        for(int x = 1; x < autoActions.size(); x++) {
-            while(autoActions.get(x-1).isRunning()) {}
-            autoActions.get(x).start();
-        }
+        autoActions.get(0).start();        
     }
 }

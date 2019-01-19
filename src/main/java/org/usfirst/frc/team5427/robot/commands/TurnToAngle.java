@@ -3,6 +3,7 @@ package org.usfirst.frc.team5427.robot.commands;
 import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.Robot;
 
+
 public class TurnToAngle extends AutoAction
 { 
     public boolean isFinished;
@@ -13,17 +14,17 @@ public class TurnToAngle extends AutoAction
     public int desiredCountInErrorRange = 5;
 
     public TurnToAngle(double angle) {
-        requires(Robot.pidTurn);
+        requires(Robot.driveTrain);
         this.angle = angle;
     }
 
     protected void initialize() {
-        Robot.pidTurn.turnDegrees(angle);
+        Robot.driveTrain.turnDegrees(angle);
     }
 
     protected void execute() {
-        this.error = Robot.pidTurn.turnController.getError();
-        this.inErrorRange = Math.abs(error) < Robot.pidTurn.turnTolerance;
+        this.error = Robot.driveTrain.turnController.getError();
+        this.inErrorRange = Math.abs(error) < Robot.driveTrain.turnTolerance;
 
         if(inErrorRange) {
             countInErrorRange++;
@@ -43,9 +44,13 @@ public class TurnToAngle extends AutoAction
     }
 
     protected void end() {
-        Robot.pidTurn.turnController.disable();
+        Robot.driveTrain.turnController.disable();
         isFinished = false;
         Robot.ahrs.reset();
-        // Robot.driveTrain.turnController.close();
+        Robot.driveTrain.turnController.close();
+        
+        System.out.println("ending turn");
+        if(this.nextAction!=null)
+            this.nextAction.start();
     }
 }

@@ -10,19 +10,19 @@ package org.usfirst.frc.team5427.robot;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.AutoPath;
+import org.usfirst.frc.team5427.robot.commands.ContinousFull;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team5427.robot.subsystems.PIDTurn;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
@@ -44,28 +44,37 @@ public class Robot extends TimedRobot {
   public static Encoder encLeft;
   public static Encoder encRight;
 
-  public static PIDTurn pidTurn;
 
   public AutoPath path;
 
+  public ContinousFull cont;
+
+
   @Override
   public void robotInit() {
+    //initialize ahrs
+    ahrs = new AHRS(SPI.Port.kMXP);
+
     //make talon motors
     driveFrontLeft = new Talon(Config.FRONT_LEFT_MOTOR);
     driveFrontRight = new Talon(Config.FRONT_RIGHT_MOTOR);
     driveRearLeft = new Talon(Config.REAR_LEFT_MOTOR);
     driveRearRight = new Talon(Config.REAR_RIGHT_MOTOR);
 
+    
+    
     //make speed controller groups
     driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
     driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
+    // Robot.driveRight.setInverted(true);
+
     //initialize drive train with speed controller groups
     drive = new DifferentialDrive(driveLeft, driveRight);
-    driveTrain = new DriveTrain(drive);
+  
+    driveTrain = new DriveTrain(driveLeft, driveRight, drive, ahrs);
 
-    //initialize ahrs
-    ahrs = new AHRS(SPI.Port.kMXP);
+ 
 
     //initialize encoders, set distance per pulse, reset
     encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
@@ -74,13 +83,18 @@ public class Robot extends TimedRobot {
 
     encRight = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
     encRight.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360)); 
-    encRight.reset();
+    encRight.reset(); 
 
-    //initialize pid subsystem for TurnToAngle AutoAction
-    pidTurn = new PIDTurn(ahrs);
     
     //intialize auto path with directions
-    path = new AutoPath("Motion "+"0 0 0 "+ "10 0 0");  //OPTIONS: Motion(set of points -> x,y,heading), TurnToAngle (angle)
+    path = new AutoPath("Motion "+"0 0 0 "+"2 0 0"+
+                        "\nTurnToAngle 45" +
+                        "\nMotion "+"0 0 45 "+"1 1 0");  //OPTIONS: Motion(set of points -> x,y,heading), TurnToAngle (angle)
+
+    path.executeAutoActions();
+
+    cont = new ContinousFull();
+    
 
     oi = new OI();
   }
@@ -88,24 +102,47 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
-    SmartDashboard.putNumber("Velocity X", ahrs.getVelocityX());
-    SmartDashboard.putNumber("Velocity Y", ahrs.getVelocityY());
-    SmartDashboard.putNumber("Accel X", ahrs.getRawAccelX());
-    SmartDashboard.putNumber("Accel Y", ahrs.getRawAccelY());
-    SmartDashboard.putNumber("Displacement X", ahrs.getDisplacementX());
-    SmartDashboard.putNumber("Displacement Y", ahrs.getDisplacementY());
+    double distance_covered = ((double)(Robot.encLeft.get()) / 360)
+    * 0.1524 * Math.PI;
+    SmartDashboard.putNumber("distance cov", distance_covered);
+    double distance_covered_r = ((double)(Robot.encRight.get()) / 360)
+    * 0.1524 * Math.PI;
+    SmartDashboard.putNumber("distance cov r", distance_covered_r);
+    double gyro_heading = ahrs.getYaw();    // Assuming the gyro is giving a value in degrees    
+    SmartDashboard.putNumber("Gyro", gyro_heading);
+    
+    // SmartDashboard.putNumber("Velocity X", Robot.ahrs.getVelocityX());
+    // SmartDashboard.putNumber("Velocity Y", Robot.ahrs.getVelocityY());
+    // SmartDashboard.putNumber("Accel X", Robot.ahrs.getRawAccelX());
+    // SmartDashboard.putNumber("Accel Y", Robot.ahrs.getRawAccelY());
+    // SmartDashboard.putNumber("Displacement X", ahrs.getDisplacementX());
+    // SmartDashboard.putNumber("Displacement Y", ahrs.getDisplacementY());
+    // SmartDashboard.putNumber("Encoder L", encLeft.get());
+    // SmartDashboard.putNumber("Encoder R", encRight.get());
     
   }
+
+
 
   @Override
   public void autonomousInit() {
     //execute each auto direction given in the passed data param upon path initialization
-    path.executeAutoActions();
+     path.executeAutoActions();
+    //  cont.start();
+     encLeft.reset();
+     encRight.reset(); 
+     ahrs.reset();  
   }
 
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
+    
+  }
+  
+  @Override
+  public void disabledInit() {
+    
   }
 
   @Override
