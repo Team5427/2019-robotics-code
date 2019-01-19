@@ -81,4 +81,14 @@ public class Config {
 
 	/* Stores what mode of controller use we are currently using. */
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
+
+	public static final double PID_STRAIGHT_P = 0;
+
+	public static final double PID_STRAIGHT_I = 0;
+
+	public static final double PID_STRAIGHT_D = 0;
+
+	public static final double PID_UPDATE_PERIOD = 0;
+
+	public static final double PID_STRAIGHT_LINEAR_INCREMENT = 0;
 }
