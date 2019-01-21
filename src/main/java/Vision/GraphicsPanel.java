@@ -30,6 +30,8 @@ public class GraphicsPanel extends JPanel implements Runnable {
     public static final double HEIGHT_PIX_RATIO = 0.52; //The ratio of the average half target height to the pixel distance between the two half targets
     public static final double DISTANCE_TOLERANCE = 25;
 
+    public Target t;
+
     public GraphicsPanel(int w, int h) {
         super();
         setSize(w, h);
@@ -97,14 +99,18 @@ public class GraphicsPanel extends JPanel implements Runnable {
                 contour.setRGB((int) p.x, (int) p.y, (currentHalfTarget.side==TargetSide.Right)?RIGHT_COLOR:LEFT_COLOR);
             }
         }
+        @SuppressWarnings("unchecked")
         ArrayList<HalfTarget> leftTargets = (ArrayList<HalfTarget>) halfTargetsInFrame.clone();
+
         for(int x = 0;x<leftTargets.size();x++) {
             if(leftTargets.get(x).side==TargetSide.Right) {
                 leftTargets.remove(x);
                 x--;
             }
         }
+        @SuppressWarnings("unchecked")
         ArrayList<HalfTarget> rightTargets = (ArrayList<HalfTarget>) halfTargetsInFrame.clone();
+        
         for(int x = 0;x<rightTargets.size();x++) {
             if(rightTargets.get(x).side==TargetSide.Left) {
                 rightTargets.remove(x);
@@ -132,7 +138,7 @@ public class GraphicsPanel extends JPanel implements Runnable {
                     leftmostRightTarget = h;
             }
             
-            Target t = new Target(leftmostLeftTarget, leftmostRightTarget, true);
+            t = new Target(leftmostLeftTarget, leftmostRightTarget, true);
             if(isValidTarget(t)>0)
                 leftTargets.remove(leftmostLeftTarget);
             else if(isValidTarget(t)<0)
@@ -140,12 +146,10 @@ public class GraphicsPanel extends JPanel implements Runnable {
             else
             {
                 targetsInFrame.add(t);
-                System.out.println("\t\t" + targetOffset(t));
+                // System.out.println("\t\t" + targetOffset(t));
                 leftTargets.remove(leftmostLeftTarget);
                 rightTargets.remove(leftmostRightTarget);
             }
-
-            System.out.println("******* z: "+t.solveForZ()+"*************************");
         }
         // this.contours = new MatOfPoint[contours.length];
         // this.contourImage = contour;

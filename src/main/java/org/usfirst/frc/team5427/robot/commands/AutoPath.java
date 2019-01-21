@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import org.usfirst.frc.team5427.robot.AutoAction;
+import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
 import org.usfirst.frc.team5427.util.Config;
 
+import Vision.Target;
 import jaci.pathfinder.Waypoint;
 
 import org.usfirst.frc.team5427.robot.commands.MotionProfile;
@@ -74,7 +76,26 @@ public class AutoPath {
                     autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
                 }
             }
-            //continue adding commands if more
+            else if(action.equals("VisionToTarget")) {
+                Target target  = Robot.vision.graphicsPanel.t;
+                double distance = target.solveForZ();
+                double angle = target.getHorAngle();
+                double x_co = distance*Math.cos(angle);
+                double y_co = distance*Math.sin(angle);
+
+                Waypoint[] way = {
+                    new Waypoint(0, 0, Config.dtr(-Robot.ahrs.getYaw())),
+                    new Waypoint(x_co, y_co, -90)
+                };
+                
+                int newIndex = autoActions.size();
+                //add motion profile with points into list of tasks
+                autoActions.add(new MotionProfile(way,false));
+
+                if(autoActions.size()>1) {
+                    autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
+                }
+            }
         }
         kb.close();
     }

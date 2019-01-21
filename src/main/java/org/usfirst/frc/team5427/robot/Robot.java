@@ -14,6 +14,7 @@ import org.usfirst.frc.team5427.robot.commands.ContinousFull;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
+import Vision.VisionFrame;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -45,13 +46,17 @@ public class Robot extends TimedRobot {
   public static Encoder encRight;
 
 
-  public AutoPath path;
+  public static AutoPath path;
 
-  public ContinousFull cont;
+  public static ContinousFull cont;
 
+  public static VisionFrame vision;
 
   @Override
   public void robotInit() {
+    //start vision
+    vision = new VisionFrame();
+
     //initialize ahrs
     ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -87,9 +92,11 @@ public class Robot extends TimedRobot {
 
     
     //blue left to cargo 1st
-    // path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 0"+
-    //                   "\nTurnToAngle 0" + 
-    //                   "\nMotion "+"1.75 5 0 " + "3 6 0 " + "4 4.75 -90"); 
+    path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 0" +
+                      "\nTurnToAngle 0" + 
+                      "\nMotion "+"1.75 5 0 " + "3 6.5 0 " + "4 5.5 -90" +
+                      "\nTurnToAngle -90" + 
+                      "\nVisiontoTarget"); 
 
     
     //blue left to rocket ship
@@ -97,7 +104,7 @@ public class Robot extends TimedRobot {
     // "\nTurnToAngle 30" + 
     // "\nMotion "+"1.75 5 30 " + "3.25 7.75 30"); 
 
-    path = new AutoPath("Motion 0 0 0 2 0 0");
+    // path = new AutoPath("Motion 0 0 0 2 0 0");
 
 
           
