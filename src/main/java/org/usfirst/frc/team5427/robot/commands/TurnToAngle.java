@@ -46,7 +46,7 @@ public class TurnToAngle extends AutoAction
     protected void end() {
         Robot.driveTrain.turnController.disable();
         isFinished = false;
-        Robot.ahrs.reset();
+        // Robot.ahrs.reset();
         Robot.driveTrain.turnController.close();
         
         System.out.println("ending turn");

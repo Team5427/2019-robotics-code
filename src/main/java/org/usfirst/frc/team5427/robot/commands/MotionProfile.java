@@ -18,8 +18,10 @@ public class MotionProfile extends AutoAction {
     public EncoderFollower followerL;
     public EncoderFollower followerR;
 
+    boolean backwards;
+
     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
-    public MotionProfile(Waypoint[] points){
+    public MotionProfile(Waypoint[] points, boolean backwards) {
         //set up config variables for profile
         Trajectory.Config config =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
         Config.DT, Config.MAX_VELOCITY, Config.MAX_ACCEL, Config.MAX_JERK);
@@ -43,6 +45,7 @@ public class MotionProfile extends AutoAction {
         followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
         followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
         
+        this.backwards = backwards;
     }
 
     // Called just before this Command runs the first time
@@ -69,8 +72,15 @@ public class MotionProfile extends AutoAction {
 
 
         //calulate speed of each side of drive train based on encoder position
-        double speedL = followerL.calculate(-Robot.encLeft.get());
-        double speedR = followerR.calculate(Robot.encRight.get());
+        double speedL, speedR;
+        if(!backwards) {
+            speedL = followerL.calculate(-Robot.encLeft.get());
+            speedR = followerR.calculate(Robot.encRight.get());
+        }
+        else {
+            speedL = followerL.calculate(Robot.encLeft.get());
+            speedR = followerR.calculate(-Robot.encRight.get());
+        }
         
         
         double gyro_heading = -(Robot.ahrs.getYaw());    // Assuming the gyro is giving a value in degrees
@@ -80,9 +90,15 @@ public class MotionProfile extends AutoAction {
         double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
         double turn = -0.01 * angleDifference;
         
-        //apply to motors     
-        Robot.driveLeft.set(speedL + turn);
-        Robot.driveRight.set(-(speedR - turn));
+        if(!backwards) {
+            //apply to motors     
+            Robot.driveLeft.set(speedL + turn);
+            Robot.driveRight.set(-(speedR - turn));
+        }
+        else {
+            Robot.driveLeft.set(-(speedL+turn));
+            Robot.driveRight.set(speedR-turn);
+        }
     }
 
     // Make this return true when this Command no longer needs to run execute()

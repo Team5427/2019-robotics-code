@@ -32,7 +32,7 @@ public class AutoPath {
             //determine action
             String action = kb.next();
 
-            if(action.equals("Motion")) {
+            if(action.equals("Motion") || action.equals("MotionInv")) {
                 //make waypoints, add it to arraylist because size of points are unknown
                 ArrayList<Waypoint> w = new ArrayList<>();
                 String line = kb.nextLine(); 
@@ -49,7 +49,11 @@ public class AutoPath {
                 }
                 int newIndex = autoActions.size();
                 //add motion profile with points into list of tasks
-                autoActions.add(new MotionProfile(way));
+                if(action.equals("MotionInv"))
+                    autoActions.add(new MotionProfile(way,true));
+                else
+                    autoActions.add(new MotionProfile(way,false));
+
                 if(autoActions.size()>1) {
                     autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
                 }

@@ -86,12 +86,21 @@ public class Robot extends TimedRobot {
     encRight.reset(); 
 
     
-    //intialize auto path with directions
-    path = new AutoPath("Motion "+"0 0 0 "+"2 0 0"+
-                        "\nTurnToAngle 45" +
-                        "\nMotion "+"0 0 45 "+"1 1 0");  //OPTIONS: Motion(set of points -> x,y,heading), TurnToAngle (angle)
+    //blue left to cargo 1st
+    // path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 0"+
+    //                   "\nTurnToAngle 0" + 
+    //                   "\nMotion "+"1.75 5 0 " + "3 6 0 " + "4 4.75 -90"); 
 
-    path.executeAutoActions();
+    
+    //blue left to rocket ship
+    // path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 30"+
+    // "\nTurnToAngle 30" + 
+    // "\nMotion "+"1.75 5 30 " + "3.25 7.75 30"); 
+
+    path = new AutoPath("Motion 0 0 0 2 0 0");
+
+
+          
 
     cont = new ContinousFull();
     
