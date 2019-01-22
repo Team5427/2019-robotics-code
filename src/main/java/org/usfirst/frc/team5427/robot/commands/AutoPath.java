@@ -80,20 +80,26 @@ public class AutoPath {
                 Target target  = Robot.vision.graphicsPanel.t;
                 double distance = target.solveForZ();
                 double angle = target.getHorAngle();
-                double x_co = distance*Math.cos(angle);
-                double y_co = distance*Math.sin(angle);
-
+                double y_co = distance*Math.cos(angle);
+                double x_co = distance*Math.sin(angle);
+                
+                
+                //over to the right
+                if(angle < 0 ) {
+                    x_co = -x_co;
+                }
+               
                 Waypoint[] way = {
-                    new Waypoint(0, 0, Config.dtr(-Robot.ahrs.getYaw())),
-                    new Waypoint(x_co, y_co, -90)
+                    new Waypoint(5, 5, Config.dtr(-Robot.ahrs.getYaw())),
+                    new Waypoint(5+x_co, 5-y_co, Config.dtr(-Robot.ahrs.getYaw()))
                 };
                 
                 int newIndex = autoActions.size();
                 //add motion profile with points into list of tasks
                 autoActions.add(new MotionProfile(way,false));
-
-                if(autoActions.size()>1) {
-                    autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
+                                    
+                if(autoActions.size() > 1) {
+                    autoActions.get(newIndex - 1).setNextAction(autoActions.get(newIndex));
                 }
             }
         }

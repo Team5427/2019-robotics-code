@@ -15,6 +15,9 @@ public class VisionFrame extends JFrame {
 	 * the width and height by the resize
 	 */
 
+	public final ImageIcon icon = getIcon();
+
+
 	public static final int width = 320;
 	public static final int height = 240;
 
@@ -23,6 +26,8 @@ public class VisionFrame extends JFrame {
 	public VisionFrame() {
 		super(TITLE);
 
+		if (icon != null)
+			setIconImage(icon.getImage());
 		pack();
 
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,5 +48,28 @@ public class VisionFrame extends JFrame {
 		pack();
 
 		setVisible(true);
+	}
+	public GraphicsPanel getPanel() {
+		return graphicsPanel;
+	}
+
+	public ImageIcon getIcon() {
+		// try {
+		// ClassLoader classLoader = getClass().getClassLoader();
+		// File file = new
+		// File(classLoader.getResource("resources/images/icon/resized.png").getFile());
+		// return new ImageIcon(ImageIO.read(file));
+		// } catch (Exception e) {
+		// System.err.println("Image not found in jar");
+		// }
+
+		// try {
+		// Image img = ImageIO.read(new File("resources\\images\\icon\\resized.png"));
+		// return new ImageIcon(img);
+		// } catch (Exception e) {
+		// System.err.println("Error loading image");
+		// }
+
+		return null;
 	}
 }
