@@ -8,7 +8,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
 import org.usfirst.frc.team5427.util.Config;
 
-import Vision.Target;
+
 import jaci.pathfinder.Waypoint;
 
 import org.usfirst.frc.team5427.robot.commands.MotionProfile;
@@ -77,21 +77,25 @@ public class AutoPath {
                 }
             }
             else if(action.equals("VisionToTarget")) {
-                Target target  = Robot.vision.graphicsPanel.t;
-                double distance = target.solveForZ();
-                double angle = target.getHorAngle();
+                while(Robot.client.lastRecievedGoal==null) {}
+                
+                double distance = Robot.client.lastRecievedGoal.getDistance();
+                distance = Config.ftm(distance/12);
+                double angle = Robot.client.lastRecievedGoal.getHorizontalAngle();
                 double y_co = distance*Math.cos(angle);
                 double x_co = distance*Math.sin(angle);
-                
-                
+                System.out.println(distance+" LOL "+angle);
+                //
                 //over to the right
                 if(angle < 0 ) {
                     x_co = -x_co;
                 }
-               
+                
+                //1.64
+
                 Waypoint[] way = {
                     new Waypoint(5, 5, Config.dtr(-Robot.ahrs.getYaw())),
-                    new Waypoint(5+x_co, 5-y_co, Config.dtr(-Robot.ahrs.getYaw()))
+                    new Waypoint(5+x_co, 5-y_co, -90)
                 };
                 
                 int newIndex = autoActions.size();

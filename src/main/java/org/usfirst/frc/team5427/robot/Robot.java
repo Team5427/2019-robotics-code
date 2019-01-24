@@ -7,14 +7,16 @@
 
 package org.usfirst.frc.team5427.robot;
 
+
 import com.kauailabs.navx.frc.AHRS;
 
+import org.usfirst.frc.team5427.Networking.client.Client;
 import org.usfirst.frc.team5427.robot.commands.AutoPath;
 import org.usfirst.frc.team5427.robot.commands.ContinousFull;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
-import Vision.VisionFrame;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -50,13 +52,15 @@ public class Robot extends TimedRobot {
 
   public static ContinousFull cont;
 
-  public static VisionFrame vision;
+
+  public static Client client;
 
   @Override
   public void robotInit() {
-    //start vision
-    vision = new VisionFrame();
-
+   
+    client = new Client();
+    client.start();
+  
     //initialize ahrs
     ahrs = new AHRS(SPI.Port.kMXP);
 
@@ -92,11 +96,7 @@ public class Robot extends TimedRobot {
 
     
     //blue left to cargo 1st
-    path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 0" +
-                      "\nTurnToAngle 0" + 
-                      "\nMotion "+"1.75 5 0 " + "3 6.5 0 " + "4 5.5 -90" +
-                      "\nTurnToAngle -90" + 
-                      "\nVisiontoTarget"); 
+    path = new AutoPath("VisionToTarget"); 
 
     
     //blue left to rocket ship
@@ -126,6 +126,7 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("distance cov r", distance_covered_r);
     double gyro_heading = ahrs.getYaw();    // Assuming the gyro is giving a value in degrees    
     SmartDashboard.putNumber("Gyro", gyro_heading);
+
     
     // SmartDashboard.putNumber("Velocity X", Robot.ahrs.getVelocityX());
     // SmartDashboard.putNumber("Velocity Y", Robot.ahrs.getVelocityY());
