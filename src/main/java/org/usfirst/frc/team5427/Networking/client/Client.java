@@ -14,7 +14,6 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 
-import org.usfirst.frc.team5427.Networking.ByteDictionary;
 import org.usfirst.frc.team5427.Networking.GoalData;
 
 public class Client implements Runnable {
@@ -194,7 +193,7 @@ public class Client implements Runnable {
 				}
 
 				try {
-					networkThread.sleep(10);
+					Thread.sleep(10);
 				} catch (InterruptedException e) {
 					//System.out.println("Thread has been interrupted, client thread will stop.");
 				} catch (Exception e) {
