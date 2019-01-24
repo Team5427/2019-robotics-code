@@ -5,9 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
+
+import org.usfirst.frc.team5427.robot.commands.ActivateSolenoid;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.Button;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -20,9 +24,13 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
 	
 	public Joystick joy1;
+	public Button solenoidButton;
 
 	public OI() {
 		joy1 = new Joystick(Config.JOYSTICK_PORT);
+		solenoidButton = new JoystickButton(joy1, Config.PCM_JOYSTICK_PORT);
+
+		solenoidButton.whenPressed(new ActivateSolenoid());
 	}
 
 	/**

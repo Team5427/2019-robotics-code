@@ -11,6 +11,7 @@ import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
@@ -32,6 +33,8 @@ public class Robot extends TimedRobot {
   public static SpeedControllerGroup driveLeft;
   public static SpeedControllerGroup driveRight;
 
+  public static Solenoid solenoidOne;
+
   @Override
   public void robotInit() {
       driveFrontLeft = new Talon(Config.FRONT_LEFT_MOTOR);
@@ -45,6 +48,8 @@ public class Robot extends TimedRobot {
       drive = new DifferentialDrive(driveLeft, driveRight);
 
       driveTrain = new DriveTrain(driveLeft, driveRight, drive);
+
+      solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
 
       oi = new OI();
   }

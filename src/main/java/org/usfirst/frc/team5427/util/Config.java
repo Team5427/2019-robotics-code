@@ -70,6 +70,23 @@ public class Config {
 	 * Stores what mode of controller use we are currently using.
 	 */
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
-	/*********************************************************/
+
+	/********************** PNEUMATICS ************************/
+
+	/**
+	 * PCP ID value
+	 */
+	public static final int PCM_ID = 0;
+
+	/**
+	 * Port value for PCP
+	 */
+	public static final int PCM_JOYSTICK_PORT = 7;
+
+	/**
+	 * Channel values for Solenoids
+	 */
+	public static final int SOLENOID_ONE_CHANNEL = 0; //not actual value
+
 
 }
