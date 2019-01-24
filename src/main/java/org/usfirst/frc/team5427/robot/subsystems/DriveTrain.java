@@ -1,7 +1,7 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 
-import com.kauailabs.navx.frc.AHRS;
+// import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 
@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class DriveTrain extends Subsystem implements PIDOutput{
+public class DriveTrain extends Subsystem {
 
 	public DifferentialDrive drive;
 
@@ -22,7 +22,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 
 	public PIDController turnController;
 
-	public AHRS ahrs;
+	// public AHRS ahrs;
 
 	public double turnTolerance = 2.0f;
 
@@ -36,21 +36,21 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		this.driveLeft = drive_Left;
 		this.driveRight = drive_Right;
 
-		turnController = new PIDController(p,i,d,ahrs,this);
-		turnController.setInputRange(-180.0f,180.0f);
-		turnController.setContinuous();
-		turnController.setOutputRange(-0.5f,0.5f);
-		turnController.setAbsoluteTolerance(turnTolerance);
+		// turnController = new PIDController(p,i,d,ahrs,this);
+		// turnController.setInputRange(-180.0f,180.0f);
+		// turnController.setContinuous();
+		// turnController.setOutputRange(-0.5f,0.5f);
+		// turnController.setAbsoluteTolerance(turnTolerance);
 	}
 
-	public void turnDegrees(double angle)
-	{
-		ahrs.reset();
-		turnController.reset();
-		turnController.setPID(p,i,d);
-		turnController.setSetpoint(angle);
-		turnController.enable();
-	}
+	// public void turnDegrees(double angle)
+	// {
+	// 	ahrs.reset();
+	// 	turnController.reset();
+	// 	turnController.setPID(p,i,d);
+	// 	turnController.setSetpoint(angle);
+	// 	turnController.enable();
+	// }
 
 	@Override
 	protected void initDefaultCommand() {
@@ -71,8 +71,8 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		drive.stopMotor();
 	}
 
-	@Override
-	public void pidWrite(double output) {
-		tankDrive(output,-output);
-	}
+	// @Override
+	// public void pidWrite(double output) {
+	// 	tankDrive(output,-output);
+	// }
 }
