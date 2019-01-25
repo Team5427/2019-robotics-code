@@ -86,7 +86,6 @@ public class Config {
 	/**
 	 * Channel values for Solenoids
 	 */
-	public static final int SOLENOID_ONE_CHANNEL = 0; //not actual value
-
+	public static final int SOLENOID_ONE_CHANNEL = 0;
 
 }

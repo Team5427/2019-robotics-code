@@ -14,12 +14,15 @@ public class ActivateSolenoid extends Command
         Robot.solenoidOne.set(true);
     }
 
-    protected void execute() {}
-
-    protected void isInterrupted() 
+    protected void execute() 
     {
-        end();
+        Robot.solenoidOne.set(true);
     }
+
+    // protected void isInterrupted() 
+    // {
+    //     end();
+    // }
 
     protected void end() 
     {
