@@ -97,6 +97,7 @@ public class Robot extends TimedRobot {
     
     //blue left to cargo 1st
     path = new AutoPath("VisionToTarget"); 
+    System.out.println("creating new auto");
 
     
     //blue left to rocket ship
@@ -145,6 +146,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //execute each auto direction given in the passed data param upon path initialization
      path.executeAutoActions();
+     System.out.println("starting autonomous, executing auto");
     //  cont.start();
      encLeft.reset();
      encRight.reset(); 

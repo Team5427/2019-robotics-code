@@ -76,35 +76,16 @@ public class AutoPath {
                     autoActions.get(newIndex-1).setNextAction(autoActions.get(newIndex));
                 }
             }
-            else if(action.equals("VisionToTarget")) {
-                while(Robot.client.lastRecievedGoal==null) {}
-                
-                double distance = Robot.client.lastRecievedGoal.getDistance();
-                distance = Config.ftm(distance/12);
-                double angle = Robot.client.lastRecievedGoal.getHorizontalAngle();
-                double y_co = distance*Math.cos(angle);
-                double x_co = distance*Math.sin(angle);
-                System.out.println(distance+" LOL "+angle);
-                //
-                //over to the right
-                if(angle < 0 ) {
-                    x_co = -x_co;
-                }
-                
-                //1.64
-
-                Waypoint[] way = {
-                    new Waypoint(5, 5, Config.dtr(-Robot.ahrs.getYaw())),
-                    new Waypoint(5+x_co, 5-y_co, -90)
-                };
-                
+            else if(action.equals("VisionToTarget")) { 
                 int newIndex = autoActions.size();
                 //add motion profile with points into list of tasks
-                autoActions.add(new MotionProfile(way,false));
+                autoActions.add(new VisionToTarget());
                                     
                 if(autoActions.size() > 1) {
                     autoActions.get(newIndex - 1).setNextAction(autoActions.get(newIndex));
                 }
+                System.out.println("added new auto action vision to target");
+
             }
         }
         kb.close();

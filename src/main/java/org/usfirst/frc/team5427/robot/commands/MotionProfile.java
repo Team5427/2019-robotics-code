@@ -5,6 +5,7 @@ import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
@@ -46,23 +47,52 @@ public class MotionProfile extends AutoAction {
         followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
         
         this.backwards = backwards;
+        System.out.println("done motion");
+
     }
 
+    public MotionProfile(Trajectory trajectory) {
+          // Create the Modifier Object (tank drive train)
+          TankModifier modifier = new TankModifier(trajectory);
+          modifier.modify(Config.ftm(Config.WHEELBASE_WIDTH));
+  
+          //create followers to manage input+output
+          followerL = new EncoderFollower(modifier.getLeftTrajectory());
+          followerR = new EncoderFollower(modifier.getRightTrajectory());
+  
+          //value configuration
+          followerL.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+          followerR.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+  
+          followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+          followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+          
+          this.backwards = false;
+          this.start();
+    }
+    double x;
+    double spL;
+    double spR;
     // Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
         //reset all sensors/ control loops
-        Robot.encLeft.reset(); 
-        Robot.encRight.reset();
+        // Robot.encLeft.reset(); 
+        // Robot.encRight.reset();
         
         // Robot.ahrs.reset();
-        Robot.ahrs.resetDisplacement();
+        // Robot.ahrs.resetDisplacement();
+        System.out.println("starting motion");
+        x= 0;
+        spR = 0;
+        spL = 0;
 
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
+        if(x++ % 3 == 0) {
         double distance_covered = ((double)(Robot.encLeft.get()) / 360)
                 * 0.1524 * Math.PI;
         double distance_covered_right = ((double)(Robot.encRight.get()) / 360)
@@ -92,13 +122,16 @@ public class MotionProfile extends AutoAction {
         
         if(!backwards) {
             //apply to motors     
-            Robot.driveLeft.set(speedL + turn);
-            Robot.driveRight.set(-(speedR - turn));
+            spL = (speedL + turn);
+            spR = (-(speedR - turn));
         }
         else {
-            Robot.driveLeft.set(-(speedL+turn));
-            Robot.driveRight.set(speedR-turn);
+            spL = (-(speedL+turn));
+            spR = (speedR-turn);
         }
+         }
+         Robot.driveLeft.set(spL);
+         Robot.driveRight.set(spR);
     }
 
     // Make this return true when this Command no longer needs to run execute()
