@@ -85,7 +85,7 @@ public class AutoPath {
                     autoActions.get(newIndex - 1).setNextAction(autoActions.get(newIndex));
                 }
                 System.out.println("added new auto action vision to target");
-
+                
             }
         }
         kb.close();

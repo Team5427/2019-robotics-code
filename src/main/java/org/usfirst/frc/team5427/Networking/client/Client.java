@@ -18,7 +18,7 @@ import org.usfirst.frc.team5427.Networking.GoalData;
 
 public class Client implements Runnable {
 
-	public static final String DEFAULT_IP = "10.54.27.185";
+	public static final String DEFAULT_IP = "10.54.27.230";
 	public static final int DEFAULT_PORT = 25565;
 	public static int MAX_BYTE_BUFFER = 256;
 

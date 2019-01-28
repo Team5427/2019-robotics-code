@@ -40,8 +40,8 @@ public class MotionProfile extends AutoAction {
         followerR = new EncoderFollower(modifier.getRightTrajectory());
 
         //value configuration
-        followerL.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
-        followerR.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+        followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+        followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
 
         followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
         followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
@@ -61,8 +61,8 @@ public class MotionProfile extends AutoAction {
           followerR = new EncoderFollower(modifier.getRightTrajectory());
   
           //value configuration
-          followerL.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
-          followerR.configureEncoder(0, 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+          followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+          followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
   
           followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
           followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
