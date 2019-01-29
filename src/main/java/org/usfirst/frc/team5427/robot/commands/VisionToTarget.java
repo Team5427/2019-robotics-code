@@ -22,27 +22,29 @@ public class VisionToTarget extends AutoAction {
     @Override
     protected void initialize() {
         super.initialize();
+        System.out.println("starting initial vision");
+
         while(Robot.client.lastRecievedGoal == null) {}
 
         System.out.println("starting vision to target");
 
-        double distance = Robot.client.lastRecievedGoal.getDistance();
+        double distance = Robot.client.lastRecievedGoal.getDistance()-4;
         distance -= (47-distance)*0.1;
         distance = Math.abs(Config.ftm(distance/12));
         double angle = Robot.client.lastRecievedGoal.getHorizontalAngle();
-        double y_co = distance*Math.sin(angle) - Config.ftm(16.0/12.0);
+        double y_co = distance*Math.sin(-angle) + Config.ftm(14.0/12.0);
         double x_co = distance*Math.cos(angle);
         System.out.println(distance+" DATA FROM VISION " + angle);
-        //over to the right
-        if(angle < 0 ) {
-            y_co = -y_co;
-        }
+        // //over to the right
+        // if(angle < 0 ) {
+        //     y_co = -y_co;
+        // }
         
 
         Waypoint[] way = {
 
             new Waypoint(0, 1, Config.dtr(Robot.ahrs.getYaw())),
-            new Waypoint(x_co, 1-y_co, 0)
+            new Waypoint(x_co, 1-y_co, 90)
         };
         System.out.println("**********" + (x_co) + "   AND   " + (y_co) + "***************");
         

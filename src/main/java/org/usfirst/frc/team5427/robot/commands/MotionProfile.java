@@ -59,7 +59,7 @@ public class MotionProfile extends AutoAction {
           //create followers to manage input+output
           followerL = new EncoderFollower(modifier.getLeftTrajectory());
           followerR = new EncoderFollower(modifier.getRightTrajectory());
-  
+          System.out.println(-Robot.encLeft.get()+"\n" + Robot.encRight.get());
           //value configuration
           followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
           followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
@@ -68,7 +68,7 @@ public class MotionProfile extends AutoAction {
           followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
           
           this.backwards = false;
-          this.start();
+        //   this.start();
     }
     double x;
     double spL;
