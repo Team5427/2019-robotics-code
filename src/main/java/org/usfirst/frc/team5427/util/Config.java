@@ -44,6 +44,14 @@ public class Config {
 	 * The PWM value for the rear left motor of the drive train.
 	 */
 	public static final int REAR_LEFT_MOTOR = 3;
+	/**
+	 * The PWM value for the arm.
+	 */
+	public static final int ARM_MOTOR = 4;
+	/**
+	* The PWM value for the wrist
+	*/
+   public static final int WRIST_MOTOR = 5;
 
 	/******************** CONTROLLER PORTS *******************/
 	/**
@@ -80,12 +88,24 @@ public class Config {
 	public static final double MAX_JERK = 0.5; //11 m/s/s/s
 
 	public static final double WHEELBASE_WIDTH = 2.25; //feet
+	public static final double ARM_WIDTH = 1; //feet
+	public static final double WRIST_WIDTH = 1; //feet
+
 
 	public static final double KP = 1f;
     public static final double KI = 0.0;	
 	public static final double KD = 0;
 	public static final double KV = 1/MAX_VELOCITY; //1.75 m/s is max
 	public static final double KA = 0.42; 
+
+
+	public static final int ROTATION_POTENTIOMETER_WRIST_PORT = 0;
+
+	public static final int ROTATION_POTENTIOMETER_WRIST_RANGE = 271;
+
+	public static final int ROTATION_POTENTIOMETER_ARM_PORT = 1;
+	
+	public static final int ROTATION_POTENTIOMETER_ARM_RANGE = 271;
 	
 	public static double ftm(double feet) {
 		return feet/3.281;

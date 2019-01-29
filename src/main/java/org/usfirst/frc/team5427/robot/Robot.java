@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.*;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -39,11 +40,17 @@ public class Robot extends TimedRobot {
   public static SpeedControllerGroup driveLeft;
   public static SpeedControllerGroup driveRight;
 
+  public static SpeedController arm;
+  public static SpeedController wrist;
+
+
   public static AHRS ahrs;
 
   public static Encoder encLeft;
   public static Encoder encRight;
 
+  public static AnalogPotentiometer rotationPotentiometerArm;
+  public static AnalogPotentiometer rotationPotentiometerWrist;
 
   public AutoPath path;
 
@@ -67,7 +74,10 @@ public class Robot extends TimedRobot {
     driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
     driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
-    // Robot.driveRight.setInverted(true);
+    //make arm and wrist
+    arm = new Talon(Config.ARM_MOTOR);
+    wrist = new Talon(Config.WRIST_MOTOR);
+
 
     //initialize drive train with speed controller groups
     drive = new DifferentialDrive(driveLeft, driveRight);
@@ -85,19 +95,14 @@ public class Robot extends TimedRobot {
     encRight.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360)); 
     encRight.reset(); 
 
-    
-    //blue left to cargo 1st
-    // path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 0"+
-    //                   "\nTurnToAngle 0" + 
-    //                   "\nMotion "+"1.75 5 0 " + "3 6 0 " + "4 4.75 -90"); 
+    rotationPotentiometerArm = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_ARM_PORT,Config.ROTATION_POTENTIOMETER_ARM_RANGE);
+    rotationPotentiometerWrist = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_WRIST_PORT,Config.ROTATION_POTENTIOMETER_WRIST_RANGE);
 
-    
-    //blue left to rocket ship
-    // path = new AutoPath("Motion "+"0 5 0 "+"1.75 5 30"+
-    // "\nTurnToAngle 30" + 
-    // "\nMotion "+"1.75 5 30 " + "3.25 7.75 30"); 
+
+
 
     path = new AutoPath("Motion 0 0 0 2 0 0");
+
 
 
           
