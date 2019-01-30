@@ -44,9 +44,28 @@ public class Config {
 
 	public static final double INTAKE_SPEED_OUT = -.5;
 
-	public static final int BUTTON_INTAKE_IN = 3;
+	//Buttons
+	/****************************************************************/
+	public static final int BUTTON_INTAKE_OUT = 1;
+
+	public static final int BUTTON_INTAKE_IN = 2;
+
+	public static final int BUTTON_ELBOW_DOWN = 3;
+
+	public static final int BUTTON_ELEVATOR_DOWN = 4;
 	
-	public static final int BUTTON_INTAKE_OUT = 5;
+	public static final int BUTTON_ELBOW_UP = 5;
+	
+	public static final int BUTTON_ELEVATOR_UP = 6;
+
+	public static final int BUTTON_HATCH_EJECT = 7;
+
+	public static final int BUTTON_LEVEL_THREE_CLIMB = 8;
+	
+	public static final int BUTTON_WRIST_UP = 9;
+	
+	public static final int BUTTON_WRIST_DOWN = 10;
+	/****************************************************************/
 
 	/* The port associated with the main joystick. */
 	public static final int JOYSTICK_PORT = 0;
