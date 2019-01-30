@@ -31,7 +31,7 @@ public class DriveTrain extends Subsystem {
 		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
 	}
 
-	public void tankDrive(double rightSpeed,double leftSpeed)
+	public void tankDrive(double leftSpeed,double rightSpeed)
 	{
 		driveRight.set(rightSpeed);
 		driveLeft.set(leftSpeed);
