@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
 
     
     //blue left to cargo 1st
-    path = new AutoPath("Motion 0 7.5 0 2.5 4 90\nVisionToTarget"); 
+    path = new AutoPath("VisionToTarget"); 
     System.out.println("creating new auto");
 
     

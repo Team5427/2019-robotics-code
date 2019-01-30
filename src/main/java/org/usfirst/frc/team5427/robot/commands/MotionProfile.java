@@ -21,6 +21,9 @@ public class MotionProfile extends AutoAction {
 
     boolean backwards;
 
+    public int frequencyDivide;
+    public int startingAngle;
+
     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
     public MotionProfile(Waypoint[] points, boolean backwards) {
         //set up config variables for profile
@@ -48,7 +51,8 @@ public class MotionProfile extends AutoAction {
         
         this.backwards = backwards;
         System.out.println("done motion");
-
+        this.frequencyDivide = 1;
+        startingAngle = 0;
     }
 
     public MotionProfile(Trajectory trajectory) {
@@ -68,7 +72,9 @@ public class MotionProfile extends AutoAction {
           followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
           
           this.backwards = false;
-        //   this.start();
+          this.frequencyDivide = 3;
+          this.start();
+          startingAngle = 90;
     }
     double x;
     double spL;
@@ -92,7 +98,7 @@ public class MotionProfile extends AutoAction {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-        if(x++ % 3 == 0) {
+        if(x++ % frequencyDivide == 0) {
         double distance_covered = ((double)(Robot.encLeft.get()) / 360)
                 * 0.1524 * Math.PI;
         double distance_covered_right = ((double)(Robot.encRight.get()) / 360)
@@ -113,9 +119,9 @@ public class MotionProfile extends AutoAction {
         }
         
         
-        double gyro_heading = -(Robot.ahrs.getYaw());    // Assuming the gyro is giving a value in degrees
+        double gyro_heading = -Robot.ahrs.getYaw();    // Assuming the gyro is giving a value in degrees
         double desired_heading = Pathfinder.r2d(followerL.getHeading());  // Should also be in degrees
-        
+        SmartDashboard.putNumber("desired heading", desired_heading);
         //calculate heading curvature
         double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
         double turn = -0.01 * angleDifference;
