@@ -7,21 +7,22 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import java.util.List;
+
+import org.ghrobotics.lib.mathematics.twodim.geometry.Pose2dWithCurvature;
+import org.ghrobotics.lib.mathematics.twodim.trajectory.types.TimedEntry;
+import org.ghrobotics.lib.mathematics.twodim.trajectory.types.TimedTrajectory;
+import org.usfirst.frc.team5427.robot.commands.MotionProfile;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 
 public class Robot extends TimedRobot {
     public static DriveTrain driveTrain;
@@ -39,6 +40,9 @@ public class Robot extends TimedRobot {
 
     public static SpeedController intakeTop;
     public static SpeedController intakeBottom;
+
+    public static MotionProfile mp;
+    public static List<TimedEntry<Pose2dWithCurvature>> points;
 
     public static Intake intake;
 
@@ -59,6 +63,15 @@ public class Robot extends TimedRobot {
         intakeBottom = new PWMVictorSPX(Config.INTAKE_BOTTOM_MOTOR);
         intake = new Intake(intakeTop,intakeBottom);
 
+
+
+        Trajectories.generateAllTrajectories();
+        
+        TimedTrajectory<Pose2dWithCurvature> t = Trajectories.frontRightCargo;
+        points = t.getPoints();
+        mp = new MotionProfile(points);
+
+
         // rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
 
         oi = new OI();
@@ -72,7 +85,7 @@ public class Robot extends TimedRobot {
 
     @Override
     public void autonomousInit() {
-
+        mp.start();
     }
 
     @Override
