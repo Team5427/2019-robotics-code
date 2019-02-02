@@ -18,12 +18,14 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  * @author Varsha Kumar
  */
-public class DriveWithJoystick extends Command {
+public class DriveWithJoystick extends Command
+{
 
 	/**
 	 * DriveWithJoystick requires the drive train subsystem.
 	 */
-	public DriveWithJoystick() {
+	public DriveWithJoystick()
+	{
 		requires(Robot.driveTrain);
 	}
 
@@ -31,14 +33,17 @@ public class DriveWithJoystick extends Command {
 	 * Called once when the command is started but is not used for anything.
 	 */
 	@Override
-	protected void initialize() {}
+	protected void initialize()
+	{
+	}
 
 	/**
 	 * Called periodically while the command is not finished. Delivers the joystick
 	 * inputs into the drive train subsystem in order to drive the robot.
 	 */
 	@Override
-	protected void execute() {
+	protected void execute()
+	{
 		Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy());
 	}
 
@@ -49,7 +54,8 @@ public class DriveWithJoystick extends Command {
 	 * @return false
 	 */
 	@Override
-	protected boolean isFinished() {
+	protected boolean isFinished()
+	{
 		return false;
 	}
 
@@ -58,7 +64,8 @@ public class DriveWithJoystick extends Command {
 	 * train to 0 power.
 	 */
 	@Override
-	protected void end() {
+	protected void end()
+	{
 		Robot.driveTrain.stop();
 	}
 
@@ -66,7 +73,8 @@ public class DriveWithJoystick extends Command {
 	 * Called once if the command is interrupted. Calls the end method in response.
 	 */
 	@Override
-	protected void interrupted() {
+	protected void interrupted()
+	{
 		end();
 	}
 }

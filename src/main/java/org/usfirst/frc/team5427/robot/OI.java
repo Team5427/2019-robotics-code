@@ -6,8 +6,10 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
-import org.usfirst.frc.team5427.robot.commands.EjectCargo;
-import org.usfirst.frc.team5427.robot.commands.IntakeCargo;
+import org.usfirst.frc.team5427.robot.commands.MoveElevator;
+import org.usfirst.frc.team5427.robot.commands.MoveIntake;
+import org.usfirst.frc.team5427.robot.commands.RotateArm;
+import org.usfirst.frc.team5427.robot.commands.RotateWrist;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -22,45 +24,42 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  *
  * @author Varsha Kumar
  */
-public class OI {
-
+public class OI
+{
 	public Joystick joy1;
 
 	Button intakeOut;
 	Button intakeIn;
-	Button elbowDown;
+	Button armDown;
 	Button elevatorDown;
-	Button elbowUp;
+	Button armUp;
 	Button elevatorUp;
-	Button hatchEject;
 	Button levelThreeClimb;
 	Button wristUp;
 	Button wristDown;
 
-	public OI() {
+	public OI()
+	{
 		joy1 = new Joystick(Config.JOYSTICK_PORT);
 
-		intakeOut = new JoystickButton(joy1,Config.BUTTON_INTAKE_OUT);
-		intakeIn = new JoystickButton(joy1,Config.BUTTON_INTAKE_IN);
-		elbowDown = new JoystickButton(joy1,Config.BUTTON_ELBOW_DOWN);
+		intakeOut = new JoystickButton(joy1, Config.BUTTON_INTAKE_OUT);
+		intakeIn = new JoystickButton(joy1, Config.BUTTON_INTAKE_IN);
+		armDown = new JoystickButton(joy1, Config.BUTTON_ARM_DOWN);
 		elevatorDown = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_DOWN);
-		elbowUp = new JoystickButton(joy1,Config.BUTTON_ELBOW_UP);
-		elevatorUp = new JoystickButton(joy1,Config.BUTTON_ELEVATOR_UP);
-		hatchEject = new JoystickButton(joy1,Config.BUTTON_HATCH_EJECT);
-		levelThreeClimb = new JoystickButton(joy1,Config.BUTTON_LEVEL_THREE_CLIMB);
-		wristUp = new JoystickButton(joy1,Config.BUTTON_WRIST_UP);
-		wristDown = new JoystickButton(joy1,Config.BUTTON_WRIST_DOWN);
+		armUp = new JoystickButton(joy1, Config.BUTTON_ARM_UP);
+		elevatorUp = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_UP);
+		levelThreeClimb = new JoystickButton(joy1, Config.BUTTON_LEVEL_THREE_CLIMB);
+		wristUp = new JoystickButton(joy1, Config.BUTTON_WRIST_UP);
+		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
 
-		intakeOut.whenPressed(new EjectCargo());
-		intakeIn.whenPressed(new IntakeCargo());
-		// elbowDown.whenPressed(new ElbowDown());
-		// elevatorDown.whenPressed(new ElevatorDown());
-		// elbowUp.whenPressed(new ElbowUp());
-		// elevatorUp.whenPressed(new ElevatorUp());
-		// hatchEject.whenPressed(new EjectHatch());
-		// levelThreeClimb.whenPressed(new LevelThreeClimb());
-		// wristUp.whenPressed(new WristUp());
-		// wristDown.whenPressed(new WristDown());
+		intakeOut.whenPressed(new MoveIntake(Config.INTAKE_SPEED_OUT));
+		intakeIn.whenPressed(new MoveIntake(Config.INTAKE_SPEED_IN));
+		armDown.whenPressed(new RotateArm(Config.ARM_SPEED_DOWN));
+		armUp.whenPressed(new RotateArm(Config.ARM_SPEED_UP));
+		elevatorDown.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_DOWN));
+		elevatorUp.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_UP));
+		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
+		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
 	}
 
 	/**
@@ -68,7 +67,8 @@ public class OI {
 	 *
 	 * @return the current joystick.
 	 */
-	public Joystick getJoy() {
+	public Joystick getJoy()
+	{
 		return joy1;
 	}
 }
