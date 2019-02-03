@@ -28,12 +28,12 @@ public class Robot extends TimedRobot
 
     public static OI oi;
 
-    public static SpeedController driveLeftFront;
+    public static SpeedController driveLeftTop;
     public static SpeedController driveLeftMiddle;
-    public static SpeedController driveLeftRear;
-    public static SpeedController driveRightFront;
+    public static SpeedController driveLeftBottom;
+    public static SpeedController driveRightTop;
     public static SpeedController driveRightMiddle;
-    public static SpeedController driveRightRear;
+    public static SpeedController driveRightBottom;
 
     public static SpeedControllerGroup driveLeft;
     public static SpeedControllerGroup driveRight;
@@ -55,15 +55,15 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        driveLeftFront = new WPI_VictorSPX(Config.FRONT_LEFT_MOTOR);
+        driveLeftTop = new WPI_VictorSPX(Config.TOP_LEFT_MOTOR);
         driveLeftMiddle = new WPI_VictorSPX(Config.MIDDLE_LEFT_MOTOR);
-        driveLeftRear = new WPI_VictorSPX(Config.REAR_LEFT_MOTOR);
-        driveRightFront = new WPI_VictorSPX(Config.FRONT_RIGHT_MOTOR);
+        driveLeftBottom = new WPI_VictorSPX(Config.BOTTOM_LEFT_MOTOR);
+        driveRightTop = new WPI_VictorSPX(Config.TOP_RIGHT_MOTOR);
         driveRightMiddle = new WPI_VictorSPX(Config.MIDDLE_RIGHT_MOTOR);
-        driveRightRear = new WPI_VictorSPX(Config.REAR_RIGHT_MOTOR);
+        driveRightBottom = new WPI_VictorSPX(Config.BOTTOM_RIGHT_MOTOR);
 
-        driveLeft = new SpeedControllerGroup(driveLeftFront,driveLeftMiddle,driveLeftRear);
-        driveRight = new SpeedControllerGroup(driveRightFront,driveRightMiddle,driveRightRear);
+        driveLeft = new SpeedControllerGroup(driveLeftTop,driveLeftMiddle,driveLeftBottom);
+        driveRight = new SpeedControllerGroup(driveRightTop,driveRightMiddle,driveRightBottom);
 
         drive = new DifferentialDrive(driveLeft, driveRight);
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
