@@ -17,6 +17,8 @@ import org.usfirst.frc.team5427.robot.subsystems.Wrist;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -52,6 +54,9 @@ public class Robot extends TimedRobot
     public static Wrist wrist;
     public static Intake intake;
 
+    public static Solenoid solenoidOne;
+    public static AnalogPotentiometer rotationPotentiometer;
+
     @Override
     public void robotInit()
     {
@@ -81,8 +86,9 @@ public class Robot extends TimedRobot
         intakeBottomMotor = new WPI_VictorSPX(Config.INTAKE_BOTTOM_MOTOR);
         intake = new Intake(intakeTopMotor, intakeBottomMotor);
 
-        // rotationPotentiometer = new
-        // AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
+        solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
+
+        rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
 
         oi = new OI();
     }

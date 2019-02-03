@@ -10,6 +10,7 @@ import org.usfirst.frc.team5427.robot.commands.MoveElevator;
 import org.usfirst.frc.team5427.robot.commands.MoveIntake;
 import org.usfirst.frc.team5427.robot.commands.RotateArm;
 import org.usfirst.frc.team5427.robot.commands.RotateWrist;
+import org.usfirst.frc.team5427.robot.commands.ActivateSolenoid;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -27,6 +28,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI
 {
 	public Joystick joy1;
+	public Button solenoidActivate;
 
 	Button intakeOut;
 	Button intakeIn;
@@ -51,6 +53,7 @@ public class OI
 		levelThreeClimb = new JoystickButton(joy1, Config.BUTTON_LEVEL_THREE_CLIMB);
 		wristUp = new JoystickButton(joy1, Config.BUTTON_WRIST_UP);
 		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
+		solenoidActivate = new JoystickButton(joy1, Config.PCM_JOYSTICK_PORT);
 
 		intakeOut.whenPressed(new MoveIntake(Config.INTAKE_SPEED_OUT));
 		intakeIn.whenPressed(new MoveIntake(Config.INTAKE_SPEED_IN));
@@ -60,6 +63,7 @@ public class OI
 		elevatorUp.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_UP));
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
+		solenoidActivate.whenPressed(new ActivateSolenoid());
 	}
 
 	/**
