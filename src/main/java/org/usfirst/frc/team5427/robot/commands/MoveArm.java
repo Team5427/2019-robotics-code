@@ -33,9 +33,21 @@ public class MoveArm extends Command {
         //value configuration
         follower.configureEncoder((int)Robot.rotationPotentiometerArm.get(), 360, 360); //initial pot angle, degrees in circle, arm radius
 
-        follower.configurePIDVA(Config.KP_ARM, Config.KI_ARM, Config.KD_ARM, Config.KV_ARM, Config.KA_ARM);
-     
+        follower.configurePIDVA(Config.KP_ARM, Config.KI_ARM, Config.KD_ARM, Config.KV_ARM, Config.KA_ARM);   
+
+        this.backwards = backwards;
+    }
+
+      //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
+      public MoveArm(Trajectory trajectory, boolean backwards) {
+        //create followers to manage input+output
+        follower = new EncoderFollower(trajectory);
         
+
+        //value configuration
+        follower.configureEncoder((int)Robot.rotationPotentiometerArm.get(), 360, 360); //initial pot angle, degrees in circle, arm radius
+
+        follower.configurePIDVA(Config.KP_ARM, Config.KI_ARM, Config.KD_ARM, Config.KV_ARM, Config.KA_ARM);   
 
         this.backwards = backwards;
     }

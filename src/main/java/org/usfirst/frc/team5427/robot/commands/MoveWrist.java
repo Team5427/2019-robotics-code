@@ -37,6 +37,20 @@ public class MoveWrist extends Command {
         this.backwards = backwards;
     }
 
+     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
+     public MoveWrist(Trajectory trajectory, boolean backwards) {
+        //create followers to manage input+output
+        follower = new EncoderFollower(trajectory);
+
+        //value configuration
+        follower.configureEncoder((int)Robot.rotationPotentiometerWrist.get(), 360, 360); //initial pot angle, degrees in circle, arm radius
+
+        follower.configurePIDVA(Config.KP_WRIST, Config.KI_WRIST, Config.KD_WRIST, Config.KV_WRIST, Config.KA_WRIST);
+     
+        
+        this.backwards = backwards;
+    }
+
     // Called just before this Command runs the first time
 	@Override
 	protected void initialize() {

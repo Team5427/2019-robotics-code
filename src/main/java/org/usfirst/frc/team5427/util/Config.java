@@ -78,6 +78,12 @@ public class Config {
 	 * Stores what mode of controller use we are currently using.
 	 */
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
+
+
+	public static final int BUTTON_ARM_UP     =  3;
+	public static final int BUTTON_ARM_DOWN   =  5;
+	public static final int BUTTON_WRIST_UP   =  9;
+	public static final int BUTTON_WRIST_DOWN = 10;
 	/*********************************************************/
 
 	public static final double ENCODER_DISTANCE_OFFSET = 0.9752;
