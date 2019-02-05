@@ -22,6 +22,6 @@ public class TrajectoryPoint {
         this.velocity = velocity;
     }
     public String toString() {
-        return "\n"+velocity/9 + "\t" + this.x + "\t" + this.y + "\t" + this.theta;
+        return "\n"+(velocity/9+0.08) + "\t" + this.x + "\t" + this.y + "\t" + this.theta;
     }
 }

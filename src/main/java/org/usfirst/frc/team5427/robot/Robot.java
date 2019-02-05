@@ -74,7 +74,6 @@ public class Robot extends TimedRobot {
         driveRearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 
         driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
-        driveLeft.setInverted(true);
         driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
         drive = new DifferentialDrive(driveLeft, driveRight);
@@ -86,7 +85,6 @@ public class Robot extends TimedRobot {
 
         encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
         encLeft.setDistancePerPulse(0.5 * Math.PI/360);
-        encLeft.setReverseDirection(true);
 
         encRight = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
         encRight.setDistancePerPulse(0.5 * Math.PI/360);
@@ -115,10 +113,10 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         Scheduler.getInstance().run();
         // SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
-        encLeftDist =  encLeft.getDistance() - encLeftPrev;
+        encLeftDist =  -encLeft.getDistance() - encLeftPrev;
         encRightDist = encRight.getDistance() - encRightPrev;
 
-        encLeftPrev = encLeft.getDistance();
+        encLeftPrev = -encLeft.getDistance();
         encRightPrev = encRight.getDistance();
 
         distance = (encLeftDist + encRightDist)/2;
@@ -128,7 +126,7 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("encRight", encRightDist);
 
         SmartDashboard.putNumber("distance", distance);
-        SmartDashboard.putNumber("ahrs", -ahrs.getYaw());
+        SmartDashboard.putNumber("ahrs", ahrs.getYaw());
 
         SmartDashboard.putNumber("robotX", robotX);
         SmartDashboard.putNumber("robotY", robotY);
@@ -145,6 +143,13 @@ public class Robot extends TimedRobot {
         ahrs.reset();
         robotX = 0;
         robotY = 0;
+        encLeftDist =  0;
+        encRightDist = 0;
+
+        encLeftPrev = 0;
+        encRightPrev = 0;
+
+        distance = 0;
     }
 
     @Override

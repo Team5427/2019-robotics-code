@@ -54,7 +54,10 @@ public class FalconTrajectoryFollower {
             m_velocity = -m_velocity; 
         }
         m_error = Pathfinder.boundHalfDegrees(m_targetAngle - robotTheta);
+        m_error = Math.toRadians(m_error);
+
         m_turn = m_error * m_kP + (m_error - m_lastError)/dT * m_kD;
+        m_lastError = m_error;
         m_leftDesiredVel = m_velocity - m_turn;
         m_rightDesiredVel = m_velocity + m_turn;
     }

@@ -54,7 +54,8 @@ public class MotionProfile extends Command {
 
 		startTime = Timer.getFPGATimestamp();
 		//0.0121
-		follower = new FalconTrajectoryFollower(path, 3, true, 0.097, 0.18);
+		//0.097 .18
+		follower = new FalconTrajectoryFollower(path, 6, true, 0.097, 0.18);
 
 	}
 
@@ -65,11 +66,11 @@ public class MotionProfile extends Command {
 		// follower.calculate(Robot.dr.robotX, Robot.dr.robotY, Robot.dr.angleDegrees, dt);
 		// Robot.dr.update(follower.getLeftVelocity()/2.75, follower.getRightVelocity()/2.75);
 
-		follower.calculate(Robot.robotX, Robot.robotY, -Robot.ahrs.getYaw(), dt);
-		Robot.driveTrain.tankDrive(follower.getLeftVelocity()/9 + 0.08, follower.getRightVelocity()/9 + 0.08);
+		follower.calculate(Robot.robotX, Robot.robotY, Robot.ahrs.getYaw(), dt);
+		Robot.driveTrain.tankDrive(-follower.getLeftVelocity()/9 - 0.12, follower.getRightVelocity()/9 + 0.12);
 
-		SmartDashboard.putNumber("left vel", follower.getLeftVelocity()/9 + 0.08);
-		SmartDashboard.putNumber("right vel", follower.getRightVelocity()/9 + 0.08);
+		SmartDashboard.putNumber("left vel", -follower.getLeftVelocity()/9 - 0.12);
+		SmartDashboard.putNumber("right vel", follower.getRightVelocity()/9 + 0.12);
 
 
 		startTime = Timer.getFPGATimestamp();
