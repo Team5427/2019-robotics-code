@@ -9,8 +9,7 @@ package org.usfirst.frc.team5427.robot;
 
 import com.kauailabs.navx.frc.AHRS;
 
-import org.usfirst.frc.team5427.robot.commands.AutoPath;
-import org.usfirst.frc.team5427.robot.commands.ContinousFull;
+import org.usfirst.frc.team5427.robot.commands.MoveArm;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -18,6 +17,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.smartdashboard.*;
+import jaci.pathfinder.Waypoint;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
@@ -43,24 +43,12 @@ public class Robot extends TimedRobot {
   public static SpeedController arm;
   public static SpeedController wrist;
 
-
-  public static AHRS ahrs;
-
-  public static Encoder encLeft;
-  public static Encoder encRight;
-
   public static AnalogPotentiometer rotationPotentiometerArm;
   public static AnalogPotentiometer rotationPotentiometerWrist;
 
-  public AutoPath path;
-
-  public ContinousFull cont;
-
-
   @Override
   public void robotInit() {
-    //initialize ahrs
-    ahrs = new AHRS(SPI.Port.kMXP);
+ 
 
     //make talon motors
     driveFrontLeft = new Talon(Config.FRONT_LEFT_MOTOR);
@@ -68,7 +56,6 @@ public class Robot extends TimedRobot {
     driveRearLeft = new Talon(Config.REAR_LEFT_MOTOR);
     driveRearRight = new Talon(Config.REAR_RIGHT_MOTOR);
 
-    
     
     //make speed controller groups
     driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
@@ -82,33 +69,10 @@ public class Robot extends TimedRobot {
     //initialize drive train with speed controller groups
     drive = new DifferentialDrive(driveLeft, driveRight);
   
-    driveTrain = new DriveTrain(driveLeft, driveRight, drive, ahrs);
-
- 
-
-    //initialize encoders, set distance per pulse, reset
-    encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-    encLeft.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360));
-    encLeft.reset();
-
-    encRight = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
-    encRight.setDistancePerPulse(Config.ENCODER_DISTANCE_OFFSET*(6.00 * Math.PI / 360)); 
-    encRight.reset(); 
+    driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
     rotationPotentiometerArm = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_ARM_PORT,Config.ROTATION_POTENTIOMETER_ARM_RANGE);
     rotationPotentiometerWrist = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_WRIST_PORT,Config.ROTATION_POTENTIOMETER_WRIST_RANGE);
-
-
-
-
-    path = new AutoPath("Motion 0 0 0 2 0 0");
-
-
-
-          
-
-    cont = new ContinousFull();
-    
 
     oi = new OI();
   }
@@ -116,36 +80,12 @@ public class Robot extends TimedRobot {
   @Override
   public void robotPeriodic() {
     Scheduler.getInstance().run();
-    double distance_covered = ((double)(Robot.encLeft.get()) / 360)
-    * 0.1524 * Math.PI;
-    SmartDashboard.putNumber("distance cov", distance_covered);
-    double distance_covered_r = ((double)(Robot.encRight.get()) / 360)
-    * 0.1524 * Math.PI;
-    SmartDashboard.putNumber("distance cov r", distance_covered_r);
-    double gyro_heading = ahrs.getYaw();    // Assuming the gyro is giving a value in degrees    
-    SmartDashboard.putNumber("Gyro", gyro_heading);
-    
-    // SmartDashboard.putNumber("Velocity X", Robot.ahrs.getVelocityX());
-    // SmartDashboard.putNumber("Velocity Y", Robot.ahrs.getVelocityY());
-    // SmartDashboard.putNumber("Accel X", Robot.ahrs.getRawAccelX());
-    // SmartDashboard.putNumber("Accel Y", Robot.ahrs.getRawAccelY());
-    // SmartDashboard.putNumber("Displacement X", ahrs.getDisplacementX());
-    // SmartDashboard.putNumber("Displacement Y", ahrs.getDisplacementY());
-    // SmartDashboard.putNumber("Encoder L", encLeft.get());
-    // SmartDashboard.putNumber("Encoder R", encRight.get());
-    
   }
 
 
 
   @Override
   public void autonomousInit() {
-    //execute each auto direction given in the passed data param upon path initialization
-     path.executeAutoActions();
-    //  cont.start();
-     encLeft.reset();
-     encRight.reset(); 
-     ahrs.reset();  
   }
 
   @Override

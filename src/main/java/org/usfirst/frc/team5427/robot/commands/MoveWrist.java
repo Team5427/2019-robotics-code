@@ -1,18 +1,16 @@
 package org.usfirst.frc.team5427.robot.commands;
 
-
-import org.usfirst.frc.team5427.robot.AutoAction;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
+import edu.wpi.first.wpilibj.command.Command;
 import jaci.pathfinder.Pathfinder;
 import jaci.pathfinder.Trajectory;
 import jaci.pathfinder.Waypoint;
 import jaci.pathfinder.followers.EncoderFollower;
-import jaci.pathfinder.modifiers.TankModifier;
 
 
-public class MoveWrist extends AutoAction {
+public class MoveWrist extends Command {
 
     public EncoderFollower follower;
 
@@ -22,23 +20,18 @@ public class MoveWrist extends AutoAction {
     public MoveWrist(Waypoint[] points, boolean backwards) {
         //set up config variables for profile
         Trajectory.Config config =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
-        Config.DT, Config.MAX_VELOCITY, Config.MAX_ACCEL, Config.MAX_JERK);
+        Config.DT, Config.MAX_VELOCITY_WRIST, Config.MAX_ACCEL_WRIST, Config.MAX_JERK_WRIST);
 
         //generate the trajectory
         Trajectory trajectory = Pathfinder.generate(points, config);
-        
-        
-        // Create the Modifier Object (tank drive train)
-        TankModifier modifier = new TankModifier(trajectory);
-        modifier.modify(Config.ftm(Config.WRIST_WIDTH));
 
         //create followers to manage input+output
-        follower = new EncoderFollower(modifier.getLeftTrajectory());
+        follower = new EncoderFollower(trajectory);
 
         //value configuration
-        follower.configureEncoder((int)Robot.rotationPotentiometerWrist.get(), 360, 0.2); //initial pot angle, degrees in circle, arm radius
+        follower.configureEncoder((int)Robot.rotationPotentiometerWrist.get(), 360, 360); //initial pot angle, degrees in circle, arm radius
 
-        follower.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+        follower.configurePIDVA(Config.KP_WRIST, Config.KI_WRIST, Config.KD_WRIST, Config.KV_WRIST, Config.KA_WRIST);
      
         
         this.backwards = backwards;

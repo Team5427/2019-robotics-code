@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-public class DriveTrain extends Subsystem implements PIDOutput{
+public class DriveTrain extends Subsystem {
 
 	public DifferentialDrive drive;
 
@@ -21,41 +21,10 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 
 	public SpeedControllerGroup driveRight;
 
-	public PIDController turnController;
-	public AHRS ahrs;
-	public double turnTolerance = 1.0f;
-	
-	/**
-	 * Ku = 0.12
-	 * Tu = 0.62830187
-	 */
-	public static final double Ku = 0.12;
-	public static final double Tu = 0.62830187;
-	public double p = 0.097;
-	public double i = 0.0;
-	public double d = 0.18;
-	// public double f = 0.02;
-
-	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive, AHRS ahrs) {
-		this.ahrs = ahrs;
+	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
 		this.drive = drive;
 		this.driveLeft = drive_Left;
 		this.driveRight = drive_Right;
-		turnController = new PIDController(p,i,d,ahrs,this);
-		turnController.setInputRange(-180.0f,180.0f);
-		turnController.setContinuous();
-		turnController.setOutputRange(-0.5f,0.5f);
-		turnController.setAbsoluteTolerance(turnTolerance);
-		
-	}
-
-	public void turnDegrees(double angle)
-	{
-		// ahrs.reset();
-		turnController.reset();
-		turnController.setPID(p,i,d);
-		turnController.setSetpoint(angle);
-		turnController.enable();
 	}
 
 	@Override
@@ -68,7 +37,7 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		
 	}
 
-	public void tankDrive(double rightSpeed,double leftSpeed)
+	public void tankDrive(double leftSpeed,double rightSpeed)
 	{
 		driveRight.set(rightSpeed);
 		driveLeft.set(leftSpeed);
@@ -76,10 +45,5 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 
 	public void stop() {
 		drive.stopMotor();
-	}
-
-	@Override
-	public void pidWrite(double output) {
-		tankDrive(output,output);
 	}
 }
