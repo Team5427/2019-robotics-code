@@ -11,12 +11,13 @@ import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
 
 
 public class Robot extends TimedRobot {
@@ -33,11 +34,10 @@ public class Robot extends TimedRobot {
   public static SpeedControllerGroup driveLeft;
   public static SpeedControllerGroup driveRight;
 
-  public static SpeedController arm;
-  public static SpeedController wrist;
+  public static SpeedController elevator;
 
-  public static AnalogPotentiometer rotationPotentiometerArm;
-  public static AnalogPotentiometer rotationPotentiometerWrist;
+  public static Encoder encElevator;
+  
 
   @Override
   public void robotInit() {
@@ -54,18 +54,17 @@ public class Robot extends TimedRobot {
     driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
     driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
-    //make arm and wrist
-    arm = new Talon(Config.ARM_MOTOR);
-    wrist = new Talon(Config.WRIST_MOTOR);
-
 
     //initialize drive train with speed controller groups
     drive = new DifferentialDrive(driveLeft, driveRight);
   
     driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
-    rotationPotentiometerArm = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_ARM_PORT,Config.ROTATION_POTENTIOMETER_ARM_RANGE);
-    rotationPotentiometerWrist = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_WRIST_PORT,Config.ROTATION_POTENTIOMETER_WRIST_RANGE);
+    elevator = new Talon(Config.ELEV_MOTOR);
+
+    encElevator = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+    encElevator.setDistancePerPulse(0.25/360);
+
 
     oi = new OI();
   }
