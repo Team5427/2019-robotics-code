@@ -63,6 +63,7 @@ public class Robot extends TimedRobot {
   
     //initialize ahrs
     ahrs = new AHRS(SPI.Port.kMXP);
+    ahrs.reset();
 
     //make talon motors
     driveFrontLeft = new Talon(Config.FRONT_LEFT_MOTOR);
@@ -76,7 +77,6 @@ public class Robot extends TimedRobot {
     driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
     driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
-    // Robot.driveRight.setInverted(true);
 
     //initialize drive train with speed controller groups
     drive = new DifferentialDrive(driveLeft, driveRight);
@@ -96,7 +96,7 @@ public class Robot extends TimedRobot {
 
     
     //blue left to cargo 1st
-    path = new AutoPath("VisionToTarget"); 
+    path = new AutoPath("Motion 0 0 0 1 1 90"); 
     System.out.println("creating new auto");
 
     

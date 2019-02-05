@@ -74,7 +74,7 @@ public class MotionProfile extends AutoAction {
           this.backwards = false;
           this.frequencyDivide = 3;
           this.start();
-          startingAngle = 90;
+          startingAngle = 0;
     }
     double x;
     double spL;
@@ -151,6 +151,10 @@ public class MotionProfile extends AutoAction {
 	@Override
 	protected void end() {
         Robot.driveTrain.stop();
+        Robot.ahrs.reset();
+        Robot.encLeft.reset();
+        Robot.encRight.reset();
+        
         if(this.nextAction!=null)
             this.nextAction.start();
 	}

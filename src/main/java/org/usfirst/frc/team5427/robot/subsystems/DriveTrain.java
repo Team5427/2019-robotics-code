@@ -68,10 +68,11 @@ public class DriveTrain extends Subsystem implements PIDOutput{
 		
 	}
 
-	public void tankDrive(double rightSpeed,double leftSpeed)
+	public void tankDrive(double leftSpeed, double rightSpeed)
 	{
-		driveRight.set(rightSpeed);
 		driveLeft.set(leftSpeed);
+		driveRight.set(rightSpeed);
+
 	}
 
 	public void stop() {
