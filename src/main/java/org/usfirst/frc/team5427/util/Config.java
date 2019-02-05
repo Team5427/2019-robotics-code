@@ -113,7 +113,7 @@ public class Config {
 	/*********************************************************/
 
 	
-	public static final double DT = 0.02; //s
+	public static final double DT = 0.06; //s
 
 
 

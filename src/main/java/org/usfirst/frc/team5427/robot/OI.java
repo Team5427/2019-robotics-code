@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
+import org.usfirst.frc.team5427.robot.commands.MoveElev;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -59,12 +60,18 @@ public class OI {
 		elev_ball_ship = new JoystickButton(joy1, Config.BUTTON_ELEV_BALL_SHIP);
 
 
-		Trajectory.Config configElev =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
-        Config.DT, Config.MAX_VELOCITY_ELEV, Config.MAX_ACCEL_ELEV, Config.MAX_JERK_ELEV);
-		
-		Trajectory trajectoryElevHighRocketFront = Pathfinder.generate(new Waypoint[] {new Waypoint(0, 0, 0), new Waypoint(45,0,0)}, configElev);
-	
-		
+		elev_high_rocket_front.whenPressed(new MoveElev(Config.HIGH_ROCKET_FRONT_HEIGHT));
+		elev_middle_rocket_front.whenPressed(new MoveElev(Config.MIDDLE_ROCKET_FRONT_HEIGHT));
+		elev_low_rocket_front.whenPressed(new MoveElev(Config.LOW_ROCKET_FRONT_HEIGHT));
+
+		elev_high_rocket_side.whenPressed(new MoveElev(Config.HIGH_ROCKET_SIDE_HEIGHT));
+		elev_middle_rocket_side.whenPressed(new MoveElev(Config.MIDDLE_ROCKET_SIDE_HEIGHT));
+
+		elev_hatch_ground.whenPressed(new MoveElev(Config.HATCH_GROUND_HEIGHT));
+		elev_ball_ground.whenPressed(new MoveElev(Config.BALL_GROUND_HEIGHT));
+
+		elev_low_hatch.whenPressed(new MoveElev(Config.LOADING_STATION_HEIGHT));
+		elev_ball_ship.whenPressed(new MoveElev(Config.BALL_SHIP_HEIGHT));
 	}
 
 	/**
