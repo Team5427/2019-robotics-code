@@ -10,6 +10,7 @@ import org.usfirst.frc.team5427.robot.Robot;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 
@@ -19,28 +20,58 @@ public class MotionProfile extends Command {
 	public FalconTrajectoryFollower follower;
 	public double startTime;
 
+	public ArrayList<Double> xPoints, yPoints;
+
+	public ArrayList<TrajectoryPoint> path;
+
     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
     public MotionProfile(List<Pose2d> points) {
+		System.out.println("constructing motion profile");
 	   	this.points = points;
 	  	TrajectoryGen g = new TrajectoryGen();
 
+		xPoints = new ArrayList<>();
+		
+		yPoints = new ArrayList<>();
+
 	   	//points, max centripetal, start vel, end vel, max vel, linear accel, reversed
-	   	ArrayList<TrajectoryPoint> a = g.generateTrajectory(points, 0.6, 0.0, 0.0, 2.75, 0.6, false);
-		follower = new FalconTrajectoryFollower(a, 2, true, 0.01, 0.002);
+	   	path = g.generateTrajectory(points, 1.2, 0.0, 0.0, 9, 2, false);
+		// for(int i = 0; ip < a.size(); i++) {
+		// 	xPoints.add(a.get(i).x);
+		// 	yPoints.add(a.get(i).y);
+		// 	System.out.print("("+a.get(i).x+","+a.get(i).y+") ");
+		// }
+
+		System.out.println(path);
+		
+		
     }
 
     // Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		System.out.println(" init motion profile");
+
 		startTime = Timer.getFPGATimestamp();
+		//0.0121
+		follower = new FalconTrajectoryFollower(path, 3, true, 0.097, 0.18);
+
 	}
 
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
 		double dt = Timer.getFPGATimestamp() - startTime;
-		follower.calculate(Robot.robotX, Robot.robotY, Robot.ahrs.getYaw(), dt);
-		Robot.drive.tankDrive(follower.getLeftVelocity(), follower.getRightVelocity());
+		// follower.calculate(Robot.dr.robotX, Robot.dr.robotY, Robot.dr.angleDegrees, dt);
+		// Robot.dr.update(follower.getLeftVelocity()/2.75, follower.getRightVelocity()/2.75);
+
+		follower.calculate(Robot.robotX, Robot.robotY, -Robot.ahrs.getYaw(), dt);
+		Robot.driveTrain.tankDrive(follower.getLeftVelocity()/9 + 0.08, follower.getRightVelocity()/9 + 0.08);
+
+		SmartDashboard.putNumber("left vel", follower.getLeftVelocity()/9 + 0.08);
+		SmartDashboard.putNumber("right vel", follower.getRightVelocity()/9 + 0.08);
+
+
 		startTime = Timer.getFPGATimestamp();
     }
 
@@ -53,12 +84,13 @@ public class MotionProfile extends Command {
 	// Called once after isFinished returns true
 	@Override
 	protected void end() {
-       
+	 
 	}
 
 	// Called when another command which requires one or more of the same
 	// subsystems is scheduled to run
 	@Override
 	protected void interrupted() {
-    }
+	}
+
 }

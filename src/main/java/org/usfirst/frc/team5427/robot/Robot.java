@@ -8,7 +8,6 @@
 package org.usfirst.frc.team5427.robot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import com.kauailabs.navx.frc.AHRS;
 
@@ -27,6 +26,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
     public static DriveTrain driveTrain;
@@ -54,8 +54,17 @@ public class Robot extends TimedRobot {
 
     public static Intake intake;
 
-    public static int robotX;
-    public static int robotY;
+    public static double robotX;
+    public static double robotY;
+
+    public static double distance;
+    public static double encLeftPrev;
+    public static double encRightPrev;
+    
+    public static double encLeftDist;
+    public static double encRightDist;
+
+    // public static Drivetrain dr;
 
     @Override
     public void robotInit() {
@@ -65,6 +74,7 @@ public class Robot extends TimedRobot {
         driveRearRight = new PWMVictorSPX(Config.REAR_RIGHT_MOTOR);
 
         driveLeft = new SpeedControllerGroup(driveFrontLeft, driveRearLeft);
+        driveLeft.setInverted(true);
         driveRight = new SpeedControllerGroup(driveFrontRight, driveRearRight);
 
         drive = new DifferentialDrive(driveLeft, driveRight);
@@ -75,8 +85,14 @@ public class Robot extends TimedRobot {
         intake = new Intake(intakeTop,intakeBottom);
 
         encLeft = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        encLeft.setDistancePerPulse(0.5 * Math.PI/360);
+        encLeft.setReverseDirection(true);
+
         encRight = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
+        encRight.setDistancePerPulse(0.5 * Math.PI/360);
+
         ahrs = new AHRS(SPI.Port.kMXP);
+        ahrs.reset();
 
         robotX = 0;
         robotY = 0;
@@ -84,8 +100,11 @@ public class Robot extends TimedRobot {
         ArrayList<Pose2d> p = new ArrayList<>();
         p.add(new Pose2D(0,0,0).pose);
         p.add(new Pose2D(5,0,0).pose);
-        mp = new MotionProfile(p);
+        
 
+
+
+        mp = new MotionProfile(p);
 
         // rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
 
@@ -96,15 +115,36 @@ public class Robot extends TimedRobot {
     public void robotPeriodic() {
         Scheduler.getInstance().run();
         // SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
-        double distance = (encLeft.getDistance() + encRight.getDistance())/2;
-        robotX += Math.sin(Robot.ahrs.getYaw()) * distance;
-        robotY += Math.cos(Robot.ahrs.getYaw()) * distance;
+        encLeftDist =  encLeft.getDistance() - encLeftPrev;
+        encRightDist = encRight.getDistance() - encRightPrev;
+
+        encLeftPrev = encLeft.getDistance();
+        encRightPrev = encRight.getDistance();
+
+        distance = (encLeftDist + encRightDist)/2;
+        robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
+        robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
+        SmartDashboard.putNumber("encLeft", encLeftDist);
+        SmartDashboard.putNumber("encRight", encRightDist);
+
+        SmartDashboard.putNumber("distance", distance);
+        SmartDashboard.putNumber("ahrs", -ahrs.getYaw());
+
+        SmartDashboard.putNumber("robotX", robotX);
+        SmartDashboard.putNumber("robotY", robotY);
+
 
     }
 
     @Override
     public void autonomousInit() {
         mp.start();
+        // dr = new Drivetrain(0.65, 0.02, 0, 0, 0);
+        encRight.reset();
+        encLeft.reset();
+        ahrs.reset();
+        robotX = 0;
+        robotY = 0;
     }
 
     @Override
