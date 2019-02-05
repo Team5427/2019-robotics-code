@@ -7,21 +7,14 @@
 
 package org.usfirst.frc.team5427.robot;
 
-import com.kauailabs.navx.frc.AHRS;
-
-import org.usfirst.frc.team5427.robot.commands.MoveArm;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.smartdashboard.*;
-import jaci.pathfinder.Waypoint;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
