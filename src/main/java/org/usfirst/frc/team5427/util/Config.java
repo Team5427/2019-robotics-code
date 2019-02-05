@@ -50,6 +50,15 @@ public class Config {
 	 */
 	public static final int ELEV_MOTOR = 4;
 
+	/**
+	 * The PWM value for the arm.
+	 */
+	public static final int ARM_MOTOR = 5;
+	/**
+	* The PWM value for the wrist
+	*/
+   	public static final int WRIST_MOTOR = 6;
+
 
 	/******************** CONTROLLER PORTS *******************/
 	/**
@@ -92,6 +101,12 @@ public class Config {
 	public static final int BUTTON_ELEV_HATCH_SHIP_LOADING_STATION_SIDE_LOW_ROCKET = 4;
 	public static final int BUTTON_ELEV_BALL_SHIP = 8;
 
+
+	public static final int BUTTON_ARM_UP     =  3;
+	public static final int BUTTON_ARM_DOWN   =  5;
+	public static final int BUTTON_WRIST_UP   =  9;
+	public static final int BUTTON_WRIST_DOWN = 10;
+
 	//inches height
 	public static final double LOW_ROCKET_FRONT_HEIGHT = 27.5;
 	public static final double MIDDLE_ROCKET_FRONT_HEIGHT = 55.5;
@@ -113,7 +128,8 @@ public class Config {
 	/*********************************************************/
 
 	
-	public static final double DT = 0.06; //s
+	public static final double DT_ELEV = 0.06; //s
+	public static final double DT_ARM_WRIST = 0.02; //s
 
 
 
@@ -126,6 +142,49 @@ public class Config {
 	public static final double KD_ELEV = 0;
 	public static final double KV_ELEV = 1/MAX_VELOCITY_ELEV;
 	public static final double KA_ELEV = 0; 
+
+
+	public static final double MAX_VELOCITY = 2.75; // m/s
+	public static final double MAX_ACCEL = 0.6; // 1.833 m/s/s
+	public static final double MAX_JERK = 0.5; //11 m/s/s/s
+
+	public static final double KP = 1f;
+    public static final double KI = 0.0;	
+	public static final double KD = 0;
+	public static final double KV = 1/MAX_VELOCITY; 
+	public static final double KA = 0.42; 
+
+
+
+	public static final double MAX_VELOCITY_ARM = 20; //degrees/sec
+	public static final double MAX_ACCEL_ARM = 10; //degrees/s/s
+	public static final double MAX_JERK_ARM = 25; //degrees/s/s/s
+
+	public static final double KP_ARM = 1f;
+    public static final double KI_ARM = 0.0;	
+	public static final double KD_ARM = 0;
+	public static final double KV_ARM = 1/MAX_VELOCITY_ARM;
+	public static final double KA_ARM = 0; 
+
+
+	public static final double MAX_VELOCITY_WRIST = 45; //degrees/sec
+	public static final double MAX_ACCEL_WRIST = 30; //degrees/s/s
+	public static final double MAX_JERK_WRIST = 40; //degrees/s/s/s
+
+	public static final double KP_WRIST = 1f;
+    public static final double KI_WRIST = 0.0;	
+	public static final double KD_WRIST = 0;
+	public static final double KV_WRIST = 1/MAX_VELOCITY_WRIST;
+	public static final double KA_WRIST = 0; 
+
+
+	public static final int ROTATION_POTENTIOMETER_WRIST_PORT = 0;
+
+	public static final int ROTATION_POTENTIOMETER_WRIST_RANGE = 271;
+
+	public static final int ROTATION_POTENTIOMETER_ARM_PORT = 1;
+	
+	public static final int ROTATION_POTENTIOMETER_ARM_RANGE = 271;
 
 
 }

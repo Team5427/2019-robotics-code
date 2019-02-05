@@ -30,7 +30,7 @@ public class MoveElev extends Command {
     //generate path, eventually open custom-made GUI (with built in commands such as drop a gear? dont know...)
     public MoveElev(double h2) {
         Trajectory.Config configElev =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
-        Config.DT, Config.MAX_VELOCITY_ELEV, Config.MAX_ACCEL_ELEV, Config.MAX_JERK_ELEV);
+        Config.DT_ELEV, Config.MAX_VELOCITY_ELEV, Config.MAX_ACCEL_ELEV, Config.MAX_JERK_ELEV);
 		
 		Trajectory trajectory = Pathfinder.generate(
 			new Waypoint[] {new Waypoint(Robot.encElevator.getDistance(), 0, 0), new Waypoint(h2,0,0)}, configElev);
@@ -54,7 +54,7 @@ public class MoveElev extends Command {
 	// Called repeatedly when this Command is scheduled to run
 	@Override
 	protected void execute() {
-        if(runs++ % (Config.DT/0.02) == 0) {
+        if(runs++ % (Config.DT_ELEV/0.02) == 0) {
             if(backwards) {
                 Robot.elevator.set(-follower.calculate(Robot.encElevator.getDistance()));
             }

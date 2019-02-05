@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
+import org.usfirst.frc.team5427.robot.commands.MoveArm;
 import org.usfirst.frc.team5427.robot.commands.MoveElev;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -41,6 +42,10 @@ public class OI {
 	public Button elev_ball_ship;
 
 
+	public Button armUp;
+	public Button armDown;
+	public Button wristUp;
+	public Button wristDown;
 	
 
 	public OI() {
@@ -72,6 +77,29 @@ public class OI {
 
 		elev_low_hatch.whenPressed(new MoveElev(Config.LOADING_STATION_HEIGHT));
 		elev_ball_ship.whenPressed(new MoveElev(Config.BALL_SHIP_HEIGHT));
+
+
+
+
+		//arm 45 degrees
+		Trajectory.Config configArm =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
+		Config.DT_ARM_WRIST, Config.MAX_VELOCITY_ARM, Config.MAX_ACCEL_ARM, Config.MAX_JERK_ARM);
+		Trajectory trajectoryArm45 = Pathfinder.generate(new Waypoint[] {new Waypoint(0, 0, 0), new Waypoint(45,0,0)}, configArm);
+	
+		//wrist 45 degrees
+		Trajectory.Config configWrist =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_HIGH, 
+		Config.DT_ARM_WRIST, Config.MAX_VELOCITY_WRIST, Config.MAX_ACCEL_WRIST, Config.MAX_JERK_WRIST);
+		Trajectory trajectoryWrist45 = Pathfinder.generate(new Waypoint[] {new Waypoint(0, 0, 0), new Waypoint(45,0,0)}, configWrist);
+		
+		armUp = new JoystickButton(joy1, Config.BUTTON_ARM_UP);
+		armDown = new JoystickButton(joy1, Config.BUTTON_ARM_DOWN);
+		wristUp = new JoystickButton(joy1, Config.BUTTON_WRIST_UP);
+		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
+
+		armUp.whenPressed(new MoveArm(trajectoryArm45, false));
+		armDown.whenPressed(new MoveArm(trajectoryArm45, true));
+		wristUp.whenPressed(new MoveArm(trajectoryWrist45, false));
+		wristDown.whenPressed(new MoveArm(trajectoryWrist45, true));	
 	}
 
 	/**
