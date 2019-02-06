@@ -7,20 +7,18 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import org.usfirst.frc.team5427.lib.trajectory.Trajectory;
+import org.usfirst.frc.team5427.lib.trajectory.TrajectoryGenerator;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.VictorSP;
-import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 
 public class Robot extends TimedRobot {
@@ -60,6 +58,12 @@ public class Robot extends TimedRobot {
         intake = new Intake(intakeTop,intakeBottom);
 
         // rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
+        TrajectoryGenerator.Config c = new TrajectoryGenerator.Config();
+        c.dt = 0.02;
+        c.max_vel = 10;
+        c.max_acc = 3;
+        c.max_jerk = 2;
+        Trajectory traj = TrajectoryGenerator.generate(c, TrajectoryGenerator.AutomaticStrategy, 0, 0, 10, 5, 0);
 
         oi = new OI();
     }
