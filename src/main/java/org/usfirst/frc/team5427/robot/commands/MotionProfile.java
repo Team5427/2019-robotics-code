@@ -19,6 +19,8 @@ public class MotionProfile extends AutoAction {
     public EncoderFollower followerL;
     public EncoderFollower followerR;
 
+    public Trajectory trajectory;
+
     boolean backwards;
 
     public int frequencyDivide;
@@ -33,21 +35,8 @@ public class MotionProfile extends AutoAction {
         //generate the trajectory
         Trajectory trajectory = Pathfinder.generate(points, config);
         
-
-        // Create the Modifier Object (tank drive train)
-        TankModifier modifier = new TankModifier(trajectory);
-        modifier.modify(Config.ftm(Config.WHEELBASE_WIDTH));
-
-        //create followers to manage input+output
-        followerL = new EncoderFollower(modifier.getLeftTrajectory());
-        followerR = new EncoderFollower(modifier.getRightTrajectory());
-
-        //value configuration
-        followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
-        followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
-
-        followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
-        followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+        this.trajectory = trajectory;
+ 
         
         this.backwards = backwards;
         System.out.println("done motion");
@@ -57,20 +46,20 @@ public class MotionProfile extends AutoAction {
 
     public MotionProfile(Trajectory trajectory) {
           // Create the Modifier Object (tank drive train)
-          TankModifier modifier = new TankModifier(trajectory);
-          modifier.modify(Config.ftm(Config.WHEELBASE_WIDTH));
+        //   TankModifier modifier = new TankModifier(trajectory);
+        //   modifier.modify(Config.ftm(Config.WHEELBASE_WIDTH));
   
           //create followers to manage input+output
-          followerL = new EncoderFollower(modifier.getLeftTrajectory());
-          followerR = new EncoderFollower(modifier.getRightTrajectory());
-          System.out.println(-Robot.encLeft.get()+"\n" + Robot.encRight.get());
-          //value configuration
-          followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
-          followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+        //   followerL = new EncoderFollower(modifier.getLeftTrajectory());
+        //   followerR = new EncoderFollower(modifier.getRightTrajectory());
+        //   System.out.println(-Robot.encLeft.get()+"\n" + Robot.encRight.get());
+        //   //value configuration
+        //   followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+        //   followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
   
-          followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
-          followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
-          
+        //   followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+        //   followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+            this.trajectory = trajectory;
           this.backwards = false;
           this.frequencyDivide = 3;
           this.start();
@@ -92,6 +81,21 @@ public class MotionProfile extends AutoAction {
         x= 0;
         spR = 0;
         spL = 0;
+
+        // Create the Modifier Object (tank drive train)
+        TankModifier modifier = new TankModifier(trajectory);
+        modifier.modify(Config.ftm(Config.WHEELBASE_WIDTH));
+
+        //create followers to manage input+output
+        followerL = new EncoderFollower(modifier.getLeftTrajectory());
+        followerR = new EncoderFollower(modifier.getRightTrajectory());
+
+        //value configuration
+        followerL.configureEncoder(-Robot.encLeft.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+        followerR.configureEncoder(Robot.encRight.get(), 360, 0.1524); //initial encoder, ticks per revolution, wheel diameter meters
+
+        followerL.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
+        followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
 
 	}
 
@@ -120,8 +124,12 @@ public class MotionProfile extends AutoAction {
         
         
         double gyro_heading = -Robot.ahrs.getYaw();    // Assuming the gyro is giving a value in degrees
+        if(backwards)
+         gyro_heading = -gyro_heading;
+
         double desired_heading = Pathfinder.r2d(followerL.getHeading());  // Should also be in degrees
         SmartDashboard.putNumber("desired heading", desired_heading);
+       
         //calculate heading curvature
         double angleDifference = Pathfinder.boundHalfDegrees(desired_heading - gyro_heading);
         double turn = -0.01 * angleDifference;
@@ -144,6 +152,9 @@ public class MotionProfile extends AutoAction {
     @Override
     protected boolean isFinished() {
         //finish when both sides are done with data
+        if(followerL == null || followerR == null) {
+            return false;
+        }
         return followerL.isFinished() && followerR.isFinished();
     }
 

@@ -29,7 +29,7 @@ public class VisionToTarget extends AutoAction {
 
         System.out.println("starting vision to target");
 
-        double distance = Robot.client.lastRecievedGoal.getDistance();
+        double distance = Robot.client.lastRecievedGoal.getDistance() - 6;
         distance -= (47-distance)*0.1;
         distance = Math.abs(Config.ftm(distance/12));
         double angle = Robot.client.lastRecievedGoal.getHorizontalAngle();
@@ -44,8 +44,8 @@ public class VisionToTarget extends AutoAction {
 
         Waypoint[] way = {
 
-            new Waypoint(0, 1, Config.dtr(Robot.ahrs.getYaw())),
-            new Waypoint(x_co, 1-y_co, 0)
+            new Waypoint(0, 2, Config.dtr(Robot.ahrs.getYaw())),
+            new Waypoint(x_co, 2-y_co, 0)
         };
         System.out.println("**********" + (x_co) + "   AND   " + (y_co) + "***************");
         
