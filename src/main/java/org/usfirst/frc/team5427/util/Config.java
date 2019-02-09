@@ -81,4 +81,29 @@ public class Config {
 
 	/* Stores what mode of controller use we are currently using. */
 	public static final int JOYSTICK_MODE = ONE_JOYSTICK;
+	/*********************************************************/
+
+	public static final double ENCODER_DISTANCE_OFFSET = 0.9752;
+	
+	public static final double DT = 0.02; //s
+	public static final double MAX_VELOCITY = 2.75; // m/s
+	public static final double MAX_ACCEL = 0.6; // 1.833 m/s/s
+	public static final double MAX_JERK = 0.5; //11 m/s/s/s
+
+	public static final double WHEELBASE_WIDTH = 2.25; //feet
+
+	public static final double KP = 1f;
+    public static final double KI = 0.0;	
+	public static final double KD = 0;
+	public static final double KV = 1/MAX_VELOCITY; //1.75 m/s is max
+	public static final double KA = 0.42; 
+	
+	public static double ftm(double feet) {
+		return feet/3.281;
+	}
+
+	public static double dtr(double deg) {
+		return Math.toRadians(deg);
+	}
+
 }
