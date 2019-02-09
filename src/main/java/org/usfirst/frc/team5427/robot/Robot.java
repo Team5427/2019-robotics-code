@@ -53,6 +53,7 @@ public class Robot extends TimedRobot {
     public void robotInit() {
         ultra = new Ultrasonic(3,2);
         ultra.setAutomaticMode(true);
+
         driveFrontLeft = new PWMVictorSPX(Config.FRONT_LEFT_MOTOR);
         driveFrontRight = new PWMVictorSPX(Config.FRONT_RIGHT_MOTOR);
         driveRearLeft = new PWMVictorSPX(Config.REAR_LEFT_MOTOR);
@@ -78,13 +79,10 @@ public class Robot extends TimedRobot {
     @Override
     public void robotPeriodic() {
         Scheduler.getInstance().run();
-        SmartDashboard.putNumber("Ultrasonic Distance",ultra.getRangeInches());
-        // SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
     }
 
     @Override
     public void autonomousInit() {
-        driveTrain.approachInches(24);
     }
 
     @Override
@@ -95,8 +93,6 @@ public class Robot extends TimedRobot {
     @Override
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        if(driveTrain.ultraController.isEnabled())
-            driveTrain.ultraController.disable();
     }
 
     @Override
