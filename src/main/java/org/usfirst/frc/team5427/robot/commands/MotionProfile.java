@@ -61,7 +61,7 @@ public class MotionProfile extends AutoAction {
         //   followerR.configurePIDVA(Config.KP, Config.KI, Config.KD, Config.KV, Config.KA);
             this.trajectory = trajectory;
           this.backwards = false;
-          this.frequencyDivide = 3;
+          this.frequencyDivide = 1;
           this.start();
           startingAngle = 0;
     }
@@ -76,6 +76,7 @@ public class MotionProfile extends AutoAction {
         // Robot.encRight.reset();
         
         // Robot.ahrs.reset();
+        Robot.ahrs.zeroYaw();
         // Robot.ahrs.resetDisplacement();
         System.out.println("starting motion");
         x= 0;

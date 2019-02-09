@@ -29,8 +29,8 @@ public class VisionToTarget extends AutoAction {
 
         System.out.println("starting vision to target");
 
-        double distance = Robot.client.lastRecievedGoal.getDistance() - 6;
-        distance -= (47-distance)*0.1;
+        double distance = Robot.client.lastRecievedGoal.getDistance()-5;
+        // distance -= (47-distance)*0.1;
         distance = Math.abs(Config.ftm(distance/12));
         double angle = Robot.client.lastRecievedGoal.getHorizontalAngle();
         double y_co = distance*Math.sin(-angle)+Config.ftm(14.0/12.0);
@@ -51,7 +51,7 @@ public class VisionToTarget extends AutoAction {
         
         CompletableFuture.runAsync(() -> {
             Trajectory.Config config =  new Trajectory.Config(Trajectory.FitMethod.HERMITE_CUBIC, Trajectory.Config.SAMPLES_FAST, 
-            Config.DT*3, Config.MAX_VELOCITY, Config.MAX_ACCEL, Config.MAX_JERK);
+            Config.DT, Config.MAX_VELOCITY, Config.MAX_ACCEL, Config.MAX_JERK);
 
             //generate the trajectory
             Trajectory trajectory = Pathfinder.generate(way, config);

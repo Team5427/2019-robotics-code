@@ -13,6 +13,9 @@ import com.kauailabs.navx.frc.AHRS;
 import org.usfirst.frc.team5427.Networking.client.Client;
 import org.usfirst.frc.team5427.robot.commands.AutoPath;
 import org.usfirst.frc.team5427.robot.commands.ContinousFull;
+import org.usfirst.frc.team5427.robot.commands.TurnToAngle;
+import org.usfirst.frc.team5427.robot.commands.auto.CenterTarget;
+import org.usfirst.frc.team5427.robot.commands.auto.TurnUntilTargetDetected;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -55,6 +58,7 @@ public class Robot extends TimedRobot {
 
   public static Client client;
 
+
   @Override
   public void robotInit() {
    
@@ -96,11 +100,11 @@ public class Robot extends TimedRobot {
 
     
     //blue left to cargo 1st
-    path = new AutoPath("Motion 0 7.5 0 3 3.5 90\nVisionToTarget");
-    //  \nMotionInv 0 0 0 3.2 2 90\nMotion 0 0 0 3 0 0"); 
+    // path = new AutoPath("Motion 0 7.5 0 3 3.5 90\nBuffer 0.5\nVisionToTarget\nMotionInv 0 0 0 3.2 2 90\nMotion 0 0 0 3 0 0\nMotionInv 0 0 0 4 0 0\nMotion 0 0 0 2 3.2 90\nVisionToTarget\nMotionInv 0 0 0 3.2 2 90\nMotion 0 0 0 3 0 0\nMotionInv 0 0 0 4 0 0\nMotion 0 0 0 2 3.2 90\nVisionToTarget");
+    path = new AutoPath("Motion 0 7.5 0 3 7.5 0\nTurnToAngle 90\nBuffer 1\nVisionToTarget\nTurnToAngle 90");
 
-    // path = new AutoPath("MotionInv 0 0 0 1 2 90"); 
-    System.out.println("creating new auto");
+    // path = new AutoPath("VisionToTarget"); 
+    // System.out.println("creating new auto");
 
     
     //blue left to rocket ship
@@ -151,6 +155,7 @@ public class Robot extends TimedRobot {
   public void autonomousInit() {
     //execute each auto direction given in the passed data param upon path initialization
      path.executeAutoActions();
+    // new TurnToAngle(-Math.toDegrees(Robot.client.getLastRecievedGoal().getHorizontalAngle())).start();
      System.out.println("starting autonomous, executing auto");
     //  cont.start();
      encLeft.reset();

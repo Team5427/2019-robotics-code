@@ -33,6 +33,8 @@ public class Client implements Runnable {
 	private ObjectInputStream is;
 	private ObjectOutputStream os;
 
+	public boolean visible;
+
 	public GoalData lastRecievedGoal;
 
 	public Client() {
@@ -43,6 +45,11 @@ public class Client implements Runnable {
 	public Client(String ip, int port) {
 		Client.ip = ip;
 		Client.port = port;
+		visible = false;
+	}
+
+	public GoalData getLastRecievedGoal() {
+		return lastRecievedGoal;
 	}
 
 	/**
@@ -65,7 +72,7 @@ public class Client implements Runnable {
 		} catch (Exception e) {
 			// TODO removed due to spam
 			// System.out.println("Connection failed to establish.");
-			System.out.println("Connection failed to establish.");
+			// System.out.println("Connection failed to establish.");
 			return false;
 		}
 	}
@@ -97,6 +104,10 @@ public class Client implements Runnable {
 
 	public ArrayList<Object> getInputStreamData() {
 		return inputStreamData;
+	}
+
+	public boolean isTargetVisible() {
+		return visible;
 	}
 
 	/**
@@ -181,49 +192,31 @@ public class Client implements Runnable {
 				try {
 					String line = is.readUTF();
 					
-					// if(line!=null) {
-					// 	System.out.println("RECIEVED DATA: " + line);
-					// }
-
-					lastRecievedGoal = new GoalData(Double.parseDouble(line.split(" ")[0]), Double.parseDouble(line.split(" ")[1]));
+					if(line.equals("invisible")) {
+						visible = false;
+					}
+					else {
+						visible = true;
+						lastRecievedGoal = new GoalData(Double.parseDouble(line.split(" ")[0]), Double.parseDouble(line.split(" ")[1]));
+					}
 				} catch (SocketException e) {
 					reconnect();
 				} catch (Exception e) {
 					//System.out.println(e.getMessage());
 				}
 
-				try {
-					Thread.sleep(10);
-				} catch (InterruptedException e) {
-					//System.out.println("Thread has been interrupted, client thread will stop.");
-				} catch (Exception e) {
-					//System.out.println(e.getMessage());
-				}
+				// try {
+				// 	Thread.sleep(10);
+				// } catch (InterruptedException e) {
+				// 	//System.out.println("Thread has been interrupted, client thread will stop.");
+				// } catch (Exception e) {
+				// 	//System.out.println(e.getMessage());
+				// }
 			} else {
 				//System.out.println("Connection lost, attempting to re-establish with driver station.");
 				reconnect();
 			}
 		}
-	}
-
-	public static String getStringByteBuffer(byte[] buff) {
-		String str = "[";
-
-		for (int i = 0; i < buff.length; i++)
-			str += buff[i] + ",";
-
-		return str + "]";
-	}
-
-	public static byte[] getBufferedSegment(byte[] buff, int startPos, int length) {
-		byte[] temp = new byte[length];
-
-		for (int i = 0; i < length; i++) {
-			System.out.println("buffereing");
-			temp[i] = buff[startPos + i];
-		}
-		return temp;
-
 	}
 
 }
