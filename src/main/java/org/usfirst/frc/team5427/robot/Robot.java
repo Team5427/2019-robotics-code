@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import org.usfirst.frc.team5427.robot.commands.MoveElev;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -18,6 +19,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 
 
 
@@ -38,6 +41,8 @@ public class Robot extends TimedRobot {
   public static SpeedController elevator;
 
   public static Encoder encElevator;
+  public static Encoder encElevator1;
+
   
   public static SpeedController arm;
   public static SpeedController wrist;
@@ -62,8 +67,8 @@ public class Robot extends TimedRobot {
 
 
     //make arm and wrist
-    arm = new Talon(Config.ARM_MOTOR);
-    wrist = new Talon(Config.WRIST_MOTOR);
+    // arm = new Talon(Config.ARM_MOTOR);
+    // wrist = new Talon(Config.WRIST_MOTOR);
 
 
     //initialize drive train with speed controller groups
@@ -71,13 +76,21 @@ public class Robot extends TimedRobot {
   
     driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
-    rotationPotentiometerArm = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_ARM_PORT,Config.ROTATION_POTENTIOMETER_ARM_RANGE);
-    rotationPotentiometerWrist = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_WRIST_PORT,Config.ROTATION_POTENTIOMETER_WRIST_RANGE);
+    // rotationPotentiometerArm = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_ARM_PORT,Config.ROTATION_POTENTIOMETER_ARM_RANGE);
+    // rotationPotentiometerWrist = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_WRIST_PORT,Config.ROTATION_POTENTIOMETER_WRIST_RANGE);
 
-    elevator = new Talon(Config.ELEV_MOTOR);
+    // elevator = new Talon(Config.ELEV_MOTOR);
 
     encElevator = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-    encElevator.setDistancePerPulse(0.25/360);
+    encElevator.setDistancePerPulse(0.1524*Math.PI/360);
+
+    encElevator1 = new Encoder(4, 5, false, Encoder.EncodingType.k4X);
+    encElevator1.setDistancePerPulse(0.1524*Math.PI/360);
+    
+    Shuffleboard.getTab("SmartDashboard").add("Move Elevator 0", new MoveElev(0)).withWidget(BuiltInWidgets.kCommand);
+    Shuffleboard.getTab("SmartDashboard").add("Move Elevator 1", new MoveElev(0.5)).withWidget(BuiltInWidgets.kCommand);
+    Shuffleboard.getTab("SmartDashboard").add("Move Elevator 2", new MoveElev(1)).withWidget(BuiltInWidgets.kCommand);
+    Shuffleboard.getTab("SmartDashboard").add("Move Elevator 3", new MoveElev(1.5)).withWidget(BuiltInWidgets.kCommand);
 
 
     oi = new OI();
@@ -92,22 +105,31 @@ public class Robot extends TimedRobot {
 
   @Override
   public void autonomousInit() {
+    
   }
 
   @Override
   public void autonomousPeriodic() {
     Scheduler.getInstance().run();
     
+
   }
   
   @Override
   public void disabledInit() {
-    
+
   }
 
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+
+  }
+
+  @Override
+  public void teleopInit() {
+    Robot.encElevator.reset();
+    Robot.encElevator1.reset();
   }
 
   @Override

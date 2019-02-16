@@ -1,5 +1,6 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -28,7 +29,9 @@ public class DriveTrain extends Subsystem {
 
 	public void takeJoystickInputs(Joystick joy) {
 		drive.arcadeDrive(-joy.getY(), joy.getZ() * .75);
-		
+		// this.driveRight.set(joy.getY());
+		// Robot.driveFrontRight.set(joy.getY());
+		// Robot.driveRearRight.set(joy.getY());
 	}
 
 	public void tankDrive(double leftSpeed,double rightSpeed)

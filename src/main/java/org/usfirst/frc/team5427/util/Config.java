@@ -128,7 +128,7 @@ public class Config {
 	/*********************************************************/
 
 	
-	public static final double DT_ELEV = 0.06; //s
+	public static final double DT_ELEV = 0.1; //s
 	public static final double DT_ARM_WRIST = 0.02; //s
 
 
@@ -148,11 +148,11 @@ public class Config {
 	public static final double MAX_ACCEL = 0.6; // 1.833 m/s/s
 	public static final double MAX_JERK = 0.5; //11 m/s/s/s
 
-	public static final double KP = 1f;
+	public static final double KP = 0;
     public static final double KI = 0.0;	
 	public static final double KD = 0;
 	public static final double KV = 1/MAX_VELOCITY; 
-	public static final double KA = 0.42; 
+	public static final double KA = 0; 
 
 
 
