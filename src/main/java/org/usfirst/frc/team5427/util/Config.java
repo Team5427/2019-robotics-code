@@ -18,27 +18,27 @@ public class Config
 
 	// CAN Values
 	/*************************************************************************************************************/
-	public static final int TOP_LEFT_MOTOR = 13;
+	public static final int LEFT_TOP_MOTOR = 9;
 
-	public static final int MIDDLE_LEFT_MOTOR = 14;
+	public static final int LEFT_MIDDLE_MOTOR = 10;
 
-	public static final int BOTTOM_LEFT_MOTOR = 1;
+	public static final int LEFT_BOTTOM_MOTOR = 11;
 
-	public static final int TOP_RIGHT_MOTOR = 12;
+	public static final int RIGHT_TOP_MOTOR = 6;
 
-	public static final int MIDDLE_RIGHT_MOTOR = 3;
+	public static final int RIGHT_MIDDLE_MOTOR = 7;
 
-	public static final int BOTTOM_RIGHT_MOTOR = 2;
+	public static final int RIGHT_BOTTOM_MOTOR = 8;
 
-	public static final int ELEVATOR_MOTOR = 6;
+	public static final int ELEVATOR_MOTOR = 5;
 
-	public static final int ARM_MOTOR = 7;
+	public static final int ARM_MOTOR = 0;
 
-	public static final int WRIST_MOTOR = 8;
+	public static final int WRIST_MOTOR = 0;
 
-	public static final int INTAKE_TOP_MOTOR = 9;
+	public static final int INTAKE_TOP_MOTOR = 0;
 
-	public static final int INTAKE_BOTTOM_MOTOR = 10;
+	public static final int INTAKE_BOTTOM_MOTOR = 0;
 	/*************************************************************************************************************/
 
 	public static final int ROTATION_POTENTIOMETER_PORT = 0;
