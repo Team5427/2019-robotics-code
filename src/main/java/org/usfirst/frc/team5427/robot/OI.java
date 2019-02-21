@@ -55,14 +55,14 @@ public class OI
 		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
 		solenoidActivate = new JoystickButton(joy1, Config.PCM_JOYSTICK_PORT);
 
-		intakeOut.whenPressed(new MoveIntake(Config.INTAKE_SPEED_OUT));
-		intakeIn.whenPressed(new MoveIntake(Config.INTAKE_SPEED_IN));
-		armDown.whenPressed(new RotateArm(Config.ARM_SPEED_DOWN));
-		armUp.whenPressed(new RotateArm(Config.ARM_SPEED_UP));
-		elevatorDown.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_DOWN));
-		elevatorUp.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_UP));
-		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
-		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
+		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
+		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
+		armDown.whileHeld(new RotateArm(Config.ARM_SPEED_DOWN));
+		armUp.whileHeld(new RotateArm(Config.ARM_SPEED_UP));
+		elevatorDown.whileHeld(new MoveElevator(Config.ELEVATOR_SPEED_DOWN));
+		elevatorUp.whileHeld(new MoveElevator(Config.ELEVATOR_SPEED_UP));
+		wristDown.whileHeld(new RotateWrist(Config.WRIST_SPEED_DOWN));
+		wristUp.whileHeld(new RotateWrist(Config.WRIST_SPEED_UP));
 		solenoidActivate.whenPressed(new ActivateSolenoid());
 	}
 

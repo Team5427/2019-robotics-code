@@ -60,13 +60,13 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit()
     {
-        driveLeftTop = new WPI_VictorSPX(Config.TOP_LEFT_MOTOR);
-        driveLeftMiddle = new WPI_VictorSPX(Config.MIDDLE_LEFT_MOTOR);
-        driveLeftBottom = new WPI_VictorSPX(Config.BOTTOM_LEFT_MOTOR);
-        driveRightTop = new WPI_VictorSPX(Config.TOP_RIGHT_MOTOR);
-        driveRightMiddle = new WPI_VictorSPX(Config.MIDDLE_RIGHT_MOTOR);
-        driveRightBottom = new WPI_VictorSPX(Config.BOTTOM_RIGHT_MOTOR);
-
+        driveLeftTop = new WPI_VictorSPX(Config.LEFT_TOP_MOTOR);
+        driveLeftMiddle = new WPI_VictorSPX(Config.LEFT_MIDDLE_MOTOR);
+        driveLeftBottom = new WPI_VictorSPX(Config.LEFT_BOTTOM_MOTOR);
+        driveRightTop = new WPI_VictorSPX(Config.RIGHT_TOP_MOTOR);
+        driveRightMiddle = new WPI_VictorSPX(Config.RIGHT_MIDDLE_MOTOR);
+        driveRightBottom = new WPI_VictorSPX(Config.RIGHT_BOTTOM_MOTOR);
+        
         driveLeft = new SpeedControllerGroup(driveLeftTop,driveLeftMiddle,driveLeftBottom);
         driveRight = new SpeedControllerGroup(driveRightTop,driveRightMiddle,driveRightBottom);
 

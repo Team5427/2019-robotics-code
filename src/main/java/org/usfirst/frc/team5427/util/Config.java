@@ -32,26 +32,26 @@ public class Config
 
 	public static final int ELEVATOR_MOTOR = 5;
 
-	public static final int ARM_MOTOR = 0;
+	public static final int ARM_MOTOR = 4;
 
-	public static final int WRIST_MOTOR = 0;
+	public static final int WRIST_MOTOR = 3;
 
-	public static final int INTAKE_TOP_MOTOR = 0;
+	public static final int INTAKE_TOP_MOTOR = 2;
 
-	public static final int INTAKE_BOTTOM_MOTOR = 0;
+	public static final int INTAKE_BOTTOM_MOTOR = 1;
 	/*************************************************************************************************************/
 
 	public static final int ROTATION_POTENTIOMETER_PORT = 0;
 
 	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
-	public static final double INTAKE_SPEED_IN = 0.5;
+	public static final double INTAKE_SPEED_IN = -0.6;
 
-	public static final double INTAKE_SPEED_OUT = -0.5;
+	public static final double INTAKE_SPEED_OUT = 0.2;
 
-	public static final double ELEVATOR_SPEED_UP = 0.5;
+	public static final double ELEVATOR_SPEED_UP = 1;
 
-	public static final double ELEVATOR_SPEED_DOWN = -0.5;
+	public static final double ELEVATOR_SPEED_DOWN = -0.01;
 
 	public static final double ARM_SPEED_UP = 0.5;
 	

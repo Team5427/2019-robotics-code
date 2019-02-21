@@ -31,9 +31,9 @@ public class MoveIntake extends Command
     protected boolean isFinished()
     {
         if (speed > 0)
-            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_IN);
-        else if (speed < 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_OUT);
+        else if (speed < 0)
+            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_IN);
         return false;
     }
 

@@ -1,11 +1,14 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 
+import org.usfirst.frc.team5427.robot.Robot;
+
 // import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -16,6 +19,7 @@ public class DriveTrain extends Subsystem {
 	public SpeedControllerGroup driveLeft;
 	public SpeedControllerGroup driveRight;
 
+	// public SpeedController testMotor;
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
 		this.drive = drive;
 		this.driveLeft = drive_Left;
@@ -29,6 +33,9 @@ public class DriveTrain extends Subsystem {
 
 	public void takeJoystickInputs(Joystick joy) {
 		drive.arcadeDrive(joy.getY(), -joy.getZ() * .75);
+		// Robot.driveRightTop.set(-joy.getY());
+		// Robot.driveRightMiddle.set(-joy.getY());
+		// Robot.driveRightBottom.set(-joy.getY());
 	}
 
 	public void tankDrive(double rightSpeed,double leftSpeed)
