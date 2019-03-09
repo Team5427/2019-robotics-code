@@ -9,6 +9,10 @@ package org.usfirst.frc.team5427.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 
+import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
+import org.usfirst.frc.team5427.robot.commands.auto.PresetPath;
+import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
+
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Elevator;
@@ -17,13 +21,22 @@ import org.usfirst.frc.team5427.robot.subsystems.Wrist;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Ultrasonic;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import jaci.pathfinder.Waypoint;
 
 public class Robot extends TimedRobot
 {
@@ -55,7 +68,29 @@ public class Robot extends TimedRobot
     public static Intake intake;
 
     public static Solenoid solenoidOne;
-    public static AnalogPotentiometer rotationPotentiometer;
+
+    public static AnalogPotentiometer wristPot;
+    public static AnalogPotentiometer armPot;
+
+
+    public static Ultrasonic ultra;
+    
+    public static Encoder elevator_enc;
+    public static Encoder drive_left_enc;
+    public static Encoder drive_right_enc;
+
+
+
+
+    public static CameraServer camServer;
+    public static UsbCamera cam1;
+    public static UsbCamera cam2;
+
+    public static MoveElevatorAuto moveWristAuto;
+
+    public static PresetPath pathWristDown;
+
+
 
     @Override
     public void robotInit()
@@ -88,7 +123,39 @@ public class Robot extends TimedRobot
 
         solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
 
-        rotationPotentiometer = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT,Config.ROTATION_POTENTIOMETER_RANGE);
+        elevator_enc = new Encoder(Config.ELEVATOR_PORT_1, Config.ELEVATOR_PORT_2, false, EncodingType.k4X);
+
+        wristPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_WRIST, 400);
+        armPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_ARM, 118);
+
+
+        camServer = CameraServer.getInstance();
+
+        cam1 = camServer.startAutomaticCapture(0);
+        cam1.setBrightness (35);
+        cam1.setResolution(100, 100);
+        cam1.setFPS(30);
+
+
+        cam2 = camServer.startAutomaticCapture(1);
+        cam1.setBrightness(30);
+        cam2.setResolution(200, 200);
+        cam2.setFPS(30);
+        
+
+
+        Shuffleboard.getTab("SmartDashboard").add("Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Hatch LV2", new HatchLevel2()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").add("Cargo LV1", new CargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo LV2", new CargoLevel2()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo LV3", new CargoLevel3()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").add("Intake Cargo Ground", new IntakeCargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Intake Hatch Loading Station", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
 
         oi = new OI();
     }
@@ -97,13 +164,25 @@ public class Robot extends TimedRobot
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
-        // SmartDashboard.putNumber("Potentiometer Angle",rotationPotentiometer.get());
+        
+
+        SmartDashboard.putNumber("Enc Elevator", elevator_enc.get());
+
+        SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
+
+        SmartDashboard.putNumber("wrist pot wpi angle", wristPot.get());
+
+
     }
 
     @Override
     public void autonomousInit()
     {
-
+        // moveWristAuto.start();
+        // new RotateWristAuto(-Config.WRIST_SPEED_UP, Config.correctedAngle).start();
+        // new RotateArmAuto(-Config.ARM_SPEED_UP, Config.correctedAngle).start();
+        // new MoveElevatorAuto(Config.ELEVATOR_SPEED_DOWN, 20).start();
+        pathWristDown.executeAutoActions();
     }
 
     @Override
@@ -116,6 +195,14 @@ public class Robot extends TimedRobot
     public void teleopPeriodic()
     {
         Scheduler.getInstance().run();
+    }
+
+    @Override
+    public void teleopInit()
+    {
+        Scheduler.getInstance().run();
+        // moveWristAuto.cancel();
+        // moveWristAuto.close();
     }
 
     @Override

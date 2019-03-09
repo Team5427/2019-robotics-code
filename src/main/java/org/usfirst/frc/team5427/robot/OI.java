@@ -6,10 +6,11 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
-import org.usfirst.frc.team5427.robot.commands.MoveElevator;
+import org.usfirst.frc.team5427.robot.commands.MoveElevator1;
 import org.usfirst.frc.team5427.robot.commands.MoveIntake;
 import org.usfirst.frc.team5427.robot.commands.RotateArm;
 import org.usfirst.frc.team5427.robot.commands.RotateWrist;
+import org.usfirst.frc.team5427.robot.commands.auto.presets.Travel;
 import org.usfirst.frc.team5427.robot.commands.ActivateSolenoid;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -36,9 +37,12 @@ public class OI
 	Button elevatorDown;
 	Button armUp;
 	Button elevatorUp;
-	Button levelThreeClimb;
+	// Button levelThreeClimb;
 	Button wristUp;
 	Button wristDown;
+	Button travel;
+
+	Button gearShift;
 
 	public OI()
 	{
@@ -50,19 +54,29 @@ public class OI
 		elevatorDown = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_DOWN);
 		armUp = new JoystickButton(joy1, Config.BUTTON_ARM_UP);
 		elevatorUp = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_UP);
-		levelThreeClimb = new JoystickButton(joy1, Config.BUTTON_LEVEL_THREE_CLIMB);
+		// levelThreeClimb = new JoystickButton(joy1, Config.BUTTON_LEVEL_THREE_CLIMB);
 		wristUp = new JoystickButton(joy1, Config.BUTTON_WRIST_UP);
 		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
 		solenoidActivate = new JoystickButton(joy1, Config.PCM_JOYSTICK_PORT);
+		travel = new JoystickButton(joy1, Config.BUTTON_TRAVEL);
+		
+		
+
 
 		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
 		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
 		armDown.whileHeld(new RotateArm(Config.ARM_SPEED_DOWN));
 		armUp.whileHeld(new RotateArm(Config.ARM_SPEED_UP));
-		elevatorDown.whileHeld(new MoveElevator(Config.ELEVATOR_SPEED_DOWN));
-		elevatorUp.whileHeld(new MoveElevator(Config.ELEVATOR_SPEED_UP));
-		wristDown.whileHeld(new RotateWrist(Config.WRIST_SPEED_DOWN));
-		wristUp.whileHeld(new RotateWrist(Config.WRIST_SPEED_UP));
+		// elevatorDown.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_DOWN));
+		// elevatorUp.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_UP));
+		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
+		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
+
+		elevatorDown.whileHeld(new MoveElevator1(Config.ELEVATOR_SPEED_DOWN));
+		elevatorUp.whileHeld(new MoveElevator1(Config.ELEVATOR_SPEED_UP));
+
+		travel.whenPressed(new Travel());
+
 		solenoidActivate.whenPressed(new ActivateSolenoid());
 	}
 

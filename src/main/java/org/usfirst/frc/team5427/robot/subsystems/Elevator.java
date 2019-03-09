@@ -7,12 +7,15 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import org.usfirst.frc.team5427.robot.Robot;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Elevator extends Subsystem
 {
 
+    // 50 - 4050
     public SpeedController elevatorMotor;
     public int elevatorPosition;
 
@@ -23,12 +26,26 @@ public class Elevator extends Subsystem
 
     public void setSpeed(double speed)
     {
-        elevatorMotor.set(speed);
+        if( (speed < 0  && Robot.elevator_enc.get() > 50 )  || (speed > 0 && Robot.elevator_enc.get() < 3990)) {
+            elevatorMotor.set(speed);
+        }
+        else {
+            elevatorMotor.set(0);
+        }
+    }
+
+    public boolean isInLimits(double speed) {
+        if( (speed < 0  && Robot.elevator_enc.get() > 50 )  || (speed > 0 && Robot.elevator_enc.get() < 3990)) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     public void stop()
     {
-        setSpeed(0);
+        Robot.elevator.setSpeed(0);
     }
 
     public int getElevatorPosition()

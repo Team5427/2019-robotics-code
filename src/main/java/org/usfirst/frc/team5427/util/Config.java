@@ -26,6 +26,8 @@ public class Config
 
 	public static final int RIGHT_TOP_MOTOR = 6;
 
+
+
 	public static final int RIGHT_MIDDLE_MOTOR = 7;
 
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
@@ -41,17 +43,30 @@ public class Config
 	public static final int INTAKE_BOTTOM_MOTOR = 1;
 	/*************************************************************************************************************/
 
-	public static final int ROTATION_POTENTIOMETER_PORT = 0;
+	public static final int ROTATION_POTENTIOMETER_PORT_ARM = 1;
+	public static final int ROTATION_POTENTIOMETER_PORT_WRIST = 0;
+
+	public static final int ULTRA_PORT1 = 8;
+	public static final int ULTRA_PORT2 = 9;
+
+	public static final int ENCODER_LEFT_PORT_1 = 4;
+	public static final int ENCODER_LEFT_PORT_2 = 5; 
+
+	public static final int ENCODER_RIGHT_PORT_1 = 6; 
+	public static final int ENCODER_RIGHT_PORT_2 = 7;
+	
+	public static final int ELEVATOR_PORT_1 = 2; 
+	public static final int ELEVATOR_PORT_2 = 3;
 
 	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
-	public static final double INTAKE_SPEED_IN = -0.6;
+	public static final double INTAKE_SPEED_IN = -0.4;
 
-	public static final double INTAKE_SPEED_OUT = 0.2;
+	public static final double INTAKE_SPEED_OUT = 1;
 
 	public static final double ELEVATOR_SPEED_UP = 1;
 
-	public static final double ELEVATOR_SPEED_DOWN = -0.01;
+	public static final double ELEVATOR_SPEED_DOWN = -0.75;
 
 	public static final double ARM_SPEED_UP = 0.5;
 	
@@ -60,6 +75,20 @@ public class Config
 	public static final double WRIST_SPEED_UP = 0.5;
 	
 	public static final double WRIST_SPEED_DOWN = -0.5;
+
+	public static final double correctedAngle = 10.0;
+
+	public static final double angleOffsetUp_Wrist = 3.0;
+	public static final double angleOffsetDown_Wrist = 0.0;
+
+	public static final double encoderOffsetUp_Elevator = 90;
+	public static final double encoderOffsetDown_Elevator = 32;
+
+	
+	public static final double angleOffsetUp_Arm = 1.0;
+	public static final double angleOffsetDown_Arm = 3.0;
+
+
 
 	// Buttons
 	/****************************************************************/
@@ -75,11 +104,12 @@ public class Config
 
 	public static final int BUTTON_ELEVATOR_UP = 6;
 
-	public static final int BUTTON_LEVEL_THREE_CLIMB = 8;
-
-	public static final int BUTTON_WRIST_UP = 9;
+	public static final int BUTTON_WRIST_UP = 8;
 
 	public static final int BUTTON_WRIST_DOWN = 10;
+
+	public static final int BUTTON_TRAVEL = 9;
+
 	/****************************************************************/
 
 	/* The port associated with the main joystick. */
@@ -107,11 +137,26 @@ public class Config
 	/**
 	 * Port value for PCP
 	 */
-	public static final int PCM_JOYSTICK_PORT = 7;
+	public static final int PCM_JOYSTICK_PORT = 12;
 
 	/**
 	 * Channel values for Solenoids
 	 */
 	public static final int SOLENOID_ONE_CHANNEL = 0;
+
+	public static final double DT_ARM_WRIST = 0.02; //s
+
+	public static final double MAX_VELOCITY_WRIST = 9; //degrees/sec
+	public static final double MAX_ACCEL_WRIST = 5; //degrees/s/s
+	public static final double MAX_JERK_WRIST = 4; //degrees/s/s/s
+
+	public static final double KP_WRIST = 0.0;
+    public static final double KI_WRIST = 0.0;	
+	public static final double KD_WRIST = 0;
+	public static final double KV_WRIST = 1/MAX_VELOCITY_WRIST;
+	public static final double KA_WRIST = 0.06;
+	public static final double KLIN_WRIST = 0.1; 
+	public static final double HORIZONTAL_WRIST = 255; 
+
 
 }

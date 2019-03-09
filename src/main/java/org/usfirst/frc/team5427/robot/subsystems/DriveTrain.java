@@ -38,7 +38,7 @@ public class DriveTrain extends Subsystem {
 		// Robot.driveRightBottom.set(-joy.getY());
 	}
 
-	public void tankDrive(double rightSpeed,double leftSpeed)
+	public void tankDrive(double leftSpeed,double rightSpeed)
 	{
 		driveRight.set(rightSpeed);
 		driveLeft.set(leftSpeed);

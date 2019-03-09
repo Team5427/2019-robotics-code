@@ -42,7 +42,7 @@ public class Intake extends Subsystem {
 	 */
 	public void setSpeed(double speed) {
         topFlywheel.set(speed);
-        bottomFlywheel.set(-speed);
+        bottomFlywheel.set(speed);
 	}
 
 	/**

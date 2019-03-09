@@ -7,16 +7,19 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class ActivateSolenoid extends Command
 {
+    public static boolean b = true;
+
     public ActivateSolenoid() {}
 
     protected void initialize() 
     {
-        Robot.solenoidOne.set(true);
+        Robot.solenoidOne.set(b);
     }
 
     protected void execute() 
     {
-        Robot.solenoidOne.set(true);
+        Robot.solenoidOne.set(b);
+        // b = !b;
     }
 
     // protected void isInterrupted() 
@@ -26,7 +29,8 @@ public class ActivateSolenoid extends Command
 
     protected void end() 
     {
-        Robot.solenoidOne.set(false);
+        // Robot.solenoidOne.set(false);
+        b = !b;
     }
 
     @Override

@@ -24,7 +24,7 @@ public class RotateWrist extends Command
     @Override
     protected void execute()
     {
-        Robot.wristMotor.set(speed);
+        Robot.wrist.moveWrist(speed);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class RotateWrist extends Command
     @Override
     protected void end()
     {
-        Robot.wristMotor.stopMotor();
+        Robot.wrist.stop();
     }
 }

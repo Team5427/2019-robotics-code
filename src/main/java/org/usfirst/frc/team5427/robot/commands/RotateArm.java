@@ -24,7 +24,7 @@ public class RotateArm extends Command
     @Override
     protected void execute()
     {
-        Robot.armMotor.set(speed);
+        Robot.arm.moveArm(speed);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class RotateArm extends Command
     @Override
     protected void end()
     {
-        Robot.armMotor.stopMotor();
+        Robot.arm.stop();
     }
 }
