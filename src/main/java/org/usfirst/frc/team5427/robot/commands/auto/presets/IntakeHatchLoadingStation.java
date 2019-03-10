@@ -12,7 +12,7 @@ public class IntakeHatchLoadingStation extends CommandGroup {
     public IntakeHatchLoadingStation() {
 
         addSequential(new RotateWristAuto(16));
-        addSequential(new Buffer(1));
+        addSequential(new Buffer(0.5));
         addSequential(new MoveElevatorAuto(0));
         addParallel(new RotateWristAuto(10));
         addSequential(new RotateArmAuto(113));

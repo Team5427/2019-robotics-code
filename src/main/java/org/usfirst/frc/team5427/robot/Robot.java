@@ -10,6 +10,11 @@ package org.usfirst.frc.team5427.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.opencv.core.Mat;
+import org.opencv.core.Point;
+import org.opencv.core.Scalar;
+import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team5427.robot.commands.LowLowGear;
 import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
 import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.PresetPath;
@@ -25,6 +30,8 @@ import org.usfirst.frc.team5427.util.Config;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
@@ -138,6 +145,9 @@ public class Robot extends TimedRobot
         intake = new Intake(intakeTopMotor, intakeBottomMotor);
 
         ahrs = new AHRS(SPI.Port.kMXP);
+
+        ultra = new Ultrasonic(Config.ULTRA_PORT2, Config.ULTRA_PORT1);
+        ultra.setAutomaticMode(true);
       
 
         solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
@@ -154,12 +164,29 @@ public class Robot extends TimedRobot
 
         cam1 = camServer.startAutomaticCapture(0);
         cam1.setBrightness (35);
-        cam1.setResolution(10, 10);
+        cam1.setResolution(150, 100);
 
+        new Thread( () -> {
+            cam2 = camServer.startAutomaticCapture(1);
+            cam2.setBrightness(40);
+            cam2.setResolution(150, 100);
+            CvSink cvSink = CameraServer.getInstance().getVideo();
+            CvSource outputStream = CameraServer.getInstance().putVideo("cam2 lined", 150, 100);
 
-        cam2 = camServer.startAutomaticCapture(1);
-        cam1.setBrightness(40);
-        cam2.setResolution(10, 10);
+            Mat source = new Mat();
+            Mat output = new Mat();
+
+            while(!Thread.interrupted()) {
+                cvSink.grabFrame(source);
+                // Imgproc.line(source, new Point(100,0), new Point(100,1000), new Scalar(0,255,0), 15);
+                // Imgproc.line(source, new Point(300,0), new Point(300,1000), new Scalar(255,0,0), 15);
+                // Imgproc.line(source, new Point(500,0), new Point(500,1000), new Scalar(0, 0,255), 15);
+                Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerBG2RGB_EA);
+                System.out.println("putting source");
+                outputStream.putFrame(output);
+            }
+        }).start();
+
         
 
 
@@ -179,9 +206,11 @@ public class Robot extends TimedRobot
         
         Shuffleboard.getTab("SmartDashboard").add("Intake Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Hatch", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Ultrasonic", ultra.getRangeInches());
 
         Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
+        
         ahrs.reset();
 
         oi = new OI();
@@ -218,6 +247,11 @@ public class Robot extends TimedRobot
         SmartDashboard.putNumber("robotY", robotY);
 
 
+        SmartDashboard.putNumber("Ultrasonic", ultra.getRangeInches());
+        SmartDashboard.putBoolean("LowLowGear", DriveTrain.lowlowgear);
+        SmartDashboard.putBoolean("Distance Hatch", ultra.getRangeInches() >= 9 && ultra.getRangeInches() <= 11);
+        SmartDashboard.putBoolean("Distance Cargo Loading", ultra.getRangeInches() >= 19 && ultra.getRangeInches() <= 21);
+        SmartDashboard.putBoolean("Distance Ship Shoot", ultra.getRangeInches() >= 23 && ultra.getRangeInches() <= 25);
 
 
 

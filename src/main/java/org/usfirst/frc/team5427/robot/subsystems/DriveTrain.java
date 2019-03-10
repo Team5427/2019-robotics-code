@@ -15,6 +15,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class DriveTrain extends Subsystem {
 
+	public static boolean lowlowgear = false;
+
 	public DifferentialDrive drive;
 	public SpeedControllerGroup driveLeft;
 	public SpeedControllerGroup driveRight;
@@ -32,10 +34,15 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
-		drive.arcadeDrive(joy.getY(), -joy.getZ() * .75);
-		// Robot.driveRightTop.set(-joy.getY());
-		// Robot.driveRightMiddle.set(-joy.getY());
-		// Robot.driveRightBottom.set(-joy.getY());
+		if(!lowlowgear)
+			drive.arcadeDrive(joy.getY(), -joy.getZ() * .75);
+		else 
+			drive.arcadeDrive(joy.getY() * 0.75, -joy.getZ() * 0.75 * 0.75);
+
+	}
+
+	public static void flipLowLowGear() {
+		lowlowgear = !lowlowgear;
 	}
 
 	public void tankDrive(double leftSpeed,double rightSpeed)

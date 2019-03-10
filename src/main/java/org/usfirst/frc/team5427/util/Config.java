@@ -110,6 +110,9 @@ public class Config
 
 	public static final int BUTTON_TRAVEL = 9;
 
+	public static final int BUTTON_LOWLOWGEAR = 7;
+
+
 	/****************************************************************/
 
 	/* The port associated with the main joystick. */

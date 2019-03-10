@@ -6,12 +6,8 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
-import org.usfirst.frc.team5427.robot.commands.MoveElevator1;
-import org.usfirst.frc.team5427.robot.commands.MoveIntake;
-import org.usfirst.frc.team5427.robot.commands.RotateArm;
-import org.usfirst.frc.team5427.robot.commands.RotateWrist;
+import org.usfirst.frc.team5427.robot.commands.*;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.Travel;
-import org.usfirst.frc.team5427.robot.commands.ActivateSolenoid;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
@@ -41,6 +37,7 @@ public class OI
 	Button wristUp;
 	Button wristDown;
 	Button travel;
+	Button lowlowgear;
 
 	Button gearShift;
 
@@ -59,6 +56,7 @@ public class OI
 		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
 		solenoidActivate = new JoystickButton(joy1, Config.PCM_JOYSTICK_PORT);
 		travel = new JoystickButton(joy1, Config.BUTTON_TRAVEL);
+		lowlowgear = new JoystickButton(joy1, Config.BUTTON_LOWLOWGEAR);
 		
 		
 
@@ -67,8 +65,7 @@ public class OI
 		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
 		armDown.whileHeld(new RotateArm(Config.ARM_SPEED_DOWN));
 		armUp.whileHeld(new RotateArm(Config.ARM_SPEED_UP));
-		// elevatorDown.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_DOWN));
-		// elevatorUp.whenPressed(new MoveElevator(Config.ELEVATOR_SPEED_UP));
+		lowlowgear.whenPressed(new LowLowGear());
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
 
