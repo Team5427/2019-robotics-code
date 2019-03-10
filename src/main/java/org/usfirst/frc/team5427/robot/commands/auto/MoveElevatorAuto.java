@@ -30,7 +30,6 @@ public class MoveElevatorAuto extends AutoAction
     protected void initialize()
     {
 
-        System.out.println("goalCountAbsolute:\t" + goalCountAbsolute);
 
         if(this.goalCountAbsolute > Robot.elevator_enc.get()) {
             this.speed = Config.ELEVATOR_SPEED_UP;
@@ -47,10 +46,9 @@ public class MoveElevatorAuto extends AutoAction
         Robot.elevator.setSpeed(this.speed);
         endEncoderCountDifference = 0;
 
-        if(this.goalCount < 0) {
-            System.out.println("cancelling");
-            this.cancel();
-        }
+        // if(this.goalCount < 0) {
+        //     this.cancel();
+        // }
     }
 
     @Override
@@ -67,7 +65,8 @@ public class MoveElevatorAuto extends AutoAction
 
         endEncoderCountDifference = Math.abs(startElevator - elevator_enc);
         
-        System.out.println("ELEVATOR\t\t: " + goalCount + "\t" + startElevator + "\t" + endEncoderCountDifference + " \t" + elevator_enc);
+        if(this.goalCount < 0)
+            return true;
 
     
         return endEncoderCountDifference >= this.goalCount;

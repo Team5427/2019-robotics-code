@@ -10,8 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class HatchLevel1 extends CommandGroup {
     public HatchLevel1() {
 
-        System.out.println(Robot.elevator_enc.get());
-        addParallel(new RotateWristAuto(82));
+        addParallel(new RotateWristAuto(11));
         addSequential(new RotateArmAuto(108));
         
     }

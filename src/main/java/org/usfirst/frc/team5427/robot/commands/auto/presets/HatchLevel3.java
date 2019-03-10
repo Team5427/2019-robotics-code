@@ -7,10 +7,10 @@ import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class HatchLevel2 extends CommandGroup {
-    public HatchLevel2() {
-        addSequential(new MoveElevatorAuto(3200));
-        addParallel(new RotateWristAuto(11));
-        addSequential(new RotateArmAuto(108));
+public class HatchLevel3 extends CommandGroup {
+    public HatchLevel3() {
+        addSequential(new MoveElevatorAuto(4000));
+        addParallel(new RotateWristAuto(10));
+        addSequential(new RotateArmAuto(80));
     }
 }

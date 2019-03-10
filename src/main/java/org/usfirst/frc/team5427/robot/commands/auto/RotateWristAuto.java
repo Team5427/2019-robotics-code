@@ -44,7 +44,6 @@ public class RotateWristAuto extends AutoAction
         Robot.wrist.moveWrist(this.speed);
         endAngleDifference = 0;
 
-        System.out.println(this.angle);
         if(this.angle < 0) {
             this.angle = 0;
         }

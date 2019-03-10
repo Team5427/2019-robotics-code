@@ -11,7 +11,7 @@ public class CargoShipCargo extends CommandGroup {
     public CargoShipCargo() {
         
         addSequential(new MoveElevatorAuto(0));
-        addParallel(new RotateWristAuto(106));
+        addParallel(new RotateWristAuto(31));
         addSequential(new RotateArmAuto(88));
       
     }

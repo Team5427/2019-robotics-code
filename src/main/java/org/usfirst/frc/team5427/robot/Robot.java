@@ -8,7 +8,9 @@
 package org.usfirst.frc.team5427.robot;
 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
+import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
 import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.PresetPath;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
@@ -28,6 +30,7 @@ import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
@@ -72,12 +75,15 @@ public class Robot extends TimedRobot
     public static AnalogPotentiometer wristPot;
     public static AnalogPotentiometer armPot;
 
+    public static AHRS ahrs;
+
 
     public static Ultrasonic ultra;
     
     public static Encoder elevator_enc;
-    public static Encoder drive_left_enc;
-    public static Encoder drive_right_enc;
+
+    public static Encoder encLeft;
+    public static Encoder encRight;
 
 
 
@@ -121,41 +127,52 @@ public class Robot extends TimedRobot
         intakeBottomMotor = new WPI_VictorSPX(Config.INTAKE_BOTTOM_MOTOR);
         intake = new Intake(intakeTopMotor, intakeBottomMotor);
 
+        ahrs = new AHRS(SPI.Port.kMXP);
+      
+
         solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
 
         elevator_enc = new Encoder(Config.ELEVATOR_PORT_1, Config.ELEVATOR_PORT_2, false, EncodingType.k4X);
 
-        wristPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_WRIST, 400);
+        wristPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_WRIST, 121);
         armPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_ARM, 118);
 
+        encRight = new Encoder(Config.ENCODER_RIGHT_PORT_1, Config.ENCODER_RIGHT_PORT_2);
+        encLeft = new Encoder(Config.ENCODER_LEFT_PORT_1, Config.ENCODER_LEFT_PORT_2);
 
         camServer = CameraServer.getInstance();
 
         cam1 = camServer.startAutomaticCapture(0);
         cam1.setBrightness (35);
-        cam1.setResolution(100, 100);
-        cam1.setFPS(30);
+        cam1.setResolution(10, 10);
 
 
         cam2 = camServer.startAutomaticCapture(1);
-        cam1.setBrightness(30);
-        cam2.setResolution(200, 200);
-        cam2.setFPS(30);
+        cam1.setBrightness(40);
+        cam2.setResolution(10, 10);
         
 
 
         Shuffleboard.getTab("SmartDashboard").add("Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Ship Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
+        
         Shuffleboard.getTab("SmartDashboard").add("Hatch LV2", new HatchLevel2()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Hatch LV3", new HatchLevel3()).withWidget(BuiltInWidgets.kCommand);
 
         Shuffleboard.getTab("SmartDashboard").add("Cargo LV1", new CargoLevel1()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo LV2", new CargoLevel2()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo LV3", new CargoLevel3()).withWidget(BuiltInWidgets.kCommand);
 
-        Shuffleboard.getTab("SmartDashboard").add("Intake Cargo Ground", new IntakeCargoLevel1()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Intake Hatch Loading Station", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo", new IntakeCargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo Keep", new IntakeCargoLevel1Keep()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Intake Cargo", new IntakeCargoLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        
+        Shuffleboard.getTab("SmartDashboard").add("Intake Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Hatch", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
 
         Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
+        ahrs.reset();
 
         oi = new OI();
     }
@@ -172,17 +189,20 @@ public class Robot extends TimedRobot
 
         SmartDashboard.putNumber("wrist pot wpi angle", wristPot.get());
 
+        SmartDashboard.putNumber("ahrs yaw", ahrs.getYaw());
+        
+        SmartDashboard.putNumber("ahrs velocity", ahrs.getVelocityX());
+        SmartDashboard.putNumber("ahrs accel", ahrs.getRawAccelX());
+
+
+
 
     }
 
     @Override
     public void autonomousInit()
     {
-        // moveWristAuto.start();
-        // new RotateWristAuto(-Config.WRIST_SPEED_UP, Config.correctedAngle).start();
-        // new RotateArmAuto(-Config.ARM_SPEED_UP, Config.correctedAngle).start();
-        // new MoveElevatorAuto(Config.ELEVATOR_SPEED_DOWN, 20).start();
-        pathWristDown.executeAutoActions();
+        new ContinuousFull().start();
     }
 
     @Override
@@ -200,9 +220,7 @@ public class Robot extends TimedRobot
     @Override
     public void teleopInit()
     {
-        Scheduler.getInstance().run();
-        // moveWristAuto.cancel();
-        // moveWristAuto.close();
+
     }
 
     @Override

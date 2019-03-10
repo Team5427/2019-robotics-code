@@ -9,10 +9,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class IntakeHatchFloor extends CommandGroup {
     public IntakeHatchFloor() {
-        
+
         addSequential(new MoveElevatorAuto(0));
-        addParallel(new RotateWristAuto(86));
-        addSequential(new RotateArmAuto(113));
+        addParallel(new RotateWristAuto(44));
+        addSequential(new RotateArmAuto(111));
 
         
     }
