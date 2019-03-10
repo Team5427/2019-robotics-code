@@ -96,6 +96,16 @@ public class Robot extends TimedRobot
 
     public static PresetPath pathWristDown;
 
+    public static double robotX;
+    public static double robotY;
+
+    public static double distance;
+    public static double encLeftPrev;
+    public static double encRightPrev;
+    
+    public static double encLeftDist;
+    public static double encRightDist;
+
 
 
     @Override
@@ -181,6 +191,16 @@ public class Robot extends TimedRobot
     public void robotPeriodic()
     {
         Scheduler.getInstance().run();
+
+        encLeftDist =  -encLeft.getDistance() - encLeftPrev;
+        encRightDist = encRight.getDistance() - encRightPrev;
+
+        encLeftPrev = -encLeft.getDistance();
+        encRightPrev = encRight.getDistance();
+
+        distance = (encLeftDist + encRightDist)/2;
+        robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
+        robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
         
 
         SmartDashboard.putNumber("Enc Elevator", elevator_enc.get());
@@ -193,6 +213,10 @@ public class Robot extends TimedRobot
         
         SmartDashboard.putNumber("ahrs velocity", ahrs.getVelocityX());
         SmartDashboard.putNumber("ahrs accel", ahrs.getRawAccelX());
+
+        SmartDashboard.putNumber("robotX", robotX);
+        SmartDashboard.putNumber("robotY", robotY);
+
 
 
 
