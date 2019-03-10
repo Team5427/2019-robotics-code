@@ -22,10 +22,10 @@ public class Wrist extends Subsystem
     {
 
         
-        if((speed > 0 && Robot.wristPot.get() >= 5.5) || (speed < 0 && Robot.wristPot.get() <= 55) )          
+        // if((speed > 0 && Robot.wristPot.get() >= 5.5) || (speed < 0 && Robot.wristPot.get() <= 55) )          
             wristMotor.set(speed);
-        else 
-            wristMotor.set(0);    
+        // else 
+            // wristMotor.set(0);    
     }
     
     @Override
