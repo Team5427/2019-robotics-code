@@ -11,7 +11,7 @@ public class CargoLevel2 extends CommandGroup {
     public CargoLevel2() {
        
         addSequential(new MoveElevatorAuto(3050));
-        addParallel(new RotateWristAuto(35.5));
+        addParallel(new RotateWristAuto(36.5));
         addSequential(new RotateArmAuto(91.5));
 
     }

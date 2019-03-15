@@ -11,6 +11,6 @@ public class HatchLevel3 extends CommandGroup {
     public HatchLevel3() {
         addSequential(new MoveElevatorAuto(4000));
         addParallel(new RotateWristAuto(10));
-        addSequential(new RotateArmAuto(80));
+        addSequential(new RotateArmAuto(79));
     }
 }

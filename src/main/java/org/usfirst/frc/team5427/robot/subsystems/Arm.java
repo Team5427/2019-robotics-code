@@ -19,7 +19,7 @@ public class Arm extends Subsystem
 
     public void moveArm(double armSpeed)
     {
-        if((armSpeed > 0 && Robot.armPot.get() >= 80) 
+        if((armSpeed > 0 && Robot.armPot.get() >= 75) 
         || (armSpeed < 0 && Robot.armPot.get() <= 118))
             armMotor.set(armSpeed);
         else 

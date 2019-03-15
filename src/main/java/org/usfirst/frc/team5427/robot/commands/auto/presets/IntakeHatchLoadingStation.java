@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class IntakeHatchLoadingStation extends CommandGroup {
     public IntakeHatchLoadingStation() {
 
-        addSequential(new RotateWristAuto(16));
+        addSequential(new RotateWristAuto(20));
         addSequential(new Buffer(0.5));
         addSequential(new MoveElevatorAuto(0));
-        addParallel(new RotateWristAuto(10));
+        addParallel(new RotateWristAuto(11));
         addSequential(new RotateArmAuto(113));
 
         
