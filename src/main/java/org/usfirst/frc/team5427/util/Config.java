@@ -34,7 +34,7 @@ public class Config
 
 	public static final int ELEVATOR_MOTOR = 5;
 
-	public static final int ARM_MOTOR = 4;
+	public static final int ARM_MOTOR = 6;
 
 	public static final int WRIST_MOTOR = 3;
 

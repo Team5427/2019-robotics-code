@@ -14,6 +14,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
+import org.usfirst.frc.team5427.robot.auto.VisionRocket;
 import org.usfirst.frc.team5427.robot.commands.LowLowGear;
 import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
 import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
@@ -119,14 +120,14 @@ public class Robot extends TimedRobot
     public void robotInit()
     {
         driveLeftTop = new WPI_VictorSPX(Config.LEFT_TOP_MOTOR);
-        driveLeftMiddle = new WPI_VictorSPX(Config.LEFT_MIDDLE_MOTOR);
+        // driveLeftMiddle = new WPI_VictorSPX(Config.LEFT_MIDDLE_MOTOR);
         driveLeftBottom = new WPI_VictorSPX(Config.LEFT_BOTTOM_MOTOR);
-        driveRightTop = new WPI_VictorSPX(Config.RIGHT_TOP_MOTOR);
+        // driveRightTop = new WPI_VictorSPX(Config.RIGHT_TOP_MOTOR);
         driveRightMiddle = new WPI_VictorSPX(Config.RIGHT_MIDDLE_MOTOR);
         driveRightBottom = new WPI_VictorSPX(Config.RIGHT_BOTTOM_MOTOR);
         
-        driveLeft = new SpeedControllerGroup(driveLeftTop,driveLeftMiddle,driveLeftBottom);
-        driveRight = new SpeedControllerGroup(driveRightTop,driveRightMiddle,driveRightBottom);
+        driveLeft = new SpeedControllerGroup(driveLeftTop,driveLeftBottom);
+        driveRight = new SpeedControllerGroup(driveRightMiddle,driveRightBottom);
 
         drive = new DifferentialDrive(driveLeft, driveRight);
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
@@ -166,27 +167,10 @@ public class Robot extends TimedRobot
         cam1.setBrightness (35);
         cam1.setResolution(150, 100);
 
-        new Thread( () -> {
-            cam2 = camServer.startAutomaticCapture(1);
-            cam2.setBrightness(40);
-            cam2.setResolution(150, 100);
-            CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("cam2 lined", 150, 100);
-
-            Mat source = new Mat();
-            Mat output = new Mat();
-
-            while(!Thread.interrupted()) {
-                cvSink.grabFrame(source);
-                // Imgproc.line(source, new Point(100,0), new Point(100,1000), new Scalar(0,255,0), 15);
-                // Imgproc.line(source, new Point(300,0), new Point(300,1000), new Scalar(255,0,0), 15);
-                // Imgproc.line(source, new Point(500,0), new Point(500,1000), new Scalar(0, 0,255), 15);
-                Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerBG2RGB_EA);
-                System.out.println("putting source");
-                outputStream.putFrame(output);
-            }
-        }).start();
-
+        cam2 = camServer.startAutomaticCapture(1);
+        cam2.setBrightness(40);
+        cam2.setResolution(150, 100);
+          
         
 
 
@@ -249,7 +233,7 @@ public class Robot extends TimedRobot
 
         SmartDashboard.putNumber("Ultrasonic", ultra.getRangeInches());
         SmartDashboard.putBoolean("LowLowGear", DriveTrain.lowlowgear);
-        SmartDashboard.putBoolean("Distance Hatch", ultra.getRangeInches() >= 9 && ultra.getRangeInches() <= 11);
+        SmartDashboard.putBoolean("Distance Hatch", ultra.getRangeInches() >= 11 && ultra.getRangeInches() <= 13);
         SmartDashboard.putBoolean("Distance Cargo Loading", ultra.getRangeInches() >= 19 && ultra.getRangeInches() <= 21);
         SmartDashboard.putBoolean("Distance Ship Shoot", ultra.getRangeInches() >= 23 && ultra.getRangeInches() <= 25);
 
@@ -260,7 +244,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        new ContinuousFull().start();
+        new VisionRocket().start();
     }
 
     @Override

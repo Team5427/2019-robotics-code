@@ -41,6 +41,9 @@ public class MotionProfile extends Command {
     // Called just before this Command runs the first time
 	@Override
 	protected void initialize() {
+		Robot.robotX = 0;
+		Robot.robotY = 0;
+
 
 		startTime = Timer.getFPGATimestamp();
 		//0.0121
@@ -68,7 +71,10 @@ public class MotionProfile extends Command {
     // Make this return true when this Command no longer needs to run execute()
     @Override
     protected boolean isFinished() {
-        return follower.isFinished();
+		if(follower!=null)
+			return follower.isFinished();
+		else
+			return false;
     }
 
 	// Called once after isFinished returns true

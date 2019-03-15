@@ -34,15 +34,6 @@ public class Elevator extends Subsystem
         }
     }
 
-    public boolean isInLimits(double speed) {
-        if( (speed < 0  && Robot.elevator_enc.get() > 50 )  || (speed > 0 && Robot.elevator_enc.get() < 3990)) {
-            return true;
-        }
-        else {
-            return false;
-        }
-    }
-
     public void stop()
     {
         Robot.elevator.setSpeed(0);
