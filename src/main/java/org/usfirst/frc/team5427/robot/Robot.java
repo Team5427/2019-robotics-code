@@ -14,7 +14,6 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team5427.robot.auto.VisionRocket;
 import org.usfirst.frc.team5427.robot.commands.LowLowGear;
 import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
 import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
@@ -47,7 +46,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Waypoint;
 
 public class Robot extends TimedRobot
 {
@@ -165,11 +163,13 @@ public class Robot extends TimedRobot
 
         cam1 = camServer.startAutomaticCapture(0);
         cam1.setBrightness (35);
-        cam1.setResolution(150, 100);
+        cam1.setFPS(30);
+        cam1.setResolution(100, 100);
 
         cam2 = camServer.startAutomaticCapture(1);
         cam2.setBrightness(40);
-        cam2.setResolution(150, 100);
+        cam2.setFPS(30);
+        cam2.setResolution(100, 100);
           
         
 
@@ -244,7 +244,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        new VisionRocket().start();
+        // new VisionRocket().start();
     }
 
     @Override

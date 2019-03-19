@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class CargoLevel1 extends CommandGroup {
     public CargoLevel1() {
-        addParallel(new RotateWristAuto(31.5));
+        addParallel(new RotateWristAuto(29.5));
         addSequential(new RotateArmAuto(112.7));
         
     }

@@ -37,7 +37,7 @@ public class DriveTrain extends Subsystem {
 		if(!lowlowgear)
 			drive.arcadeDrive(joy.getY(), -joy.getZ() * .75);
 		else 
-			drive.arcadeDrive(joy.getY() * 0.75, -joy.getZ() * 0.75 * 0.75);
+			drive.arcadeDrive(joy.getY() * 0.70, -joy.getZ() * 0.75 * 0.70);
 
 	}
 
