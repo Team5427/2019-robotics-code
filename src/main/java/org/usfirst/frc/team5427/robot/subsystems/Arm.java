@@ -26,6 +26,8 @@ public class Arm extends Subsystem
             armMotor.set(0);
     }
 
+    
+
     public void stop(){
         armMotor.set(0);
     }

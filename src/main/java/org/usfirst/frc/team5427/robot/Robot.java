@@ -14,8 +14,7 @@ import org.opencv.core.Mat;
 import org.opencv.core.Point;
 import org.opencv.core.Scalar;
 import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team5427.robot.commands.LowLowGear;
-import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
+
 import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.PresetPath;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
@@ -34,7 +33,6 @@ import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
@@ -46,7 +44,6 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import jaci.pathfinder.Waypoint;
 
 public class Robot extends TimedRobot
 {
@@ -119,14 +116,14 @@ public class Robot extends TimedRobot
     public void robotInit()
     {
         driveLeftTop = new WPI_VictorSPX(Config.LEFT_TOP_MOTOR);
-        driveLeftMiddle = new WPI_VictorSPX(Config.LEFT_MIDDLE_MOTOR);
+        // driveLeftMiddle = new WPI_VictorSPX(Config.LEFT_MIDDLE_MOTOR);
         driveLeftBottom = new WPI_VictorSPX(Config.LEFT_BOTTOM_MOTOR);
-        driveRightTop = new WPI_VictorSPX(Config.RIGHT_TOP_MOTOR);
+        // driveRightTop = new WPI_VictorSPX(Config.RIGHT_TOP_MOTOR);
         driveRightMiddle = new WPI_VictorSPX(Config.RIGHT_MIDDLE_MOTOR);
         driveRightBottom = new WPI_VictorSPX(Config.RIGHT_BOTTOM_MOTOR);
         
-        driveLeft = new SpeedControllerGroup(driveLeftTop,driveLeftMiddle,driveLeftBottom);
-        driveRight = new SpeedControllerGroup(driveRightTop,driveRightMiddle,driveRightBottom);
+        driveLeft = new SpeedControllerGroup(driveLeftTop ,driveLeftBottom);
+        driveRight = new SpeedControllerGroup(driveRightMiddle,driveRightBottom);
 
         drive = new DifferentialDrive(driveLeft, driveRight);
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
@@ -163,53 +160,62 @@ public class Robot extends TimedRobot
         camServer = CameraServer.getInstance();
 
         cam1 = camServer.startAutomaticCapture(0);
-        cam1.setBrightness (35);
-        cam1.setResolution(150, 100);
+        cam1.setBrightness (50);
+        cam1.setResolution(200, 200);
 
-        new Thread( () -> {
-            cam2 = camServer.startAutomaticCapture(1);
-            cam2.setBrightness(40);
-            cam2.setResolution(150, 100);
-            CvSink cvSink = CameraServer.getInstance().getVideo();
-            CvSource outputStream = CameraServer.getInstance().putVideo("cam2 lined", 150, 100);
-
-            Mat source = new Mat();
-            Mat output = new Mat();
-
-            while(!Thread.interrupted()) {
-                cvSink.grabFrame(source);
-                // Imgproc.line(source, new Point(100,0), new Point(100,1000), new Scalar(0,255,0), 15);
-                // Imgproc.line(source, new Point(300,0), new Point(300,1000), new Scalar(255,0,0), 15);
-                // Imgproc.line(source, new Point(500,0), new Point(500,1000), new Scalar(0, 0,255), 15);
-                Imgproc.cvtColor(source, output, Imgproc.COLOR_BayerBG2RGB_EA);
-                System.out.println("putting source");
-                outputStream.putFrame(output);
-            }
-        }).start();
+        cam2 = camServer.startAutomaticCapture(1);
+        cam2.setBrightness(50);
+        cam2.setResolution(150, 100);
+        
+          
 
         
 
 
-        Shuffleboard.getTab("SmartDashboard").add("Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Ship Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Ship Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
         
-        Shuffleboard.getTab("SmartDashboard").add("Hatch LV2", new HatchLevel2()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Hatch LV3", new HatchLevel3()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Hatch LV2", new HatchLevel2()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Hatch LV3", new HatchLevel3()).withWidget(BuiltInWidgets.kCommand);
 
-        Shuffleboard.getTab("SmartDashboard").add("Cargo LV1", new CargoLevel1()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Cargo LV2", new CargoLevel2()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Cargo LV3", new CargoLevel3()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Cargo LV1", new CargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Cargo LV2", new CargoLevel2()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Cargo LV3", new CargoLevel3()).withWidget(BuiltInWidgets.kCommand);
 
-        Shuffleboard.getTab("SmartDashboard").add("Cargo", new IntakeCargoLevel1()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Cargo Keep", new IntakeCargoLevel1Keep()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Intake Cargo", new IntakeCargoLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Cargo", new IntakeCargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Cargo Keep", new IntakeCargoLevel1Keep()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Intake Cargo", new IntakeCargoLoadingStation()).withWidget(BuiltInWidgets.kCommand);
         
-        Shuffleboard.getTab("SmartDashboard").add("Intake Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Hatch", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
-        // Shuffleboard.getTab("SmartDashboard").add("Ultrasonic", ultra.getRangeInches());
+        // Shuffleboard.getTab("SmartDashboard").add("Intake Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Hatch", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Hatch Off", new LiftHatchOffLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+
+        // Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
+        // Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
+        
+
+        
+                  Shuffleboard.getTab("SmartDashboard").getLayout("Rocket", "Grid Layout").add("Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);        
+        Shuffleboard.getTab("SmartDashboard").getLayout("Rocket", "Grid Layout").add("Hatch LV2", new HatchLevel2()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Rocket", "Grid Layout").add("Hatch LV3", new HatchLevel3()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").getLayout("Rocket", "Grid Layout").add("Cargo LV1", new CargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Rocket", "Grid Layout").add("Cargo LV2", new CargoLevel2()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Rocket", "Grid Layout").add("Cargo LV3", new CargoLevel3()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").getLayout("Ground", "Grid Layout").add("Cargo", new IntakeCargoLevel1()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Ground", "Grid Layout").add("Cargo Keep", new IntakeCargoLevel1Keep()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Ground", "Grid Layout").add("Hatch", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").getLayout("Loading Station", "Grid Layout").add("Intake Cargo", new IntakeCargoLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Loading Station", "Grid Layout").add("Intake Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Loading Station", "Grid Layout").add("Hatch Off", new LiftHatchOffLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+
+        Shuffleboard.getTab("SmartDashboard").getLayout("Ship", "Grid Layout").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").getLayout("Ship", "Grid Layout").add("Ship Hatch LV1", new HatchLevel1()).withWidget(BuiltInWidgets.kCommand);
 
         Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
-        Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
+
         
         ahrs.reset();
 
@@ -260,7 +266,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        new ContinuousFull().start();
+        // new ContinuousFull().start();
     }
 
     @Override
