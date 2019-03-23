@@ -27,6 +27,12 @@ public class Wrist extends Subsystem
         else 
             wristMotor.set(0);    
     }
+
+    public void moveWristNoLimits(double speed)
+    {
+        wristMotor.set(speed);
+    }
+
     
     @Override
     protected void initDefaultCommand()

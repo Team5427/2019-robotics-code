@@ -26,7 +26,7 @@ public class Elevator extends Subsystem
 
     public void setSpeed(double speed)
     {
-        if( (speed < 0  && Robot.elevator_enc.get() > 50 )  || (speed > 0 && Robot.elevator_enc.get() < 3990)) {
+        if( (speed < 0  && Robot.elevator_enc.get() > 0 )  || (speed > 0 && Robot.elevator_enc.get() < 3990)) {
             elevatorMotor.set(speed);
         }
         else {

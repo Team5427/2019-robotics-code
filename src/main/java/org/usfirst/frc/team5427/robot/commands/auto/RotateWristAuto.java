@@ -18,12 +18,26 @@ public class RotateWristAuto extends AutoAction
 
     public double goalAngle;
 
+    public boolean ignoreLimits;
+
+
     public RotateWristAuto(double goalAngle)
     {
         requires(Robot.wrist);
 
         this.goalAngle = goalAngle;
     }
+
+    
+
+   //for ignoring limits
+   public RotateWristAuto(double goalAngle, boolean ignoreLimits)
+   {
+       requires(Robot.wrist);
+
+       this.goalAngle = goalAngle;
+       this.ignoreLimits = ignoreLimits;
+   }
 
     @Override
     protected void initialize()
@@ -53,7 +67,10 @@ public class RotateWristAuto extends AutoAction
     @Override
     protected void execute()
     {
-        Robot.wrist.moveWrist(this.speed);
+        if(!ignoreLimits)
+            Robot.wrist.moveWrist(this.speed);
+        else
+            Robot.wrist.moveWristNoLimits(this.speed);
     }
     public double previous_wrist_pot;
 

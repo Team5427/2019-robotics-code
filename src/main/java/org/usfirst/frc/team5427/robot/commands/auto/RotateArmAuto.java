@@ -30,11 +30,11 @@ public class RotateArmAuto extends AutoAction
     {
    
         if(this.goalAngle < Robot.armPot.get()) {
-            this.speed = Config.ARM_SPEED_UP;
+            this.speed = Config.ARM_SPEED_UP_AUTO;
             this.angle = Math.abs(this.goalAngle - Robot.armPot.get()) - Config.angleOffsetUp_Arm;
         }
         else if(this.goalAngle > Robot.armPot.get()) {
-            this.speed = Config.ARM_SPEED_DOWN;
+            this.speed = Config.ARM_SPEED_DOWN_AUTO;
             this.angle = Math.abs(this.goalAngle - Robot.armPot.get()) - Config.angleOffsetDown_Arm;            
         }
 

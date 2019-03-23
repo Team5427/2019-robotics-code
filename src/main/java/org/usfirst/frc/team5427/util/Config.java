@@ -72,6 +72,10 @@ public class Config
 	
 	public static final double ARM_SPEED_DOWN = -0.5;
 
+	public static final double ARM_SPEED_UP_AUTO = 0.85;
+	
+	public static final double ARM_SPEED_DOWN_AUTO = -0.85;
+
 	public static final double WRIST_SPEED_UP = 0.5;
 	
 	public static final double WRIST_SPEED_DOWN = -0.5;
