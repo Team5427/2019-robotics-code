@@ -1,13 +1,14 @@
 package org.usfirst.frc.team5427.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  * Waits for a given time
  * 
  * @author Akshat Jain
  */
-public class Buffer extends AutoAction {
+public class Buffer extends Command {
     
     public double startTime;
 	public double goalTime;

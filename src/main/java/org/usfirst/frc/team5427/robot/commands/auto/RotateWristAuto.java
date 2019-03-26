@@ -3,8 +3,10 @@ package org.usfirst.frc.team5427.robot.commands.auto;
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
+import edu.wpi.first.wpilibj.command.Command;
 
-public class RotateWristAuto extends AutoAction
+
+public class RotateWristAuto extends Command
 {
     //wrist: 9 deg/sec
     //elevator: 390 counts/sec

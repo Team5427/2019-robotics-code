@@ -17,7 +17,6 @@ import org.opencv.imgproc.Imgproc;
 import org.usfirst.frc.team5427.robot.commands.LowLowGear;
 import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
 import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
-import org.usfirst.frc.team5427.robot.commands.auto.PresetPath;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
@@ -98,9 +97,7 @@ public class Robot extends TimedRobot
     public static UsbCamera cam1;
     public static UsbCamera cam2;
 
-    public static MoveElevatorAuto moveWristAuto;
 
-    public static PresetPath pathWristDown;
 
     public static double robotX;
     public static double robotY;
@@ -190,7 +187,6 @@ public class Robot extends TimedRobot
         
         Shuffleboard.getTab("SmartDashboard").add("Intake Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Hatch", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
-        // Shuffleboard.getTab("SmartDashboard").add("Ultrasonic", ultra.getRangeInches());
 
         Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
@@ -244,7 +240,6 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
-        // new VisionRocket().start();
     }
 
     @Override
