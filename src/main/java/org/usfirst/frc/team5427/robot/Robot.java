@@ -10,13 +10,6 @@ package org.usfirst.frc.team5427.robot;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.Scalar;
-import org.opencv.imgproc.Imgproc;
-import org.usfirst.frc.team5427.robot.commands.LowLowGear;
-import org.usfirst.frc.team5427.robot.commands.auto.ContinuousFull;
-import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
@@ -29,11 +22,8 @@ import org.usfirst.frc.team5427.util.Config;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.AnalogAccelerometer;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;

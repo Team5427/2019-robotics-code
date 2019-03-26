@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5427.robot.commands.auto;
 
 import org.usfirst.frc.team5427.robot.Robot;
-import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;

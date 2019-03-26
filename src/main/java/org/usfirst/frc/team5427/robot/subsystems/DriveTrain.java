@@ -1,14 +1,10 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 
-import org.usfirst.frc.team5427.robot.Robot;
-
-// import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
