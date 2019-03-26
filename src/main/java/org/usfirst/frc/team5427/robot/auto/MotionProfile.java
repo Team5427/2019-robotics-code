@@ -35,7 +35,7 @@ public class MotionProfile extends Command {
 		yPoints = new ArrayList<>();
 
 	   	//points, max centripetal, start vel, end vel, max vel, linear accel, reversed
-	   	path = g.generateTrajectory(points, 1.2, 0.0, 0.0, 9, 2, false);
+	   	path = g.generateTrajectory(points, 1.2, 0.0, 0.0, 11, 3, false);
 		// for(int i = 0; ip < a.size(); i++) {
 		// 	xPoints.add(a.get(i).x);
 		// 	yPoints.add(a.get(i).y);
@@ -43,6 +43,8 @@ public class MotionProfile extends Command {
 		// }
 
 		System.out.println(path);
+
+		System.out.println(path.size() * 0.02);
 		
 		
     }

@@ -11,13 +11,17 @@ import java.util.ArrayList;
 
 import com.kauailabs.navx.frc.AHRS;
 
+import org.ghrobotics.lib.commands.FalconSubsystem;
+import org.ghrobotics.lib.localization.TankEncoderLocalization;
 import org.ghrobotics.lib.mathematics.twodim.geometry.Pose2d;
+import org.ghrobotics.lib.mathematics.units.Length;
+import org.ghrobotics.lib.subsystems.drive.*;
+import org.ghrobotics.lib.utils.SourceKt;
 import org.usfirst.frc.team5427.robot.auto.MotionProfile;
 import org.usfirst.frc.team5427.robot.auto.Pose2D;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.util.Config;
-
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Encoder;
@@ -60,7 +64,7 @@ public class Robot extends TimedRobot {
     public static double distance;
     public static double encLeftPrev;
     public static double encRightPrev;
-    
+
     public static double encLeftDist;
     public static double encRightDist;
 
@@ -97,10 +101,8 @@ public class Robot extends TimedRobot {
 
         ArrayList<Pose2d> p = new ArrayList<>();
         p.add(new Pose2D(0,0,0).pose);
-        p.add(new Pose2D(5,0,0).pose);
+        p.add(new Pose2D(500,0,0).pose);
         
-
-
 
         mp = new MotionProfile(p);
 

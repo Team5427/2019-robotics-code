@@ -48,15 +48,15 @@ public class TrajectoryGen {
              VelocityKt.getVelocity(LengthKt.getFeet(startVelocity / 0.3)),
              VelocityKt.getVelocity(LengthKt.getFeet(endVelocity / 0.3)),
               VelocityKt.getVelocity(LengthKt.getFeet(maxVelocity / 0.3)), 
-              AccelerationKt.getAcceleration(LengthKt.getFeet(accel / 0.3)), reversed);
+              AccelerationKt.getAcceleration(LengthKt.getFeet(accel / 0.3)), reversed, true);
         iterator = falconTraj.iterator();
         ArrayList<TrajectoryPoint> trajPoints = new ArrayList<>();
         while (!iterator.isDone()) {
             TrajectorySamplePoint<? extends Object> point = iterator.getCurrentState();
             TimedEntry point2 = (TimedEntry) point.component1();
             Pose2dWithCurvature point3 = (Pose2dWithCurvature) point2.getState();
-            double x = point3.component1().getTranslation().getX().getFeet();
-            double y = point3.component1().getTranslation().getY().getFeet();
+            double x = point3.component1().getTranslation().getX();
+            double y = point3.component1().getTranslation().getY();
             double theta = point3.component1().getRotation().getDegree();
             double velocity = point2.getVelocity().getValue();
             double acceleration = point2.getAcceleration().getValue();
