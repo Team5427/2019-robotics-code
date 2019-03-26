@@ -30,11 +30,17 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public void takeJoystickInputs(Joystick joy) {
+		
 		if(!lowlowgear)
-			drive.arcadeDrive(joy.getY(), -joy.getZ() * .75);
+			if(joy.getY() == 0)
+				drive.curvatureDrive(0, -joy.getZ() * 0.75, true);
+			else
+				drive.arcadeDrive(joy.getY(), -joy.getZ() * .75, false);
 		else 
-			drive.arcadeDrive(joy.getY() * 0.70, -joy.getZ() * 0.75 * 0.70);
-
+			if(joy.getY() == 0)
+				drive.curvatureDrive(0, -joy.getZ() * 0.70 * 0.75, true);
+			else
+				drive.arcadeDrive(joy.getY() * 0.70, -joy.getZ() * 0.70 * .75, false);
 	}
 
 	public static void flipLowLowGear() {
