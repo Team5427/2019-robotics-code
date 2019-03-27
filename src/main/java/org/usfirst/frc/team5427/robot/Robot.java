@@ -7,9 +7,14 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import java.util.ArrayList;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
+import org.ghrobotics.lib.mathematics.twodim.geometry.Pose2d;
+import org.usfirst.frc.team5427.robot.commands.auto.motion.MotionProfile;
+import org.usfirst.frc.team5427.robot.commands.auto.motion.Pose2D;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
@@ -32,6 +37,7 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -92,12 +98,13 @@ public class Robot extends TimedRobot
     public static double robotX;
     public static double robotY;
 
-    public static double distance;
     public static double encLeftPrev;
     public static double encRightPrev;
     
     public static double encLeftDist;
     public static double encRightDist;
+
+    public static MotionProfile mp;
 
 
 
@@ -105,6 +112,7 @@ public class Robot extends TimedRobot
     public void robotInit()
     {
         driveLeftTop = new WPI_VictorSPX(Config.LEFT_TOP_MOTOR);
+
         // driveLeftMiddle = new WPI_VictorSPX(Config.LEFT_MIDDLE_MOTOR);
         driveLeftBottom = new WPI_VictorSPX(Config.LEFT_BOTTOM_MOTOR);
         // driveRightTop = new WPI_VictorSPX(Config.RIGHT_TOP_MOTOR);
@@ -113,6 +121,8 @@ public class Robot extends TimedRobot
         
         driveLeft = new SpeedControllerGroup(driveLeftTop,driveLeftBottom);
         driveRight = new SpeedControllerGroup(driveRightMiddle,driveRightBottom);
+
+        
 
         drive = new DifferentialDrive(driveLeft, driveRight);
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
@@ -144,7 +154,9 @@ public class Robot extends TimedRobot
         armPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_ARM, 118);
 
         encRight = new Encoder(Config.ENCODER_RIGHT_PORT_1, Config.ENCODER_RIGHT_PORT_2);
+        encRight.setDistancePerPulse(Math.PI * 0.1524 * 2/360); // cicrumference divided by 360 (feet)
         encLeft = new Encoder(Config.ENCODER_LEFT_PORT_1, Config.ENCODER_LEFT_PORT_2);
+        encLeft.setDistancePerPulse(Math.PI * 0.1524 * 2/360); // cicrumference divided by 360 (feet)
 
         camServer = CameraServer.getInstance();
 
@@ -157,7 +169,14 @@ public class Robot extends TimedRobot
         cam2.setBrightness(40);
         cam2.setFPS(30);
         cam2.setResolution(100, 100);
-          
+        
+        ArrayList<Pose2d> p = new ArrayList<>();
+  
+        
+
+        mp = new MotionProfile(p);
+
+        
         
 
 
@@ -191,17 +210,28 @@ public class Robot extends TimedRobot
     {
         Scheduler.getInstance().run();
 
-        encLeftDist =  -encLeft.getDistance() - encLeftPrev;
-        encRightDist = encRight.getDistance() - encRightPrev;
+        double encLeftDist =  -encLeft.getDistance() - encLeftPrev;
+        double encRightDist = encRight.getDistance() - encRightPrev;
 
         encLeftPrev = -encLeft.getDistance();
         encRightPrev = encRight.getDistance();
 
-        distance = (encLeftDist + encRightDist)/2;
+        double distance = (encLeftDist + encRightDist)/2;
         robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
         robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
-        
 
+        NetworkTable net = NetworkTable.getTable("ChickenVision");
+
+        boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
+        double tapeYaw = net.getValue("tapeYaw").getDouble();
+        double xDist = ultra.getRangeInches();
+
+        double yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
+
+        yDist -= 5; //offset in inches
+
+        SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
+        
         SmartDashboard.putNumber("Enc Elevator", elevator_enc.get());
 
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
@@ -230,6 +260,7 @@ public class Robot extends TimedRobot
     @Override
     public void autonomousInit()
     {
+
     }
 
     @Override

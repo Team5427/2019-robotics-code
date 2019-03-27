@@ -79,7 +79,7 @@ public class ContinuousFull extends Command {
 	 */
 	@Override
 	protected void end() {
-        SmartDashboard.putNumber("Average", (distance_covered+distance_covered_r) / 2);
+        SmartDashboard.putNumber("Average Distance Covered", (distance_covered+distance_covered_r) / 2);
 
 		Robot.driveTrain.stop();
 	}
