@@ -26,11 +26,11 @@ public class Config
 
 	public static final int RIGHT_TOP_MOTOR = 6;
 
-
-
 	public static final int RIGHT_MIDDLE_MOTOR = 7;
 
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
+
+	public static final int CLIMBER_ARM_MOTOR = 5;
 
 	public static final int ARM_MOTOR = 6;
 
@@ -54,7 +54,7 @@ public class Config
 	public static final int ENCODER_RIGHT_PORT_2 = 7;
 	
 	public static final int ENCODER_CLIMB_PORT_1 = 2; 
-	public static final int ENCODER_CLIMB_2 = 3;
+	public static final int ENCODER_CLIMB_PORT_2 = 3;
 
 	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
@@ -74,6 +74,10 @@ public class Config
 	
 	public static final double WRIST_SPEED_DOWN = -0.5;
 
+	public static final double CLIMBER_ARM_SPEED_DOWN = 1;
+	
+	public static final double CLIMBER_ARM_SPEED_UP = -1;
+
 	public static final double correctedAngle = 10.0;
 
 	public static final double angleOffsetUp_Wrist = 3.0;
@@ -92,7 +96,11 @@ public class Config
 
 	public static final int BUTTON_ARM_DOWN = 3;
 
+	public static final int BUTTON_CLIMBER_ARM_DOWN = 4;
+
 	public static final int BUTTON_ARM_UP = 5;
+
+	public static final int BUTTON_CLIMBER_ARM_UP = 6;
 
 	public static final int BUTTON_WRIST_UP = 8;
 

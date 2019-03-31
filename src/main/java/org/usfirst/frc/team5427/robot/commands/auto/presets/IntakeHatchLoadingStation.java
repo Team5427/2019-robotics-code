@@ -1,7 +1,6 @@
 package org.usfirst.frc.team5427.robot.commands.auto.presets;
 
 import org.usfirst.frc.team5427.robot.commands.auto.Buffer;
-import org.usfirst.frc.team5427.robot.commands.auto.MoveElevatorAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.RotateArmAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
 
@@ -12,7 +11,6 @@ public class IntakeHatchLoadingStation extends CommandGroup {
 
         addSequential(new RotateWristAuto(20));
         addSequential(new Buffer(0.5));
-        addSequential(new MoveElevatorAuto(0));
         addParallel(new RotateWristAuto(11));
         addSequential(new RotateArmAuto(113));
 

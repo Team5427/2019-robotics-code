@@ -30,9 +30,9 @@ public class OI
 	Button intakeOut;
 	Button intakeIn;
 	Button armDown;
-	Button elevatorDown;
+	Button climberArmDown;
 	Button armUp;
-	Button elevatorUp;
+	Button climberArmUp;
 	// Button levelThreeClimb;
 	Button wristUp;
 	Button wristDown;
@@ -48,9 +48,9 @@ public class OI
 		intakeOut = new JoystickButton(joy1, Config.BUTTON_INTAKE_OUT);
 		intakeIn = new JoystickButton(joy1, Config.BUTTON_INTAKE_IN);
 		armDown = new JoystickButton(joy1, Config.BUTTON_ARM_DOWN);
-		elevatorDown = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_DOWN);
+		climberArmDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_ARM_DOWN);
 		armUp = new JoystickButton(joy1, Config.BUTTON_ARM_UP);
-		elevatorUp = new JoystickButton(joy1, Config.BUTTON_ELEVATOR_UP);
+		climberArmUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_ARM_UP);
 		// levelThreeClimb = new JoystickButton(joy1, Config.BUTTON_LEVEL_THREE_CLIMB);
 		wristUp = new JoystickButton(joy1, Config.BUTTON_WRIST_UP);
 		wristDown = new JoystickButton(joy1, Config.BUTTON_WRIST_DOWN);
@@ -63,6 +63,8 @@ public class OI
 
 		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
 		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
+		climberArmDown.whileHeld(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_DOWN));
+		climberArmUp.whileHeld(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_UP));
 		armDown.whileHeld(new RotateArm(Config.ARM_SPEED_DOWN));
 		armUp.whileHeld(new RotateArm(Config.ARM_SPEED_UP));
 		lowlowgear.whenPressed(new LowLowGear());
