@@ -19,7 +19,6 @@ import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
-import org.usfirst.frc.team5427.robot.subsystems.Elevator;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.Wrist;
 import org.usfirst.frc.team5427.util.Config;
@@ -60,13 +59,11 @@ public class Robot extends TimedRobot
     public static DriveTrain driveTrain;
     public static DifferentialDrive drive;
 
-    public static SpeedController elevatorMotor;
     public static SpeedController armMotor;
     public static SpeedController wristMotor;
     public static SpeedController intakeTopMotor;
     public static SpeedController intakeBottomMotor;
 
-    public static Elevator elevator;
     public static Arm arm;
     public static Wrist wrist;
     public static Intake intake;
@@ -81,7 +78,7 @@ public class Robot extends TimedRobot
 
     public static Ultrasonic ultra;
     
-    public static Encoder elevator_enc;
+    public static Encoder climb_enc;
 
     public static Encoder encLeft;
     public static Encoder encRight;
@@ -127,9 +124,6 @@ public class Robot extends TimedRobot
         drive = new DifferentialDrive(driveLeft, driveRight);
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
-        elevatorMotor = new WPI_VictorSPX(Config.ELEVATOR_MOTOR);
-        elevator = new Elevator(elevatorMotor);
-
         armMotor = new WPI_VictorSPX(Config.ARM_MOTOR);
         arm = new Arm(armMotor);
 
@@ -148,7 +142,7 @@ public class Robot extends TimedRobot
 
         solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
 
-        elevator_enc = new Encoder(Config.ELEVATOR_PORT_1, Config.ELEVATOR_PORT_2, false, EncodingType.k4X);
+        climb_enc = new Encoder(Config.ENCODER_CLIMB_1, Config.ENCODER_CLIMB_2, false, EncodingType.k4X);
 
         wristPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_WRIST, 121);
         armPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_ARM, 118);

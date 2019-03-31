@@ -32,8 +32,6 @@ public class Config
 
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
 
-	public static final int ELEVATOR_MOTOR = 5;
-
 	public static final int ARM_MOTOR = 6;
 
 	public static final int WRIST_MOTOR = 3;
@@ -55,18 +53,14 @@ public class Config
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
 	public static final int ENCODER_RIGHT_PORT_2 = 7;
 	
-	public static final int ELEVATOR_PORT_1 = 2; 
-	public static final int ELEVATOR_PORT_2 = 3;
+	public static final int ENCODER_CLIMB_PORT_1 = 2; 
+	public static final int ENCODER_CLIMB_2 = 3;
 
 	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
 	public static final double INTAKE_SPEED_IN = -0.4;
 
 	public static final double INTAKE_SPEED_OUT = 1;
-
-	public static final double ELEVATOR_SPEED_UP = 1;
-
-	public static final double ELEVATOR_SPEED_DOWN = -0.75;
 
 	public static final double ARM_SPEED_UP = 0.5;
 	
@@ -85,10 +79,6 @@ public class Config
 	public static final double angleOffsetUp_Wrist = 3.0;
 	public static final double angleOffsetDown_Wrist = 0.0;
 
-	public static final double encoderOffsetUp_Elevator = 90;
-	public static final double encoderOffsetDown_Elevator = 32;
-
-	
 	public static final double angleOffsetUp_Arm = 1.0;
 	public static final double angleOffsetDown_Arm = 3.0;
 
@@ -102,11 +92,7 @@ public class Config
 
 	public static final int BUTTON_ARM_DOWN = 3;
 
-	public static final int BUTTON_ELEVATOR_DOWN = 4;
-
 	public static final int BUTTON_ARM_UP = 5;
-
-	public static final int BUTTON_ELEVATOR_UP = 6;
 
 	public static final int BUTTON_WRIST_UP = 8;
 

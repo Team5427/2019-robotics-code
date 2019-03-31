@@ -69,9 +69,6 @@ public class OI
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
 
-		elevatorDown.whileHeld(new MoveElevator1(Config.ELEVATOR_SPEED_DOWN));
-		elevatorUp.whileHeld(new MoveElevator1(Config.ELEVATOR_SPEED_UP));
-
 		travel.whenPressed(new Travel());
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());
