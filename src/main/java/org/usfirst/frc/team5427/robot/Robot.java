@@ -19,6 +19,7 @@ import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
 import org.usfirst.frc.team5427.robot.subsystems.ClimberArm;
+import org.usfirst.frc.team5427.robot.subsystems.ClimberLeg;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.Wrist;
@@ -62,12 +63,15 @@ public class Robot extends TimedRobot
 
     public static SpeedController armMotor;
     public static SpeedController climberArmMotor;
+    public static SpeedController climberLegMotor;
     public static SpeedController wristMotor;
     public static SpeedController intakeTopMotor;
     public static SpeedController intakeBottomMotor;
 
     public static Arm arm;
     public static ClimberArm climberArm;
+    public static ClimberLeg climberLeg;
+
     public static Wrist wrist;
     public static Intake intake;
 
@@ -128,7 +132,10 @@ public class Robot extends TimedRobot
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
         climberArmMotor = new WPI_VictorSPX(Config.CLIMBER_ARM_MOTOR);
-        climberArm = new ClimberArm(climberArmMotor);
+        climberArm = new ClimberArm();
+
+        climberLegMotor = new WPI_VictorSPX(Config.CLIMBER_LEG_MOTOR);
+        climberLeg = new ClimberLeg();
 
         armMotor = new WPI_VictorSPX(Config.ARM_MOTOR);
         arm = new Arm(armMotor);
