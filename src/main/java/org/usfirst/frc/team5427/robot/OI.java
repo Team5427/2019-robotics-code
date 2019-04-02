@@ -40,6 +40,8 @@ public class OI
 
 	Button climberLegUp, climberLegDown;
 
+	Button climberWheelForward, climberWheelBackward;
+
 	Button gearShift;
 
 	public OI()
@@ -59,6 +61,8 @@ public class OI
 		lowlowgear = new JoystickButton(joy1, Config.BUTTON_LOWLOWGEAR);
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
+		climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
+		climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
 
 		
 		
@@ -66,16 +70,17 @@ public class OI
 
 		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
 		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
-		climberArmDown.whileHeld(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_DOWN));
-		climberArmUp.whileHeld(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_UP));
-		climberLegDown.whileHeld(new MoveClimberLeg(Config.CLIMBER_LEG_SPEED_DOWN));
-		climberLegUp.whileHeld(new MoveClimberLeg(Config.CLIMBER_LEG_SPEED_UP));
+		climberArmDown.whenPressed(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_DOWN));
+		climberArmUp.whenPressed(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_UP));
+		climberLegDown.whenPressed(new MoveClimberLeg(Config.CLIMBER_LEG_SPEED_DOWN));
+		climberLegUp.whenPressed(new MoveClimberLeg(Config.CLIMBER_LEG_SPEED_UP));
 		armDown.whileHeld(new RotateArm(Config.ARM_SPEED_DOWN));
 		armUp.whileHeld(new RotateArm(Config.ARM_SPEED_UP));
 		lowlowgear.whenPressed(new LowLowGear());
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
-
+		climberWheelBackward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_BACKWARD));
+		climberWheelForward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_FORWARD));
 		travel.whenPressed(new Travel());
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());

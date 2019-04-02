@@ -5,13 +5,13 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class MoveClimberArm extends Command
+public class MoveClimberWheels extends Command
 {
     public double speed;
 
-    public MoveClimberArm(double speed)
+    public MoveClimberWheels(double speed)
     {
-        requires(Robot.climberArm);
+        requires(Robot.climberWheel);
         this.speed = speed;
     }
 
@@ -24,22 +24,22 @@ public class MoveClimberArm extends Command
     @Override
     protected void execute()
     {
-        Robot.climberArm.setSpeed(speed);
+        Robot.climberWheel.setSpeed(speed);
     }
 
     @Override
     protected boolean isFinished()
     {
         if (speed > 0)
-            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_ARM_DOWN);
+            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_WHEEL_FORWARD);
         else if (speed < 0)
-            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_ARM_UP);
+            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
         return false;
     }
 
     @Override
     protected void end()
     {
-        Robot.climberArm.stop();
+        Robot.climberWheel.stop();
     }
 }

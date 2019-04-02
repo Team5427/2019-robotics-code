@@ -20,6 +20,7 @@ import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
 import org.usfirst.frc.team5427.robot.subsystems.ClimberArm;
 import org.usfirst.frc.team5427.robot.subsystems.ClimberLeg;
+import org.usfirst.frc.team5427.robot.subsystems.ClimberWheel;
 import org.usfirst.frc.team5427.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team5427.robot.subsystems.Intake;
 import org.usfirst.frc.team5427.robot.subsystems.Wrist;
@@ -63,6 +64,10 @@ public class Robot extends TimedRobot
 
     public static SpeedController armMotor;
     public static SpeedController climberArmMotor;
+    public static SpeedController climberArmMotor1;
+    public static SpeedController climberWheelMotor;
+
+
     public static SpeedController climberLegMotor;
     public static SpeedController wristMotor;
     public static SpeedController intakeTopMotor;
@@ -71,6 +76,8 @@ public class Robot extends TimedRobot
     public static Arm arm;
     public static ClimberArm climberArm;
     public static ClimberLeg climberLeg;
+    public static ClimberWheel climberWheel;
+
 
     public static Wrist wrist;
     public static Intake intake;
@@ -131,8 +138,12 @@ public class Robot extends TimedRobot
         drive = new DifferentialDrive(driveLeft, driveRight);
         driveTrain = new DriveTrain(driveLeft, driveRight, drive);
 
-        climberArmMotor = new WPI_VictorSPX(Config.CLIMBER_ARM_MOTOR);
+        climberArmMotor = new WPI_VictorSPX(Config.CLIMBER_ARM_MOTOR_LEFT);
+        climberArmMotor1 = new WPI_VictorSPX(Config.CLIMBER_ARM_MOTOR_RIGHT);
         climberArm = new ClimberArm();
+
+        climberWheelMotor = new WPI_VictorSPX(Config.CLIMBER_WHEEL_MOTOR);
+        climberWheel = new ClimberWheel();
 
         climberLegMotor = new WPI_VictorSPX(Config.CLIMBER_LEG_MOTOR);
         climberLeg = new ClimberLeg();
@@ -177,11 +188,11 @@ public class Robot extends TimedRobot
         cam2.setFPS(30);
         cam2.setResolution(100, 100);
         
-        ArrayList<Pose2d> p = new ArrayList<>();
+        // ArrayList<Pose2d> p = new ArrayList<>();
   
         
 
-        mp = new MotionProfile(p);
+        // mp = new MotionProfile(p);
 
         
         
@@ -227,17 +238,17 @@ public class Robot extends TimedRobot
         robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
         robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
 
-        NetworkTable net = NetworkTable.getTable("ChickenVision");
+        // NetworkTable net = NetworkTable.getTable("ChickenVision");
 
-        boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
-        double tapeYaw = net.getValue("tapeYaw").getDouble();
-        double xDist = ultra.getRangeInches();
+        // boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
+        // double tapeYaw = net.getValue("tapeYaw").getDouble();
+        // double xDist = ultra.getRangeInches();
 
-        double yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
+        // double yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
 
-        yDist -= 5; //offset in inches
+        // yDist -= 5; //offset in inches
 
-        SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
+        // SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
         
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
 

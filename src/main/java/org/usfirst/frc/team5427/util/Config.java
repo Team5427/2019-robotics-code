@@ -30,9 +30,14 @@ public class Config
 
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
 
-	public static final int CLIMBER_ARM_MOTOR = 5;
+	public static final int CLIMBER_ARM_MOTOR_LEFT = 5;
+	public static final int CLIMBER_ARM_MOTOR_RIGHT = 10;
 
-	public static final int CLIMBER_LEG_MOTOR = 10;
+
+	public static final int CLIMBER_LEG_MOTOR = 13;
+
+	public static final int CLIMBER_WHEEL_MOTOR = 12;
+
 
 	public static final int ARM_MOTOR = 6;
 
@@ -76,9 +81,13 @@ public class Config
 	
 	public static final double WRIST_SPEED_DOWN = -0.5;
 
-	public static final double CLIMBER_ARM_SPEED_DOWN = 1;
+	public static final double CLIMBER_ARM_SPEED_DOWN = 0.5;
 	
-	public static final double CLIMBER_ARM_SPEED_UP = -1;
+	public static final double CLIMBER_ARM_SPEED_UP = -0.5;
+
+	public static final double CLIMBER_WHEEL_SPEED_FORWARD = 0.5;
+	
+	public static final double CLIMBER_WHEEL_SPEED_BACKWARD = -0.5;
 
 	
 	public static final double CLIMBER_LEG_SPEED_DOWN = -1;
@@ -119,6 +128,9 @@ public class Config
 
 	public static final int BUTTON_CLIMBER_LEG_UP = 11;
 	public static final int BUTTON_CLIMBER_LEG_DOWN = 12;
+	
+	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 13;
+	public static final int BUTTON_CLIMBER_WHEEL_BACKWARD = 14;
 
 
 
