@@ -31,15 +31,15 @@ public class MoveClimberLeg extends Command
     protected boolean isFinished()
     {
         if (speed > 0)
-            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_LEG_DOWN);
-        else if (speed < 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_LEG_UP);
+        else if (speed < 0)
+            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_LEG_DOWN);
         return false;
     }
 
     @Override
     protected void end()
     {
-        Robot.intake.stop();
+        Robot.climberLeg.stop();
     }
 }

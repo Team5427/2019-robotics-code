@@ -13,6 +13,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
 import org.ghrobotics.lib.mathematics.twodim.geometry.Pose2d;
+import org.usfirst.frc.team5427.robot.commands.auto.MoveClimberLegAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.motion.MotionProfile;
 import org.usfirst.frc.team5427.robot.commands.auto.motion.Pose2D;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
@@ -218,6 +219,9 @@ public class Robot extends TimedRobot
         Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
         
+        Shuffleboard.getTab("SmartDashboard").add("Climber Leg Level 2", new MoveClimberLegAuto(100)).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Climber Leg Level 3", new MoveClimberLegAuto(200)).withWidget(BuiltInWidgets.kCommand);
+
         ahrs.reset();
 
         oi = new OI();
@@ -238,17 +242,23 @@ public class Robot extends TimedRobot
         robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
         robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
 
-        // NetworkTable net = NetworkTable.getTable("ChickenVision");
+        NetworkTable net = NetworkTable.getTable("ChickenVision");
 
-        // boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
-        // double tapeYaw = net.getValue("tapeYaw").getDouble();
-        // double xDist = ultra.getRangeInches();
+        boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
 
-        // double yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
+        double yDist = 0;
+        if(tapeDetected) {
+            double tapeYaw = net.getValue("tapeYaw").getDouble();
+            double xDist = ultra.getRangeInches();
 
-        // yDist -= 5; //offset in inches
+            yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
 
-        // SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
+            yDist -= 5; //offset in inches
+        }
+
+        SmartDashboard.putNumber("climb encoder", climb_enc.get());
+
+        SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
         
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
 
