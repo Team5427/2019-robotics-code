@@ -8,8 +8,6 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class Travel extends CommandGroup {
     public Travel() {
 
-        addParallel(new RotateWristAuto(18.5));
-        addSequential(new RotateArmAuto(99));
         addParallel(new RotateArmAuto(114));
         addSequential(new RotateWristAuto(5));
     }

@@ -32,8 +32,6 @@ public class MoveClimberWheels extends Command
     {
         if (speed > 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_WHEEL_FORWARD);
-        else if (speed < 0)
-            return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
         return false;
     }
 

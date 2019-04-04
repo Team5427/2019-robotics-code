@@ -84,6 +84,8 @@ public class Robot extends TimedRobot
     public static Intake intake;
 
     public static Solenoid solenoidOne;
+    public static Solenoid solenoidLight;
+
 
     public static AnalogPotentiometer wristPot;
     public static AnalogPotentiometer armPot;
@@ -166,6 +168,9 @@ public class Robot extends TimedRobot
       
 
         solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
+        solenoidLight = new Solenoid(Config.PCM_ID, Config.SOLENOID_LIGHT_CHANNEL);
+        
+        solenoidLight.set(true);
 
         climb_enc = new Encoder(Config.ENCODER_CLIMB_PORT_1, Config.ENCODER_CLIMB_PORT_2, false, EncodingType.k4X);
 
@@ -243,22 +248,25 @@ public class Robot extends TimedRobot
         robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
 
         NetworkTable net = NetworkTable.getTable("ChickenVision");
+        if(net!=null) {
+            boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
 
-        boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
+            double yDist = 0;
+            if(tapeDetected) {
+                double tapeYaw = net.getValue("tapeYaw").getDouble();
+                double xDist = ultra.getRangeInches() + 15.5;
 
-        double yDist = 0;
-        if(tapeDetected) {
-            double tapeYaw = net.getValue("tapeYaw").getDouble();
-            double xDist = ultra.getRangeInches();
+                yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
 
-            yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
+                yDist += 9.7; //offset in inches
+            }
 
-            yDist -= 5; //offset in inches
+            SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
+
         }
 
         SmartDashboard.putNumber("climb encoder", climb_enc.get());
 
-        SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
         
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
 

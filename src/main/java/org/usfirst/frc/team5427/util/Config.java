@@ -18,7 +18,7 @@ public class Config
 
 	// CAN Values
 	/*************************************************************************************************************/
-	public static final int LEFT_TOP_MOTOR = 9;
+	public static final int LEFT_TOP_MOTOR = 10;
 
 	public static final int LEFT_MIDDLE_MOTOR = 10;
 
@@ -31,7 +31,7 @@ public class Config
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
 
 	public static final int CLIMBER_ARM_MOTOR_LEFT = 5;
-	public static final int CLIMBER_ARM_MOTOR_RIGHT = 10;
+	public static final int CLIMBER_ARM_MOTOR_RIGHT = 9;
 
 
 	public static final int CLIMBER_LEG_MOTOR = 13;
@@ -85,9 +85,9 @@ public class Config
 	
 	public static final double CLIMBER_ARM_SPEED_UP = -0.5;
 
-	public static final double CLIMBER_WHEEL_SPEED_FORWARD = 0.5;
+	public static final double CLIMBER_WHEEL_SPEED_FORWARD = -0.5;
 	
-	public static final double CLIMBER_WHEEL_SPEED_BACKWARD = -0.5;
+	public static final double CLIMBER_WHEEL_SPEED_BACKWARD = 0.5;
 
 	
 	public static final double CLIMBER_LEG_SPEED_DOWN = -1;
@@ -126,11 +126,11 @@ public class Config
 
 	public static final int BUTTON_LOWLOWGEAR = 7;
 
-	public static final int BUTTON_CLIMBER_LEG_UP = 11;
-	public static final int BUTTON_CLIMBER_LEG_DOWN = 12;
+	public static final int BUTTON_CLIMBER_LEG_UP = 13;
+	public static final int BUTTON_CLIMBER_LEG_DOWN = 14;
 	
-	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 13;
-	public static final int BUTTON_CLIMBER_WHEEL_BACKWARD = 14;
+	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 11;
+	// public static final int BUTTON_CLIMBER_WHEEL_BACKWARD = 11;
 
 
 
@@ -167,6 +167,8 @@ public class Config
 	 * Channel values for Solenoids
 	 */
 	public static final int SOLENOID_ONE_CHANNEL = 0;
+	public static final int SOLENOID_LIGHT_CHANNEL = 1;
+
 
 	public static final double DT_ARM_WRIST = 0.02; //s
 

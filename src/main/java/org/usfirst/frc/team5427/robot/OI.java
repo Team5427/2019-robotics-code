@@ -62,7 +62,7 @@ public class OI
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
 		climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
-		climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
+		// climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
 
 		
 		
@@ -79,7 +79,7 @@ public class OI
 		lowlowgear.whenPressed(new LowLowGear());
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
-		climberWheelBackward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_BACKWARD));
+		// climberWheelBackward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_BACKWARD));
 		climberWheelForward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_FORWARD));
 		travel.whenPressed(new Travel());
 
