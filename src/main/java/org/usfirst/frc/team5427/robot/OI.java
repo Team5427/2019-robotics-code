@@ -40,13 +40,15 @@ public class OI
 
 	Button climberLegUp, climberLegDown;
 
-	Button climberWheelForward, climberWheelBackward;
+	// Button climberWheelForward, climberWheelBackward;
 
 	Button gearShift;
 
 	public OI()
 	{
 		joy1 = new Joystick(Config.JOYSTICK_PORT);
+
+		
 
 		intakeOut = new JoystickButton(joy1, Config.BUTTON_INTAKE_OUT);
 		intakeIn = new JoystickButton(joy1, Config.BUTTON_INTAKE_IN);
@@ -61,7 +63,7 @@ public class OI
 		lowlowgear = new JoystickButton(joy1, Config.BUTTON_LOWLOWGEAR);
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
-		climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
+		// climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
 		// climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
 
 		
@@ -80,7 +82,7 @@ public class OI
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
 		// climberWheelBackward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_BACKWARD));
-		climberWheelForward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_FORWARD));
+		// climberWheelForward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_FORWARD));
 		travel.whenPressed(new Travel());
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());
