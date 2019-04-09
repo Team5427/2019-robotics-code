@@ -26,6 +26,8 @@ public class OI
 {
 	public Joystick joy1;
 	public Button solenoidActivate;
+	public Button solenoidHatchActivate;
+
 
 	Button intakeOut;
 	Button intakeIn;
@@ -37,6 +39,7 @@ public class OI
 	Button wristDown;
 	Button travel;
 	Button lowlowgear;
+	Button hatchShift;
 
 	Button climberLegUp, climberLegDown;
 
@@ -62,6 +65,7 @@ public class OI
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
 		climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
+		solenoidHatchActivate = new JoystickButton(joy1,Config.BUTTON_PNEUMATIC_ACTIVATE);
 		// climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
 
 		
@@ -84,6 +88,8 @@ public class OI
 		travel.whenPressed(new Travel());
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());
+		solenoidHatchActivate.whenPressed(new ActivateSolenoidHatch());
+
 	}
 
 	/**

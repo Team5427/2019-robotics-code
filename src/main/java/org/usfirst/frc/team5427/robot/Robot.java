@@ -83,7 +83,9 @@ public class Robot extends TimedRobot
     public static Wrist wrist;
     public static Intake intake;
 
-    public static Solenoid solenoidOne;
+    public static Solenoid solenoidGearShifter;
+    public static Solenoid solenoidHatchShifter;
+
     public static Solenoid solenoidLight;
 
 
@@ -167,8 +169,10 @@ public class Robot extends TimedRobot
         ultra.setAutomaticMode(true);
       
 
-        solenoidOne = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
+        solenoidGearShifter = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
         solenoidLight = new Solenoid(Config.PCM_ID, Config.SOLENOID_LIGHT_CHANNEL);
+        solenoidHatchShifter = new Solenoid(Config.PCM_ID, Config.SOLENOID_HATCH_CHANNEL);
+
         
         solenoidLight.set(true);
 

@@ -129,7 +129,10 @@ public class Config
 	public static final int BUTTON_CLIMBER_LEG_UP = 13;
 	public static final int BUTTON_CLIMBER_LEG_DOWN = 14;
 	
-	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 11;
+	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 20;
+	public static final int BUTTON_PNEUMATIC_ACTIVATE = 11;
+
+	
 	// public static final int BUTTON_CLIMBER_WHEEL_BACKWARD = 11;
 
 
@@ -168,6 +171,8 @@ public class Config
 	 */
 	public static final int SOLENOID_ONE_CHANNEL = 0;
 	public static final int SOLENOID_LIGHT_CHANNEL = 1;
+	public static final int SOLENOID_HATCH_CHANNEL = 2;
+
 
 
 	public static final double DT_ARM_WRIST = 0.02; //s
