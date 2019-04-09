@@ -28,7 +28,7 @@ public class MoveClimberWheels extends Command
         {
             Robot.climberWheel.setSpeed(Config.CLIMBER_WHEEL_SPEED_FORWARD);
         }
-        else if(Robot.oi.getJoy().getPOV(0) >= 135 || Robot.oi.getJoy().getPOV(0) <= 225)
+        else if(Robot.oi.getJoy().getPOV(0) >= 135 && Robot.oi.getJoy().getPOV(0) <= 225)
         {
             Robot.climberWheel.setSpeed(Config.CLIMBER_WHEEL_SPEED_BACKWARD);
         }
