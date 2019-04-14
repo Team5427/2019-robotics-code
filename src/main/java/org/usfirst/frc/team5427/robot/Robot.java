@@ -273,7 +273,6 @@ public class Robot extends TimedRobot
         }*/
 
         SmartDashboard.putNumber("climb encoder", climb_enc.get());
-
         
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
 
@@ -286,7 +285,6 @@ public class Robot extends TimedRobot
 
         SmartDashboard.putNumber("robotX", robotX);
         SmartDashboard.putNumber("robotY", robotY);
-
 
         SmartDashboard.putNumber("Ultrasonic", ultra.getRangeInches());
         SmartDashboard.putBoolean("LowLowGear", DriveTrain.lowlowgear);
