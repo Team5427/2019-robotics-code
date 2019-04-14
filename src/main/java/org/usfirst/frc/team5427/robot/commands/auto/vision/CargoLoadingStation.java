@@ -11,6 +11,6 @@ public class CargoLoadingStation extends CommandGroup {
     public CargoLoadingStation() {
         addParallel(new IntakeCargoLoadingStation());
         addSequential(new TurnToAngle(180));
-        addSequential(new DriveToTape());
+        // addSequential(new DriveToTape());
     }
 }

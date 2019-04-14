@@ -9,6 +9,6 @@ public class HatchLoadingStation extends CommandGroup {
     public HatchLoadingStation() {
         addParallel(new IntakeHatchLoadingStation());
         addSequential(new TurnToAngle(270));
-        addSequential(new DriveToTape());
+        // addSequential(new DriveToTape());
     }
 }

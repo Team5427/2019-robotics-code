@@ -9,6 +9,6 @@ public class CargoShipFront extends CommandGroup {
     public CargoShipFront() {
         addParallel(new CargoShipCargo());
         addSequential(new TurnToAngle(0));
-        addSequential(new DriveToTape());
+        // addSeqsuential(new DriveToTape());
     }
 }
