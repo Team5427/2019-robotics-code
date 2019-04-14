@@ -1,15 +1,15 @@
 package org.usfirst.frc.team5427.robot.commands.auto.presets;
 
-
 import org.usfirst.frc.team5427.robot.commands.auto.RotateArmAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CargoLevel1 extends CommandGroup {
-    public CargoLevel1() {
-        addParallel(new RotateWristAuto(27.6));//45
-        addSequential(new RotateArmAuto(112.8)); //89
+public class CargoFloor extends CommandGroup {
+    public CargoFloor() {
         
+        addParallel(new RotateArmAuto(90));
+        addSequential(new RotateWristAuto(56.7));
     }
+
 }

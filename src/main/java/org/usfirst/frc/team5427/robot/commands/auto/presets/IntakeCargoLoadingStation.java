@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class IntakeCargoLoadingStation extends CommandGroup {
     public IntakeCargoLoadingStation() {
         
-        addParallel(new RotateArmAuto(82));
-        addSequential(new RotateWristAuto(30.5));
+        addParallel(new RotateArmAuto(112.8));
+        addSequential(new RotateWristAuto(12.4));
     }
 
 }

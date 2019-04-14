@@ -11,7 +11,7 @@ public class IntakeHatchLoadingStation extends CommandGroup {
 
         addSequential(new RotateWristAuto(20));
         addSequential(new Buffer(0.5));
-        addParallel(new RotateWristAuto(11));
+        addParallel(new RotateWristAuto(13.5));
         addSequential(new RotateArmAuto(113));
 
         

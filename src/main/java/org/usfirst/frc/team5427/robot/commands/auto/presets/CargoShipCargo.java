@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class CargoShipCargo extends CommandGroup {
     public CargoShipCargo() {
         
-        addParallel(new RotateWristAuto(29.5));
-        addSequential(new RotateArmAuto(84.5));
+        addParallel(new RotateWristAuto(37));
+        addSequential(new RotateArmAuto(80));
       
     }
 
