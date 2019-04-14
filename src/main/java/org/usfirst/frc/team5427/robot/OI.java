@@ -51,8 +51,6 @@ public class OI
 	{
 		joy1 = new Joystick(Config.JOYSTICK_PORT);
 
-		
-
 		intakeOut = new JoystickButton(joy1, Config.BUTTON_INTAKE_OUT);
 		intakeIn = new JoystickButton(joy1, Config.BUTTON_INTAKE_IN);
 		armDown = new JoystickButton(joy1, Config.BUTTON_ARM_DOWN);
@@ -66,17 +64,9 @@ public class OI
 		lowlowgear = new JoystickButton(joy1, Config.BUTTON_LOWLOWGEAR);
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
-<<<<<<< HEAD
-		climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
 		solenoidHatchActivate = new JoystickButton(joy1,Config.BUTTON_PNEUMATIC_ACTIVATE);
-=======
 		// climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
->>>>>>> 5baa6bf037ac6620af791beb6279ea86477a535a
 		// climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
-
-		
-		
-
 
 		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
 		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
