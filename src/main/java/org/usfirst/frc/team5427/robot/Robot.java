@@ -231,6 +231,13 @@ public class Robot extends TimedRobot
         Shuffleboard.getTab("SmartDashboard").add("Climber Leg Level 2", new MoveClimberLegAuto(100)).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Climber Leg Level 3", new MoveClimberLegAuto(200)).withWidget(BuiltInWidgets.kCommand);
 
+        Shuffleboard.getTab("SmartDashboard").add("Load Hatch", new IntakeHatchLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Intake Cargo LS", new IntakeCargoLoadingStation()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
+        Shuffleboard.getTab("SmartDashboard").add("Cargo Floor", new CargoFloor()).withWidget(BuiltInWidgets.kCommand);
+
+
+
         ahrs.reset();
 
         oi = new OI();
@@ -252,7 +259,7 @@ public class Robot extends TimedRobot
         robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
 
         NetworkTable net = NetworkTable.getTable("ChickenVision");
-        if(net!=null) {
+        /*if(net!=null) {
             boolean tapeDetected = net.getValue("tapeDetected").getBoolean();
 
             double yDist = 0;
@@ -267,10 +274,9 @@ public class Robot extends TimedRobot
 
             SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
 
-        }
+        }*/
 
         SmartDashboard.putNumber("climb encoder", climb_enc.get());
-
         
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
 
@@ -283,7 +289,6 @@ public class Robot extends TimedRobot
 
         SmartDashboard.putNumber("robotX", robotX);
         SmartDashboard.putNumber("robotY", robotY);
-
 
         SmartDashboard.putNumber("Ultrasonic", ultra.getRangeInches());
         SmartDashboard.putBoolean("LowLowGear", DriveTrain.lowlowgear);

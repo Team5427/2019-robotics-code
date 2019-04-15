@@ -7,8 +7,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 
 public class IntakeCargoLevel1 extends CommandGroup {
     public IntakeCargoLevel1() {  
-        addSequential(new RotateWristAuto(15));
-        addParallel(new RotateArmAuto(114));
-        addSequential(new RotateWristAuto(53.5));
+        addSequential(new RotateWristAuto(15));//Different
+        addParallel(new RotateArmAuto(114));//Different
+        addSequential(new RotateWristAuto(53.5));//Different
     }
 }
