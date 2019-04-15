@@ -5,12 +5,11 @@ import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
-public class CargoShipCargo extends CommandGroup {
-    public CargoShipCargo() {
+public class CargoFloor extends CommandGroup {
+    public CargoFloor() {
         
-        addParallel(new RotateWristAuto(37));//Different
-        addSequential(new RotateArmAuto(80));//Different
-      
+        addParallel(new RotateArmAuto(90));
+        addSequential(new RotateWristAuto(56.7));
     }
 
 }

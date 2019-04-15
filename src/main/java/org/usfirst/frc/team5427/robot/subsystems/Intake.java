@@ -41,7 +41,7 @@ public class Intake extends Subsystem {
 	 *            the desired power to set the intake to.
 	 */
 	public void setSpeed(double speed) {
-        topFlywheel.set(speed);
+        topFlywheel.set(-speed);
         bottomFlywheel.set(-speed);
 	}
 

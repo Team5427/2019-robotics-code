@@ -5,9 +5,9 @@ import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
+//Wrist up first, then arms down.
 public class Travel extends CommandGroup {
     public Travel() {
-
         addParallel(new RotateArmAuto(114));
         addSequential(new RotateWristAuto(5));
     }
