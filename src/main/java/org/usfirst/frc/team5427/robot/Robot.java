@@ -12,10 +12,8 @@ import java.util.ArrayList;
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
 
-import org.ghrobotics.lib.mathematics.twodim.geometry.Pose2d;
 import org.usfirst.frc.team5427.robot.commands.auto.MoveClimberLegAuto;
-import org.usfirst.frc.team5427.robot.commands.auto.motion.MotionProfile;
-import org.usfirst.frc.team5427.robot.commands.auto.motion.Pose2D;
+
 import org.usfirst.frc.team5427.robot.commands.auto.presets.*;
 
 import org.usfirst.frc.team5427.robot.subsystems.Arm;
@@ -120,7 +118,6 @@ public class Robot extends TimedRobot
     public static double encLeftDist;
     public static double encRightDist;
 
-    public static MotionProfile mp;
 
 
 
