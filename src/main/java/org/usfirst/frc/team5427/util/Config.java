@@ -135,7 +135,11 @@ public class Config
 	
 	// public static final int BUTTON_CLIMBER_WHEEL_BACKWARD = 11;
 
-
+	//Limits
+	public static final double ARM_LIMIT_TOP = 69;
+	public static final double ARM_LIMIT_BOTTOM = 109.5;
+	public static final double WRIST_LIMIT_TOP = 5.5;
+	public static final double WRIST_LIMIT_BOTTOM = 56.4;
 
 	/****************************************************************/
 

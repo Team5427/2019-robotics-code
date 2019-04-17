@@ -2,14 +2,15 @@ package org.usfirst.frc.team5427.robot.commands.auto.presets;
 
 import org.usfirst.frc.team5427.robot.commands.auto.RotateArmAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
+import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 //Wrist up first, then arms down.
 public class Travel extends CommandGroup {
     public Travel() {
-        addParallel(new RotateArmAuto(114));
-        addSequential(new RotateWristAuto(5));
+        addParallel(new RotateArmAuto(Config.WRIST_LIMIT_BOTTOM));
+        addSequential(new RotateWristAuto(Config.WRIST_LIMIT_TOP));
     }
 
 }

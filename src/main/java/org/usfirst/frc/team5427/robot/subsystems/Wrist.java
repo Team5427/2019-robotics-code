@@ -1,6 +1,7 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -22,7 +23,7 @@ public class Wrist extends Subsystem
     {
 
         
-        if((speed > 0 && Robot.wristPot.get() >= 5.5) || (speed < 0 && Robot.wristPot.get() <= 56.4) )          
+        if((speed > 0 && Robot.wristPot.get() >= Config.WRIST_LIMIT_TOP) || (speed < 0 && Robot.wristPot.get() <= Config.WRIST_LIMIT_BOTTOM) )          
             wristMotor.set(speed);
         else 
             wristMotor.set(0);    

@@ -1,6 +1,8 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
+
 import org.usfirst.frc.team5427.robot.Robot;
+import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -19,8 +21,8 @@ public class Arm extends Subsystem
 
     public void moveArm(double armSpeed)
     {
-        if((armSpeed > 0 && Robot.armPot.get() >= 69) 
-        || (armSpeed < 0 && Robot.armPot.get() <= 109.5))
+        if((armSpeed > 0 && Robot.armPot.get() >= Config.ARM_LIMIT_TOP) 
+        || (armSpeed < 0 && Robot.armPot.get() <= Config.ARM_LIMIT_BOTTOM))
             armMotor.set(armSpeed);
         else 
             armMotor.set(0);
