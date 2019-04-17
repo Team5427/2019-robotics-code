@@ -169,9 +169,9 @@ public class Config
 	/**
 	 * Channel values for Solenoids
 	 */
-	public static final int SOLENOID_ONE_CHANNEL = 0;
+	public static final int SOLENOID_ONE_CHANNEL   = 0;
 	public static final int SOLENOID_LIGHT_CHANNEL = 1;
-	public static final int SOLENOID_HATCH_CHANNEL = 2;
+	public static final int SOLENOID_HATCH_CHANNEL = 3;
 
 
 

@@ -9,7 +9,7 @@ public class HatchLevel1 extends CommandGroup {
     public HatchLevel1() {
 
         addParallel(new RotateWristAuto(11));
-        addSequential(new RotateArmAuto(108));
+        addSequential(new RotateArmAuto(99));
         
     }
 

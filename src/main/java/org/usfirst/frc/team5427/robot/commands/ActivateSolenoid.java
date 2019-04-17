@@ -18,9 +18,9 @@ public class ActivateSolenoid extends Command
 
     protected void execute() 
     {
-            Robot.solenoidGearShifter.set(true);
+            // Robot.solenoidGearShifter.set(true);
         
-        // b = !b;
+            // b = !b;
     }
 
     // protected void isInterrupted() 
