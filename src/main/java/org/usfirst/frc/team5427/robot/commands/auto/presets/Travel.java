@@ -9,8 +9,9 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //Wrist up first, then arms down.
 public class Travel extends CommandGroup {
     public Travel() {
-        addParallel(new RotateArmAuto(Config.WRIST_LIMIT_BOTTOM));
         addSequential(new RotateWristAuto(Config.WRIST_LIMIT_TOP));
+        addSequential(new RotateArmAuto(Config.ARM_LIMIT_BOTTOM));
+        
     }
 
 }
