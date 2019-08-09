@@ -250,32 +250,32 @@ public class Robot extends TimedRobot {
     /**
      * the x coordinate of the robot -- not in use. 
      */
-    public static double robotX;
+    public static double robotX = 0;
 
     /**
      * the y coordinate of the robot -- not in use.
      */
-    public static double robotY;
+    public static double robotY = 0;
 
     /**
      * The previous value stored in the left encoder -- not in use. 
      */
-    public static double encLeftPrev;
+    public static double encLeftPrev = 0;
 
     /**
      * The previous value stored in the right encoder -- not in use. 
      */
-    public static double encRightPrev;
+    public static double encRightPrev = 0;
     
     /**
      * The distance travelled by the left encoder -- not in use. 
      */
-    public static double encLeftDist;
+    public static double encLeftDist = 0;
 
     /**
      * The distance travelled by the right encoder -- not in use. 
      */
-    public static double encRightDist;
+    public static double encRightDist = 0;
 
 
     /**
@@ -350,9 +350,9 @@ public class Robot extends TimedRobot {
         armPot = new AnalogPotentiometer(Config.ROTATION_POTENTIOMETER_PORT_ARM, 118);
 
         encRight = new Encoder(Config.ENCODER_RIGHT_PORT_1, Config.ENCODER_RIGHT_PORT_2);
-        encRight.setDistancePerPulse(Math.PI * 0.1524 * 2/360); // cicrumference divided by 360 (feet)
+        encRight.setDistancePerPulse(Math.PI * 0.1524 * 360); // cicrumference divided by 360 (feet)
         encLeft = new Encoder(Config.ENCODER_LEFT_PORT_1, Config.ENCODER_LEFT_PORT_2);
-        encLeft.setDistancePerPulse(Math.PI * 0.1524 * 2/360); // cicrumference divided by 360 (feet)
+        encLeft.setDistancePerPulse(Math.PI * 0.1524 * 360); // cicrumference divided by 360 (feet)
 
         //cameras
         camServer = CameraServer.getInstance();
