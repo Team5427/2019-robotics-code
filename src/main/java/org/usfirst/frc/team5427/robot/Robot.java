@@ -7,10 +7,9 @@
 
 package org.usfirst.frc.team5427.robot;
 
-//EXTERNAL LIBRARIES
-
-//If this gives you an error, you need to install the CAN libraries. 
+//EXTERNAL LIBRARIES 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
+import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.auto.MoveClimberLegAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.CargoFloor;
@@ -207,7 +206,10 @@ public class Robot extends TimedRobot {
      */
     public static AnalogPotentiometer armPot;
 
-    // public static AHRS ahrs;
+    /**
+     * The NavX sensor used to read angle (yaw) values. 
+     */
+    public static AHRS ahrs;
 
     /**
      * Ultrasonic sensor. 
