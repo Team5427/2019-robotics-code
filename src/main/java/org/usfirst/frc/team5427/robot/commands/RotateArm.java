@@ -5,10 +5,20 @@ import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.Command;
 
+/**
+ * This class rotates the arm during teleoperated control. 
+ */
 public class RotateArm extends Command
 {
+    /**
+     * The speed of the arm. 
+     */
     public double speed;
 
+    /**
+     * Constructor for the command to rotate the arm in teleop. Stores the received speed value. 
+     * @param speed the speed that the arm should be at. 
+     */
     public RotateArm(double speed)
     {
         requires(Robot.arm);

@@ -10,126 +10,321 @@ package org.usfirst.frc.team5427.util;
 public class Config
 {
 
+	/**
+	 * The name of the program. 
+	 */
 	public static final String PROGRAM_NAME = "Team5427RoboCode";
 
+	/**
+	 * Whether or not the robot is in debug mode. 
+	 */
 	public static final boolean DEBUG_MODE = true;
 
+	/**
+	 * Whether or not the robot is logging data. 
+	 */
 	public static final boolean LOGGING = true;
 
 	// CAN Values
-	/*************************************************************************************************************/
+	/********************************************************************************************/
+
+	/**
+	 * The CAN port for the left top motor of the drive train. 
+	 */
 	public static final int LEFT_TOP_MOTOR = 10;
 
+	/**
+	 * The CAN port for the left middle port of the drive train. 
+	 */
 	public static final int LEFT_MIDDLE_MOTOR = 10;
 
+	/**
+	 * The CAN port for the left bottom port of the drive train. 
+	 */
 	public static final int LEFT_BOTTOM_MOTOR = 11;
 
+	/**
+	 * The CAN port of the right top motor of the drive train. 
+	 */
 	public static final int RIGHT_TOP_MOTOR = 6;
 
+	/**
+	 * The CAN port of the right middle motor of the drive train. 
+	 */
 	public static final int RIGHT_MIDDLE_MOTOR = 7;
 
+	/**
+	 * The CAN port of the right bottom motor of the drive train. 
+	 */
 	public static final int RIGHT_BOTTOM_MOTOR = 8;
 
+	/**
+	 * The CAN port of the left motor of the climber arm. 
+	 */
 	public static final int CLIMBER_ARM_MOTOR_LEFT = 5;
+
+	/**
+	 * The CAN port of the right motor of the climber arm. 
+	 */
 	public static final int CLIMBER_ARM_MOTOR_RIGHT = 9;
 
-
+	/**
+	 * The CAN port of the motor on the climber leg. 
+	 */
 	public static final int CLIMBER_LEG_MOTOR = 13;
 
+	/**
+	 * The CAN port of the motor on the climber wheel. 
+	 */
 	public static final int CLIMBER_WHEEL_MOTOR = 12;
 
-
+	/**
+	 * The CAN port of the arm motor. 
+	 */
 	public static final int ARM_MOTOR = 6;
 
+	/**
+	 * The CAN port of the wrist motor. 
+	 */
 	public static final int WRIST_MOTOR = 3;
 
+	/**
+	 * The CAN port of the top motor of the intake. 
+	 */
 	public static final int INTAKE_TOP_MOTOR = 2;
 
+	/**
+	 * The CAN port of the bottom motor of the intake. 
+	 */
 	public static final int INTAKE_BOTTOM_MOTOR = 1;
-	/*************************************************************************************************************/
+	
+	/********************************************************************************************/
 
+	/**
+	 * The port of the potentiometer on the arm. 
+	 */
 	public static final int ROTATION_POTENTIOMETER_PORT_ARM = 1;
+
+	/**
+	 * The port of the potentiometer on the wrist. 
+	 */
 	public static final int ROTATION_POTENTIOMETER_PORT_WRIST = 0;
 
+	/**
+	 * Port 1 of the ultrasonic sensor. 
+	 */
 	public static final int ULTRA_PORT1 = 8;
+
+	/**
+	 * Port 2 of the ultrasonic sensor. 
+	 */
 	public static final int ULTRA_PORT2 = 9;
 
+	/**
+	 * Port 1 of the left encoder on the drive train. 
+	 */
 	public static final int ENCODER_LEFT_PORT_1 = 4;
+
+	/**
+	 * Port 2 of the left encoder of the drive train. 
+	 */
 	public static final int ENCODER_LEFT_PORT_2 = 5; 
 
+	/**
+	 * Port 1 of the right encoder of the drive train. 
+	 */
 	public static final int ENCODER_RIGHT_PORT_1 = 6; 
+
+	/**
+	 * Port 2 of the right encoder of the drive train. 
+	 */
 	public static final int ENCODER_RIGHT_PORT_2 = 7;
 	
+	/**
+	 * Port 1 of the encoder on the climber leg. 
+	 */
 	public static final int ENCODER_CLIMB_PORT_1 = 2; 
+
+	/**
+	 * Port 2 of the encoder on the climber leg. 
+	 */
 	public static final int ENCODER_CLIMB_PORT_2 = 3;
 
+	/**
+	 * The range of rotation of the potentiometers. 
+	 */
 	public static final int ROTATION_POTENTIOMETER_RANGE = 271;
 
+	//Motor speeds
+	//Speeds are represeted from 0-1, and are the percentage of power exerted by the motor. 
+	/********************************************************************************************/
+
+	/**
+	 * The speed of the motors on the intake when collecting cargo. 
+	 */
 	public static final double INTAKE_SPEED_IN = -0.4;
 
+	/**
+	 * The speed of the motors on the intake when delivering cargo. 
+	 */
 	public static final double INTAKE_SPEED_OUT = 1;
 
+	/**
+	 * The speed of the arm motor when going up. 
+	 */
 	public static final double ARM_SPEED_UP = 0.5;
 	
+	/**
+	 * The speed of the arm motor when going down. 
+	 */
 	public static final double ARM_SPEED_DOWN = -0.5;
 
+	/**
+	 * The speed of the arm motor when going up in autonomous. 
+	 */
 	public static final double ARM_SPEED_UP_AUTO = 0.85;
 	
+	/**
+	 * The speed of the arm motor when going down in autonomous. 
+	 */
 	public static final double ARM_SPEED_DOWN_AUTO = -0.85;
 
+	/**
+	 * The speed of the wrist motor when going up. 
+	 */
 	public static final double WRIST_SPEED_UP = 0.5;
 	
+	/**
+	 * The speed of the wrist motor when going down. 
+	 */
 	public static final double WRIST_SPEED_DOWN = -0.5;
 
+	/**
+	 * The speed of the climber arm when going down. 
+	 */
 	public static final double CLIMBER_ARM_SPEED_DOWN = 0.5;
 	
+	/**
+	 * The speed of the climber arm when going up. 
+	 */
 	public static final double CLIMBER_ARM_SPEED_UP = -0.5;
 
+	/**
+	 * The speed of the climber wheel when going forward. 
+	 */
 	public static final double CLIMBER_WHEEL_SPEED_FORWARD = -0.5;
 	
+	/**
+	 * The speed of the climber wheel when going backwards. 
+	 */
 	public static final double CLIMBER_WHEEL_SPEED_BACKWARD = 0.5;
 
-	
+	/**
+	 * The speed of the climber leg when going down. 
+	 */
 	public static final double CLIMBER_LEG_SPEED_DOWN = -1;
 	
+	/**
+	 * The speed of the climber leg when going up. 
+	 */
 	public static final double CLIMBER_LEG_SPEED_UP = 1;
 
+	/**
+	 * Corrected angle for the potentiometers (not in use). 
+	 */
 	public static final double correctedAngle = 10.0;
 
+	/**
+	 * Angle offset for the wrist when going upwards. 
+	 */
 	public static final double angleOffsetUp_Wrist = 3.0;
+
+	/**
+	 * Angle offset for the wrist when going down. 
+	 */
 	public static final double angleOffsetDown_Wrist = 0.0;
 
+	/**
+	 * Angle offset for the arm when going up. 
+	 */
 	public static final double angleOffsetUp_Arm = 1.0;
+
+	/**
+	 * Angle offset for the arm when going down. 
+	 */
 	public static final double angleOffsetDown_Arm = 3.0;
 
-
-
 	// Buttons
-	/****************************************************************/
+	/********************************************************************************************/
+
+	/**
+	 * The button on the joystick for running the intake outwards. 
+	 */
 	public static final int BUTTON_INTAKE_OUT = 1;
 
+	/**
+	 * The button on the joystick for running the intake inwards. 
+	 */
 	public static final int BUTTON_INTAKE_IN = 2;
 
+	/**
+	 * The button on the joystick for moving the arm down. 
+	 */
 	public static final int BUTTON_ARM_DOWN = 3;
 
+	/**
+	 * The button on the joystick for moving the climber arm down. 
+	 */
 	public static final int BUTTON_CLIMBER_ARM_DOWN = 14;
 
+	/**
+	 * The button on the joystick for moving the arm up. 
+	 */
 	public static final int BUTTON_ARM_UP = 5;
 
+	/**
+	 * The button on the joystick for moving the climber arm up. 
+	 */
 	public static final int BUTTON_CLIMBER_ARM_UP = 13;
 
+	/**
+	 * The button on the joystick for moving the wrist up. 
+	 */
 	public static final int BUTTON_WRIST_UP = 8;
 
+	/**
+	 * The button on the joystick for moving the wrist down. 
+	 */
 	public static final int BUTTON_WRIST_DOWN = 10;
 
+	/**
+	 * The button on the joystick for the travel preset. 
+	 */
 	public static final int BUTTON_TRAVEL = 9;
 
+	/**
+	 * The button on the joystick for toggling lowlowgear. 
+	 */
 	public static final int BUTTON_LOWLOWGEAR = 7;
 
+	/**
+	 * The button on the joystick for moving the climber leg up. 
+	 */
 	public static final int BUTTON_CLIMBER_LEG_UP = 4;
+
+	/**
+	 * The button on the joystick for moving the climber leg down. 
+	 */
 	public static final int BUTTON_CLIMBER_LEG_DOWN = 6;
 	
+	/**
+	 * The button on the joystick for moving the climber wheel forward. 
+	 */
 	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 20;
+
+	/**
+	 * The button on the joystick for the gear shifter. 
+	 */
 	public static final int BUTTON_PNEUMATIC_ACTIVATE = 11;
 
 	
