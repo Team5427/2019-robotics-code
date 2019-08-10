@@ -14,8 +14,10 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class ClimberLeg extends Subsystem {
     
-    
-	public ClimberLeg() {
+	private SpeedController climberLegMotor;
+	public ClimberLeg(SpeedController climberLegMotor) 
+	{
+		this.climberLegMotor = climberLegMotor;
 	}
 
 	/**
@@ -25,7 +27,7 @@ public class ClimberLeg extends Subsystem {
 	 *            the desired power to set the intake to.
 	 */
 	public void setSpeed(double speed) {
-        Robot.climberLegMotor.set(speed);
+        climberLegMotor.set(speed);
 	}
 
 	/**

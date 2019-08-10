@@ -13,7 +13,7 @@ public class ActivateSolenoid extends Command
 
     protected void initialize() 
     {
-        Robot.solenoidGearShifter.set(b);
+        Robot.getGearShifter().set(b);
     }
 
     protected void execute() 

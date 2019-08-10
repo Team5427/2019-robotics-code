@@ -11,7 +11,7 @@ public class MoveIntake extends Command
 
     public MoveIntake(double speed)
     {
-        requires(Robot.intake);
+        requires(Robot.getIntake());
         this.speed = speed;
     }
 
@@ -24,7 +24,7 @@ public class MoveIntake extends Command
     @Override
     protected void execute()
     {
-        Robot.intake.setSpeed(speed);
+        Robot.getIntake().setSpeed(speed);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class MoveIntake extends Command
     @Override
     protected void end()
     {
-        Robot.intake.stop();
+        Robot.getIntake().stop();
     }
 }

@@ -121,82 +121,82 @@ public class Robot extends TimedRobot {
     /**
      * Speed controller for the climber arm motor -- not in use. 
      */
-    public static SpeedController climberArmMotor;
+    private static SpeedController climberArmMotor;
 
     /**
      * Speed controller for the climber arm motor -- not in use. 
      */
-    public static SpeedController climberArmMotor1;
+    private static SpeedController climberArmMotor1;
 
     /**
      * Speed controller for the climber wheel motor -- not in use. 
      */
-    public static SpeedController climberWheelMotor;
+    private static SpeedController climberWheelMotor;
 
     /**
      * Speed controller for the climber leg motor -- not in use. 
      */
-    public static SpeedController climberLegMotor;
+    private static SpeedController climberLegMotor;
 
     /**
      * Speed controller for the wrist motor. 
      */
-    public static SpeedController wristMotor;
+    private static SpeedController wristMotor;
 
     /**
      * Speed controller for the top intake motor. 
      */
-    public static SpeedController intakeTopMotor;
+    private static SpeedController intakeTopMotor;
 
     /**
      * Speed controller for the bottom intake motor. 
      */
-    public static SpeedController intakeBottomMotor;
+    private static SpeedController intakeBottomMotor;
 
     /**
      * Subsystem for the arm. 
      */
-    public static Arm arm;
+    private static Arm arm;
 
     /**
      * Subsystem for the climber arm -- not in use. 
      */
-    public static ClimberArm climberArm;
+    private static ClimberArm climberArm;
 
     /**
      * Subsystem for the climber leg -- not in use. 
      */
-    public static ClimberLeg climberLeg;
+    private static ClimberLeg climberLeg;
 
     /**
      * Subsystem for the climber wheel -- not in use. 
      */
-    public static ClimberWheel climberWheel;
+    private static ClimberWheel climberWheel;
 
     /**
      * Subsystem for the wrist. 
      */
-    public static Wrist wrist;
+    private static Wrist wrist;
 
     /**
      * Subsystem for the intake. 
      */
-    public static Intake intake;
+    private static Intake intake;
 
     /**
      * Solenoid for the gear shifter. 
      */
-    public static Solenoid solenoidGearShifter;
+    private static Solenoid solenoidGearShifter;
 
     /**
      * Solenoid for the hatch shifter. 
      */
-    public static Solenoid solenoidHatchShifter;
+    private static Solenoid solenoidHatchShifter;
 
     /**
      * Solenoid for the light. 
      */
-    public static Solenoid solenoidLight;   
+    private static Solenoid solenoidLight;   
 
     /**
      * Potentiometer on the wrist. 
@@ -322,15 +322,15 @@ public class Robot extends TimedRobot {
         //climber arm
         climberArmMotor = new WPI_VictorSPX(Config.CLIMBER_ARM_MOTOR_LEFT);
         climberArmMotor1 = new WPI_VictorSPX(Config.CLIMBER_ARM_MOTOR_RIGHT);
-        climberArm = new ClimberArm();
+        climberArm = new ClimberArm(climberArmMotor, climberArmMotor1);
 
         //clumber wheel
         climberWheelMotor = new WPI_VictorSPX(Config.CLIMBER_WHEEL_MOTOR);
-        climberWheel = new ClimberWheel();
+        climberWheel = new ClimberWheel(climberWheelMotor);
 
         //climber leg
         climberLegMotor = new WPI_VictorSPX(Config.CLIMBER_LEG_MOTOR);
-        climberLeg = new ClimberLeg();
+        climberLeg = new ClimberLeg(climberLegMotor);
 
         //arm 
         armMotor = new WPI_VictorSPX(Config.ARM_MOTOR);
@@ -496,6 +496,56 @@ public class Robot extends TimedRobot {
     public static AnalogPotentiometer getWristPot()
     {
         return wristPot;
+    }
+
+    public static Solenoid getGearShifter()
+    {
+        return solenoidGearShifter;
+    }
+
+    public static DriveTrain getDriveTrain()
+    {
+        return driveTrain;
+    }
+
+    public static Solenoid getHatchShifter()
+    {
+        return solenoidHatchShifter;
+    }
+
+    public static ClimberArm getClimberArm()
+    {
+        return climberArm;
+    }
+
+    public static ClimberLeg getClimberLeg()
+    {
+        return climberLeg;
+    }
+
+    public static ClimberWheel getClimberWheel()
+    {
+        return climberWheel;
+    }
+
+    public static Intake getIntake()
+    {
+        return intake;
+    }
+
+    public static Arm getArm()
+    {
+        return arm;
+    }
+
+    public static Wrist getWrist()
+    {
+        return wrist;
+    }
+
+    public static Encoder getClimbEnc()
+    {
+        return climb_enc;
     }
 
     /**

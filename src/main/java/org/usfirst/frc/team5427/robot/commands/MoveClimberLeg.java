@@ -11,7 +11,7 @@ public class MoveClimberLeg extends Command
 
     public MoveClimberLeg(double speed)
     {
-        requires(Robot.climberLeg);
+        requires(Robot.getClimberLeg());
         this.speed = speed;
     }
 
@@ -24,7 +24,7 @@ public class MoveClimberLeg extends Command
     @Override
     protected void execute()
     {
-        Robot.climberLeg.setSpeed(speed);
+        Robot.getClimberLeg().setSpeed(speed);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class MoveClimberLeg extends Command
     @Override
     protected void end()
     {
-        Robot.climberLeg.stop();
+        Robot.getClimberLeg().stop();
     }
 }

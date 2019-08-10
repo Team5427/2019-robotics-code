@@ -22,7 +22,7 @@ public class RotateArmAuto extends Command
 
     public RotateArmAuto(double goalAngle)
     {
-        requires(Robot.arm);
+        requires(Robot.getArm());
 
         this.goalAngle = goalAngle;
     }
@@ -31,37 +31,37 @@ public class RotateArmAuto extends Command
     protected void initialize()
     {
    
-        if(this.goalAngle < Robot.armPot.get()) {
+        if(this.goalAngle < Robot.getArmPot().get()) {
             this.speed = Config.ARM_SPEED_UP_AUTO;
-            this.angle = Math.abs(this.goalAngle - Robot.armPot.get()) - Config.angleOffsetUp_Arm;
+            this.angle = Math.abs(this.goalAngle - Robot.getArmPot().get()) - Config.angleOffsetUp_Arm;
         }
-        else if(this.goalAngle > Robot.armPot.get()) {
+        else if(this.goalAngle > Robot.getArmPot().get()) {
             this.speed = Config.ARM_SPEED_DOWN_AUTO;
-            this.angle = Math.abs(this.goalAngle - Robot.armPot.get()) - Config.angleOffsetDown_Arm;            
+            this.angle = Math.abs(this.goalAngle - Robot.getArmPot().get()) - Config.angleOffsetDown_Arm;            
         }
 
      
 
         this.setInterruptible(true);
-        startArm = Robot.armPot.get();
+        startArm = Robot.getArmPot().get();
 
 
         endAngleDifference = 0;
 
-        Robot.arm.moveArm(this.speed);
+        Robot.getArm().moveArm(this.speed);
     }
 
     @Override
     protected void execute()
     {
-        Robot.arm.moveArm(this.speed);
+        Robot.getArm().moveArm(this.speed);
     }
     public double previous_arm_pot;
 
     @Override
     protected boolean isFinished()
     {
-        double arm_pot = Robot.armPot.get();
+        double arm_pot = Robot.getArmPot().get();
 
         if(Math.abs(arm_pot - previous_arm_pot) <= 2) {
             endAngleDifference = Math.abs(startArm - arm_pot);
@@ -75,6 +75,6 @@ public class RotateArmAuto extends Command
     @Override
     protected void end()
     {
-        Robot.arm.stop();
+        Robot.getArm().stop();
     }
 }

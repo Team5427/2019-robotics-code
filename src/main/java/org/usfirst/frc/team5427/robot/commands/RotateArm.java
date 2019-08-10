@@ -21,7 +21,7 @@ public class RotateArm extends Command
      */
     public RotateArm(double speed)
     {
-        requires(Robot.arm);
+        requires(Robot.getArm());
         this.speed = speed;
     }
 
@@ -34,7 +34,7 @@ public class RotateArm extends Command
     @Override
     protected void execute()
     {
-        Robot.arm.moveArm(speed);
+        Robot.getArm().moveArm(speed);
     }
 
     @Override
@@ -50,6 +50,6 @@ public class RotateArm extends Command
     @Override
     protected void end()
     {
-        Robot.arm.stop();
+        Robot.getArm().stop();
     }
 }

@@ -28,7 +28,7 @@ public class DriveWithJoystick extends Command
 	 */
 	public DriveWithJoystick()
 	{
-		requires(Robot.driveTrain);
+		requires(Robot.getDriveTrain());
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class DriveWithJoystick extends Command
 	@Override
 	protected void execute()
 	{
-		Robot.driveTrain.takeJoystickInputs(Robot.oi.getJoy());
+		Robot.getDriveTrain().takeJoystickInputs(Robot.oi.getJoy());
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class DriveWithJoystick extends Command
 	@Override
 	protected void end()
 	{
-		Robot.driveTrain.stop();
+		Robot.getDriveTrain().stop();
 	}
 
 	/**

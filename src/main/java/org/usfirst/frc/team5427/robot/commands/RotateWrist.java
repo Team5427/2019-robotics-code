@@ -11,7 +11,7 @@ public class RotateWrist extends Command
 
     public RotateWrist(double speed)
     {
-        requires(Robot.wrist);
+        requires(Robot.getWrist());
         this.speed = speed;
     }
 
@@ -24,7 +24,7 @@ public class RotateWrist extends Command
     @Override
     protected void execute()
     {
-        Robot.wrist.moveWrist(speed);
+        Robot.getWrist().moveWrist(speed);
     }
 
     @Override
@@ -40,6 +40,6 @@ public class RotateWrist extends Command
     @Override
     protected void end()
     {
-        Robot.wrist.stop();
+        Robot.getWrist().stop();
     }
 }

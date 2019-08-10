@@ -13,12 +13,12 @@ public class ActivateSolenoidHatch extends Command
 
     protected void initialize() 
     {
-        Robot.solenoidHatchShifter.set(b);
+        Robot.getHatchShifter().set(b);
     }
 
     protected void execute() 
     {
-        Robot.solenoidHatchShifter.set(b);
+        Robot.getHatchShifter().set(b);
     }
 
     protected void end() 

@@ -11,7 +11,7 @@ public class MoveClimberWheels extends Command
 
     public MoveClimberWheels(double speed)
     {
-        requires(Robot.climberWheel);
+        requires(Robot.getClimberWheel());
         this.speed = speed;
     }
 
@@ -26,11 +26,11 @@ public class MoveClimberWheels extends Command
     {
         if(Robot.oi.getJoy().getPOV(0) >= 315 || Robot.oi.getJoy().getPOV(0) <= 45)
         {
-            Robot.climberWheel.setSpeed(Config.CLIMBER_WHEEL_SPEED_FORWARD);
+            Robot.getClimberWheel().setSpeed(Config.CLIMBER_WHEEL_SPEED_FORWARD);
         }
         else if(Robot.oi.getJoy().getPOV(0) >= 135 && Robot.oi.getJoy().getPOV(0) <= 225)
         {
-            Robot.climberWheel.setSpeed(Config.CLIMBER_WHEEL_SPEED_BACKWARD);
+            Robot.getClimberWheel().setSpeed(Config.CLIMBER_WHEEL_SPEED_BACKWARD);
         }
     }
 
@@ -45,6 +45,6 @@ public class MoveClimberWheels extends Command
     @Override
     protected void end()
     {
-        Robot.climberWheel.stop();
+        Robot.getClimberWheel().stop();
     }
 }

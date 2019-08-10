@@ -12,10 +12,15 @@ import org.usfirst.frc.team5427.robot.Robot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ClimberArm extends Subsystem {
+public class ClimberArm extends Subsystem 
+{
+	private SpeedController climberArmMotor;
+	private SpeedController climberArmMotor1;
     
     
-	public ClimberArm() {
+	public ClimberArm(SpeedController climberArmMotor, SpeedController climberArmMotor1) 
+	{
+		this.climberArmMotor = climberArmMotor;
 	}
 
 	/**
@@ -25,8 +30,8 @@ public class ClimberArm extends Subsystem {
 	 *            the desired power to set the intake to.
 	 */
 	public void setSpeed(double speed) {
-		Robot.climberArmMotor.set(speed);
-		Robot.climberArmMotor1.set(-speed);
+		climberArmMotor.set(speed);
+		climberArmMotor1.set(-speed);
 	}
 
 	/**
