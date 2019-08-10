@@ -24,28 +24,24 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
  */
 public class OI
 {
-	public Joystick joy1;
-	public Button solenoidActivate;
-	public Button solenoidHatchActivate;
+	private Joystick joy1;
+	private Button solenoidActivate;
+	private Button solenoidHatchActivate;
 
 
-	Button intakeOut;
-	Button intakeIn;
-	Button armDown;
-	Button climberArmDown;
-	Button armUp;
-	Button climberArmUp;
-	Button wristUp;
-	Button wristDown;
-	Button travel;
-	Button lowlowgear;
-	Button hatchShift;
-
-	Button climberLegUp, climberLegDown;
-
-	// Button climberWheelForward, climberWheelBackward;
-
-	Button gearShift;
+	private Button intakeOut;
+	private Button intakeIn;
+	private Button armDown;
+	private Button climberArmDown;
+	private Button armUp;
+	private Button climberArmUp;
+	private Button wristUp;
+	private Button wristDown;
+	private Button travel;
+	private Button lowlowgear;
+	private Button hatchShift;
+	private Button climberLegUp, climberLegDown;
+	private Button gearShift;
 
 	public OI()
 	{
@@ -65,8 +61,6 @@ public class OI
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
 		solenoidHatchActivate = new JoystickButton(joy1,Config.BUTTON_PNEUMATIC_ACTIVATE);
-		// climberWheelForward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_FORWARD);
-		// climberWheelBackward = new JoystickButton(joy1, Config.BUTTON_CLIMBER_WHEEL_BACKWARD);
 
 		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
 		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
@@ -79,13 +73,10 @@ public class OI
 		lowlowgear.whenPressed(new LowLowGear());
 		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
 		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
-		// climberWheelBackward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_BACKWARD));
-		// climberWheelForward.whileHeld(new MoveClimberWheels(Config.CLIMBER_WHEEL_SPEED_FORWARD));
 		travel.whenPressed(new Travel());
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());
 		solenoidHatchActivate.whenPressed(new ActivateSolenoidHatch());
-
 	}
 
 	/**

@@ -23,7 +23,8 @@ public class Wrist extends Subsystem
     {
 
         
-        if((speed > 0 && Robot.wristPot.get() >= Config.WRIST_LIMIT_TOP) || (speed < 0 && Robot.wristPot.get() <= Config.WRIST_LIMIT_BOTTOM) )          
+        if((speed > 0 && Robot.getWristPot().get() >= Config.WRIST_LIMIT_TOP) 
+            || (speed < 0 && Robot.getWristPot().get() <= Config.WRIST_LIMIT_BOTTOM))          
             wristMotor.set(speed);
         else 
             wristMotor.set(0);    

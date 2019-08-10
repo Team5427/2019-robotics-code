@@ -41,8 +41,8 @@ public class Arm extends Subsystem
     public void moveArm(double armSpeed)
     {
         //if the arm is not at the limits
-        if((armSpeed > 0 && Robot.armPot.get() >= Config.ARM_LIMIT_TOP) 
-        || (armSpeed < 0 && Robot.armPot.get() <= Config.ARM_LIMIT_BOTTOM))
+        if((armSpeed > 0 && Robot.getArmPot().get() >= Config.ARM_LIMIT_TOP) 
+        || (armSpeed < 0 && Robot.getArmPot().get() <= Config.ARM_LIMIT_BOTTOM))
             armMotor.set(armSpeed);
         else //if the arm is at or beyond the limits
             armMotor.set(0);

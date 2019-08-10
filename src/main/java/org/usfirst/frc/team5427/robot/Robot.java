@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5427.robot;
 
+import java.math.BigDecimal;
+
 //EXTERNAL LIBRARIES 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
 import com.kauailabs.navx.frc.AHRS;
@@ -63,58 +65,58 @@ public class Robot extends TimedRobot {
     /**
      * Speed controller for the left top motor of the drive train.
      */
-    public static SpeedController driveLeftTop;
+    private static SpeedController driveLeftTop;
 
     /**
      * Speed controller for the left middle motor of the drive train. 
      */
-    public static SpeedController driveLeftMiddle;
+    private static SpeedController driveLeftMiddle;
 
     /**
      * Speed controller for the left bottom motor of the drive train.
      */
-    public static SpeedController driveLeftBottom;
+    private static SpeedController driveLeftBottom;
 
     /**
      * Speed controller for the right top motor of the drive train.
      */
-    public static SpeedController driveRightTop;
+    private static SpeedController driveRightTop;
 
     /**
      * Speed controller for the right middle motor of the drive train.
      */
-    public static SpeedController driveRightMiddle;
+    private static SpeedController driveRightMiddle;
 
     /**
      * Speed controller for the right bottom motor of the drive train.
      */
-    public static SpeedController driveRightBottom;
+    private static SpeedController driveRightBottom;
 
     /**
      * Group of the left motors of the drive train. 
      */
-    public static SpeedControllerGroup driveLeft;
+    private static SpeedControllerGroup driveLeft;
 
     /**
      * Group of the right motors of the drive train.
      */
-    public static SpeedControllerGroup driveRight;
+    private static SpeedControllerGroup driveRight;
 
     /**
      * The drive train subsystem.
      */
-    public static DriveTrain driveTrain;
+    private static DriveTrain driveTrain;
 
     /**
      * Differential drive base for the robot, which allows for control of the left and 
      * right side of the drive train in control groups. 
      */
-    public static DifferentialDrive drive;
+    private static DifferentialDrive drive;
 
     /**
      * Speed controller for the arm motor. 
      */
-    public static SpeedController armMotor;
+    private static SpeedController armMotor;
 
     /**
      * Speed controller for the climber arm motor -- not in use. 
@@ -199,83 +201,95 @@ public class Robot extends TimedRobot {
     /**
      * Potentiometer on the wrist. 
      */
-    public static AnalogPotentiometer wristPot;
+    private static AnalogPotentiometer wristPot;
 
     /**
      * Potentiometer on the arm. 
      */
-    public static AnalogPotentiometer armPot;
+    private static AnalogPotentiometer armPot;
 
     /**
      * The NavX sensor used to read angle (yaw) values. 
      */
-    public static AHRS ahrs;
+    private static AHRS ahrs;
 
     /**
      * Ultrasonic sensor. 
      */
-    public static Ultrasonic ultra;
+    private static Ultrasonic ultra;
     
     /**
      * Encoder on the climber.
      */
-    public static Encoder climb_enc;
+    private static Encoder climb_enc;
 
     /**
      * Encoder on the left side of the drive train. 
      */
-    public static Encoder encLeft;
+    private static Encoder encLeft;
 
     /**
      * Encoder on the right side of the drive train. 
      */
-    public static Encoder encRight;
+    private static Encoder encRight;
 
     /**
      * Camera server that allows the transfer of camera data to NetworkTables, 
      * which sends data back and forth from the robot to the driver station. 
      */
-    public static CameraServer camServer;
+    private static CameraServer camServer;
 
     /**
      * USB camera one. 
      */
-    public static UsbCamera cam1;
+    private static UsbCamera cam1;
 
     /**
-     * USB camera two -- not in use. 
+     * USB camera two. 
      */
-    public static UsbCamera cam2;
+    private static UsbCamera cam2;
 
     /**
-     * the x coordinate of the robot -- not in use. 
+     * the x coordinate of the robot. 
      */
-    public static double robotX = 0;
+    private BigDecimal robotX = new BigDecimal("0");
 
     /**
-     * the y coordinate of the robot -- not in use.
+     * the y coordinate of the robot.
      */
-    public static double robotY = 0;
+    private BigDecimal robotY = new BigDecimal("0");
 
     /**
-     * The previous value stored in the left encoder -- not in use. 
+     * The previous value stored in the left encoder. 
      */
-    public static double encLeftPrev = 0;
+    private BigDecimal encLeftPrev = new BigDecimal("0");
 
     /**
-     * The previous value stored in the right encoder -- not in use. 
+     * The previous value stored in the right encoder. 
      */
-    public static double encRightPrev = 0;
+    private BigDecimal encRightPrev = new BigDecimal("0");
     
     /**
-     * The distance travelled by the left encoder -- not in use. 
+     * The distance travelled by the left encoder. 
      */
-    public static double encLeftDist = 0;
+    private BigDecimal encLeftDist = new BigDecimal("0");
 
     /**
-     * The distance travelled by the right encoder -- not in use. 
+     * The distance travelled by the right encoder. 
      */
-    public static double encRightDist = 0;
+    private BigDecimal encRightDist = new BigDecimal("0");
+
+    /**
+     * The value stored to represent the left encoder reading. 
+     */
+    private BigDecimal encLeftValue = new BigDecimal("0");
+
+    /**
+     * The value stored to represent the right encoder reading. 
+     */
+    private BigDecimal encRightValue = new BigDecimal("0");
+
+    private BigDecimal distance = new BigDecimal("0");
 
 
     /**
@@ -331,7 +345,8 @@ public class Robot extends TimedRobot {
         intakeBottomMotor = new WPI_VictorSPX(Config.INTAKE_BOTTOM_MOTOR);
         intake = new Intake(intakeTopMotor, intakeBottomMotor);
 
-        // ahrs = new AHRS(SPI.Port.kMXP);
+        //navX
+        ahrs = new AHRS(SPI.Port.kMXP);
 
         //ultrasonic sensor
         ultra = new Ultrasonic(Config.ULTRA_PORT2, Config.ULTRA_PORT1);
@@ -406,16 +421,20 @@ public class Robot extends TimedRobot {
         //runs commands and makes sure that commands with conflicting requirements do not run at once. 
         Scheduler.getInstance().run();
 
+        //sets the current encoder values. 
+        encLeftValue = BigDecimal.valueOf(-encLeft.getDistance());
+        encRightValue = BigDecimal.valueOf(encRight.getDistance());
+
         //calculates the distance each encoder has travelled since the last iteration.
-        double encLeftDist =  -encLeft.getDistance() - encLeftPrev;
-        double encRightDist = encRight.getDistance() - encRightPrev;
+        encLeftDist =  encLeftValue.subtract(encLeftPrev);
+        encRightDist = encRightValue.subtract(encRightPrev);
 
         //resets the previous values. 
-        encLeftPrev = -encLeft.getDistance();
-        encRightPrev = encRight.getDistance();
+        encLeftPrev = encLeftValue;
+        encRightPrev = encRightValue;
 
         //averages the distance values to get a read of the robot movement, when in a straight line. 
-        double distance = (encLeftDist + encRightDist)/2;
+        distance = encLeftDist.add(encRightDist).divide(new BigDecimal(0));
 
         //based on the distance (the hypotenuse), calculates the robotX and robotY values. 
         robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
@@ -459,14 +478,24 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("ahrs velocity", ahrs.getVelocityX());
         SmartDashboard.putNumber("ahrs accel", ahrs.getRawAccelX());
 
-        SmartDashboard.putNumber("robotX", robotX);
-        SmartDashboard.putNumber("robotY", robotY);
+        SmartDashboard.putNumber("robotX", robotX.doubleValue());
+        SmartDashboard.putNumber("robotY", robotY.doubleValue());
 
         SmartDashboard.putNumber("Ultrasonic", ultra.getRangeInches());
         SmartDashboard.putBoolean("LowLowGear", DriveTrain.lowlowgear);
         SmartDashboard.putBoolean("Distance Hatch", ultra.getRangeInches() >= 11 && ultra.getRangeInches() <= 13);
         SmartDashboard.putBoolean("Distance Cargo Loading", ultra.getRangeInches() >= 19 && ultra.getRangeInches() <= 21);
         SmartDashboard.putBoolean("Distance Ship Shoot", ultra.getRangeInches() >= 23 && ultra.getRangeInches() <= 25);
+    }
+
+    public static AnalogPotentiometer getArmPot()
+    {
+        return armPot;
+    }
+
+    public static AnalogPotentiometer getWristPot()
+    {
+        return wristPot;
     }
 
     /**
