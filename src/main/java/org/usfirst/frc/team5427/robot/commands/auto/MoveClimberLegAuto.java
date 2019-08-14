@@ -16,14 +16,12 @@ public class MoveClimberLegAuto extends Command
     private BigDecimal startLeg = new BigDecimal("0");;
     private BigDecimal endLegDifference = new BigDecimal("0");
     private BigDecimal previous_leg_enc = new BigDecimal("0");
+    private BigDecimal goalLeg = new BigDecimal("0");
+    private BigDecimal climbPot = new BigDecimal("0");
 
-
-    public double goalLeg;
-
-    public MoveClimberLegAuto(double goalLeg)
+    public MoveClimberLegAuto(BigDecimal goalLeg)
     {
         requires(Robot.getClimberLeg());
-
         this.goalLeg = goalLeg;
     }
 
@@ -33,15 +31,14 @@ public class MoveClimberLegAuto extends Command
         
         startLeg = BigDecimal.valueOf(Robot.getClimbEnc().get());
 
-        if(this.goalLeg > Robot.getClimbEnc().get()) {
+        if(this.goalLeg.doubleValue() > startLeg.doubleValue()) {
             this.speed = BigDecimal.valueOf(Config.CLIMBER_LEG_SPEED_DOWN);
-            this.leg = BigDecimal.valueOf(Math.abs(this.goalLeg - startLeg.doubleValue()));
+            this.leg = BigDecimal.valueOf(Math.abs(this.goalLeg.doubleValue() - startLeg.doubleValue()));
         }
-        else if(this.goalLeg < Robot.getClimbEnc().get()) {
+        else if(this.goalLeg.doubleValue() < startLeg.doubleValue()) {
             this.speed = BigDecimal.valueOf(Config.CLIMBER_LEG_SPEED_UP);
-            this.leg = BigDecimal.valueOf(Math.abs(this.goalLeg - startLeg.doubleValue()));            
+            this.leg = BigDecimal.valueOf(Math.abs(this.goalLeg.doubleValue() - startLeg.doubleValue()));            
         }
-        
         this.setInterruptible(true);
         Robot.getClimberLeg().setSpeed(this.speed.doubleValue());
     }
@@ -49,21 +46,21 @@ public class MoveClimberLegAuto extends Command
     @Override
     protected void execute()
     {
-        Robot.getClimberLeg().setSpeed(this.speed);
+        Robot.getClimberLeg().setSpeed(this.speed.doubleValue());
     }
 
     @Override
     protected boolean isFinished()
     {
-        double climbPot = Robot.getClimbEnc().get();
+        climbPot = BigDecimal.valueOf(Robot.getClimbEnc().get());
 
-        if(Math.abs(climbPot - previous_leg_enc) <= 2) {
-            endLegDifference = Math.abs(startLeg - climbPot);
+        if(Math.abs(climbPot.doubleValue() - previous_leg_enc.doubleValue()) <= 2) {
+            endLegDifference = BigDecimal.valueOf(Math.abs(startLeg.doubleValue() - climbPot.doubleValue()));
         }
         
         previous_leg_enc = climbPot;
 
-        return endLegDifference >= this.leg;
+        return endLegDifference.doubleValue() >= this.leg.doubleValue();
     }
 
     @Override
