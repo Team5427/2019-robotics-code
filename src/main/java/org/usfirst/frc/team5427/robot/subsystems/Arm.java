@@ -36,15 +36,13 @@ public class Arm extends Subsystem{
         if((armSpeed > 0 && Robot.getArmPot().get() >= Config.ARM_LIMIT_TOP)
         || (armSpeed < 0 && Robot.getArmPot().get() <= Config.ARM_LIMIT_BOTTOM))
             armMotor.set(armSpeed); 
-        else armMotor.set(0);  //if the arm is at or beyond the limits
+        else armMotor.stopMotor();  //if the arm is at or beyond the limits
     }
+
+    
 
     /** Sets the motor speed of the arm to 0.  */
-    public void stop(){
-        armMotor.set(0);
-    }
-
-
+    public void stop(){armMotor.stopMotor();}
 
     /** Sets the arm's angle to given angle.  @param angle given angle for arm. */
     public void setArmAngle(double angle){this.armAngle = angle;}
