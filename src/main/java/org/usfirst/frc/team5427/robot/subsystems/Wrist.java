@@ -13,7 +13,6 @@ public class Wrist extends Subsystem
 
     //265 - 200
     
-    
     public Wrist(SpeedController wristMotor)
     {
         this.wristMotor = wristMotor;
@@ -21,13 +20,11 @@ public class Wrist extends Subsystem
     
     public void moveWrist(double speed)
     {
-
-        
         if((speed > 0 && Robot.getWristPot().get() >= Config.WRIST_LIMIT_TOP) 
             || (speed < 0 && Robot.getWristPot().get() <= Config.WRIST_LIMIT_BOTTOM))          
             wristMotor.set(speed);
         else 
-            wristMotor.set(0);    
+            wristMotor.stopMotor();    
     }
 
     public void moveWristNoLimits(double speed)
@@ -37,13 +34,10 @@ public class Wrist extends Subsystem
 
     
     @Override
-    protected void initDefaultCommand()
-    {
-        
-    }
+    protected void initDefaultCommand() {}
 
     public void stop() {
-        wristMotor.set(0);
+        wristMotor.stopMotor();
     }
     
     public void setWristAngle(double angle)

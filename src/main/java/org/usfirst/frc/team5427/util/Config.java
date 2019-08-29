@@ -388,5 +388,8 @@ public class Config
 	public static final double KLIN_WRIST = 0.1; 
 	public static final double HORIZONTAL_WRIST = 255; 
 
+	/** Holds the sensitivity multiplier for high gear*/
+	public static final double HIGH_GEAR_SENSITIVITY = 0.70;
+	public static final double Z_ROT_DAMPENING = 0.75;
 
 }

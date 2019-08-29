@@ -12,8 +12,8 @@ import org.usfirst.frc.team5427.robot.Robot;
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class ClimberArm extends Subsystem 
-{
+public class ClimberArm extends Subsystem {
+	
 	private SpeedController leftClimberArmMotor;
 	private SpeedController rightClimberArmMotor;
     

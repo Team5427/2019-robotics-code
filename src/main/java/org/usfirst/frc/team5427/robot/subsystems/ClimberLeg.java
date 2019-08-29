@@ -22,26 +22,19 @@ public class ClimberLeg extends Subsystem {
 
 	/**
 	 * Sets the speed of each SpeedController to whatever the received speed parameter is.
-	 * 
-	 * @param speed
-	 *            the desired power to set the intake to.
+	 * @param speed the desired power to set the intake to.
 	 */
 	public void setSpeed(double speed) {
         climberLegMotor.set(speed);
 	}
 
-	/**
-	 * Unused method but required by extending SubSystem class
-	 */
+	/**Unused method but required by extending SubSystem class*/
 	@Override
-	public void initDefaultCommand() {
-	}
+	public void initDefaultCommand() {}
 
-	/**
-	 * Stops the motors of the intake.
-	 */
+	/** Stops the motors of the intake.*/
 	public void stop() {
-		setSpeed(0);
+		climberLegMotor.stopMotor();
 	}
 
 }

@@ -11,23 +11,17 @@ import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Intake extends Subsystem {
-	/**
-	 * The SpeedController that controls the top motor of the intake.
-	 */
+
+	/**The SpeedController that controls the top motor of the intake.*/
 	private SpeedController topFlywheel;
 	
-	/**
-	 * The SpeedController that controls the bottom motor of the intake.
-	 */
+	/** The SpeedController that controls the bottom motor of the intake.*/
     private SpeedController bottomFlywheel;
     
 	/**
 	 * Assigns each SpeedController to its received motor.
-	 * 
-	 * @param topFlywheel
-	 *            the SpeedController of the left motor of the intake.
-	 * @param bottomFlywheel
-	 *            the SpeedController of the right motor of the intake.
+	 * @param topFlywheel the SpeedController of the left motor of the intake.
+	 * @param bottomFlywheel the SpeedController of the right motor of the intake.
 	 */
 	public Intake(SpeedController topFlywheel, SpeedController bottomFlywheel) {
 		this.topFlywheel = topFlywheel;
@@ -36,27 +30,21 @@ public class Intake extends Subsystem {
 
 	/**
 	 * Sets the speed of each SpeedController to whatever the received speed parameter is.
-	 * 
-	 * @param speed
-	 *            the desired power to set the intake to.
+	 * @param speed the desired power to set the intake to.
 	 */
 	public void setSpeed(double speed) {
         topFlywheel.set(-speed);
         bottomFlywheel.set(speed);
 	}
 
-	/**
-	 * Unused method but required by extending SubSystem class
-	 */
+	/**Unused method but required by extending SubSystem class*/
 	@Override
-	public void initDefaultCommand() {
-	}
+	public void initDefaultCommand() {}
 
-	/**
-	 * Stops the motors of the intake.
-	 */
+	/**Stops the motors of the intake. */
 	public void stop() {
-		setSpeed(0);
+		topFlywheel.stopMotor();
+		bottomFlywheel.stopMotor();
 	}
 
 }
