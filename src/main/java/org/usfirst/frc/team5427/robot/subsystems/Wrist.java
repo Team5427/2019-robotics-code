@@ -8,18 +8,17 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 
 public class Wrist extends Subsystem
 {
+    /**Wrist motor component */
     private SpeedController wristMotor;
     public double wristAngle;
 
-    //265 - 200
-    
-    public Wrist(SpeedController wristMotor)
-    {
+    /**Constructor for Robot Wrist*/
+    public Wrist(SpeedController wristMotor){
         this.wristMotor = wristMotor;
     }
     
-    public void moveWrist(double speed)
-    {
+    /**wrist movement within wrist limits */
+    public void moveWrist(double speed){
         if((speed > 0 && Robot.getWristPot().get() >= Config.WRIST_LIMIT_TOP) 
             || (speed < 0 && Robot.getWristPot().get() <= Config.WRIST_LIMIT_BOTTOM))          
             wristMotor.set(speed);
@@ -27,8 +26,8 @@ public class Wrist extends Subsystem
             wristMotor.stopMotor();    
     }
 
-    public void moveWristNoLimits(double speed)
-    {
+    /**wrist motor movement without limits */
+    public void moveWristNoLimits(double speed){
         wristMotor.set(speed);
     }
 
@@ -36,17 +35,18 @@ public class Wrist extends Subsystem
     @Override
     protected void initDefaultCommand() {}
 
+    //stop motor
     public void stop() {
         wristMotor.stopMotor();
     }
     
-    public void setWristAngle(double angle)
-    {
+    /**mutator for wrist angle */
+    public void setWristAngle(double angle){
         this.wristAngle = angle;
     }
     
-    public double getWristAngle()
-    {
+    /**accessor for wrist angle */
+    public double getWristAngle(){
         return wristAngle;
     }
 }
