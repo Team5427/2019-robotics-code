@@ -9,7 +9,7 @@ package org.usfirst.frc.team5427.robot;
 
 //EXTERNAL LIBRARIES 
 import com.ctre.phoenix.motorcontrol.can.WPI_VictorSPX;
-import com.kauailabs.navx.frc.AHRS;
+// import com.kauailabs.navx.frc.AHRS;
 
 import org.usfirst.frc.team5427.robot.commands.auto.MoveClimberLegAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.CargoFloor;
@@ -209,7 +209,7 @@ public class Robot extends TimedRobot {
     /**
      * The NavX sensor used to read angle (yaw) values. 
      */
-    public static AHRS ahrs;
+    // public static AHRS ahrs;
 
     /**
      * Ultrasonic sensor. 
@@ -418,8 +418,8 @@ public class Robot extends TimedRobot {
         double distance = (encLeftDist + encRightDist)/2;
 
         //based on the distance (the hypotenuse), calculates the robotX and robotY values. 
-        robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
-        robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
+        // robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
+        // robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
 
         //accesses the NetworkTable for vision processing
         NetworkTableInstance netInstance = NetworkTableInstance.getDefault();
@@ -455,9 +455,9 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
         SmartDashboard.putNumber("wrist pot wpi angle", wristPot.get());
 
-        SmartDashboard.putNumber("ahrs yaw", ahrs.getYaw());
-        SmartDashboard.putNumber("ahrs velocity", ahrs.getVelocityX());
-        SmartDashboard.putNumber("ahrs accel", ahrs.getRawAccelX());
+        // SmartDashboard.putNumber("ahrs yaw", ahrrs.getRawAccelX())s.getYaw());
+        // SmartDashboard.putNumber("ahrs velocity", ahrs.getVelocityX());
+        // SmartDashboard.putNumber("ahrs accel", ah;
 
         SmartDashboard.putNumber("robotX", robotX);
         SmartDashboard.putNumber("robotY", robotY);
