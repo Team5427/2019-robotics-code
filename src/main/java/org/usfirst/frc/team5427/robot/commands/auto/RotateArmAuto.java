@@ -4,6 +4,8 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.Command;
+import java.math.BigDecimal;
+
 
 
 public class RotateArmAuto extends Command
@@ -12,15 +14,13 @@ public class RotateArmAuto extends Command
     //elevator: 390 counts/sec
     //elevator: 502 counts/sec
 
-    public double speed;
-    public double angle;
-    public double startArm;
-    public double endAngleDifference;
-    public int counts;
+    public BigDecimal speed = new BigDecimal("0");
+    public BigDecimal angle = new BigDecimal("0");
+    public BigDecimal startArm = new BigDecimal("0");
+    public BigDecimal endAngleDifference = new BigDecimal("0");
+    public BigDecimal goalAngle = new BigDecimal("0");
 
-    public double goalAngle;
-
-    public RotateArmAuto(double goalAngle)
+    public RotateArmAuto(BigDecimal goalAngle)
     {
         requires(Robot.getArm());
 
@@ -30,46 +30,47 @@ public class RotateArmAuto extends Command
     @Override
     protected void initialize()
     {
+        BigDecimal armPotValue = BigDecimal.valueOf(Robot.getArmPot().get());
    
-        if(this.goalAngle < Robot.getArmPot().get()) {
-            this.speed = Config.ARM_SPEED_UP_AUTO;
-            this.angle = Math.abs(this.goalAngle - Robot.getArmPot().get()) - Config.angleOffsetUp_Arm;
+        if(this.goalAngle.compareTo(armPotValue)<0) {
+            this.speed = BigDecimal.valueOf(Config.ARM_SPEED_UP_AUTO);
+            this.angle = (this.goalAngle.subtract(armPotValue).abs()).subtract(BigDecimal.valueOf(Config.angleOffsetUp_Arm));
         }
-        else if(this.goalAngle > Robot.getArmPot().get()) {
-            this.speed = Config.ARM_SPEED_DOWN_AUTO;
-            this.angle = Math.abs(this.goalAngle - Robot.getArmPot().get()) - Config.angleOffsetDown_Arm;            
+        else if(this.goalAngle.compareTo(armPotValue)>0) {
+            this.speed = BigDecimal.valueOf(Config.ARM_SPEED_DOWN_AUTO);
+            this.angle = (this.goalAngle.subtract(armPotValue).abs()).subtract(BigDecimal.valueOf(Config.angleOffsetDown_Arm));           
         }
 
      
 
         this.setInterruptible(true);
-        startArm = Robot.getArmPot().get();
+        startArm = armPotValue;
 
 
-        endAngleDifference = 0;
+        endAngleDifference = new BigDecimal("0");
 
-        Robot.getArm().moveArm(this.speed);
+        Robot.getArm().moveArm(this.speed.doubleValue());
     }
 
     @Override
     protected void execute()
     {
-        Robot.getArm().moveArm(this.speed);
+        Robot.getArm().moveArm(this.speed.doubleValue());
     }
-    public double previous_arm_pot;
+    public BigDecimal previous_arm_pot = new BigDecimal("0");
 
     @Override
     protected boolean isFinished()
     {
-        double arm_pot = Robot.getArmPot().get();
+        BigDecimal arm_pot = BigDecimal.valueOf(Robot.getArmPot().get());
 
-        if(Math.abs(arm_pot - previous_arm_pot) <= 2) {
-            endAngleDifference = Math.abs(startArm - arm_pot);
+        if((arm_pot.subtract(previous_arm_pot)).abs().compareTo(new BigDecimal("2"))<=0) {
+            endAngleDifference = startArm.subtract(arm_pot).abs();
         }
         
         previous_arm_pot = arm_pot;
 
-        return endAngleDifference >= this.angle;
+        return endAngleDifference.compareTo(this.angle)>=0;
     }
 
     @Override
