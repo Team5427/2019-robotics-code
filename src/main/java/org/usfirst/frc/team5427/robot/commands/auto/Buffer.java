@@ -12,6 +12,7 @@ public class Buffer extends Command {
     
     public double startTime;
 	public double goalTime;
+	public double sss;//DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
 	public Buffer(double time) {
         this.goalTime = time;
 	}
