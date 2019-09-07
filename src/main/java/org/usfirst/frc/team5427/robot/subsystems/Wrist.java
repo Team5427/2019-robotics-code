@@ -35,7 +35,7 @@ public class Wrist extends Subsystem
     @Override
     protected void initDefaultCommand() {}
 
-    //stop motor
+    /** Stops the wrist motor */
     public void stop() {
         wristMotor.stopMotor();
     }
