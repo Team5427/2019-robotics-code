@@ -31,15 +31,16 @@ public class MoveClimberLegAuto extends Command
         
         startLeg = BigDecimal.valueOf(Robot.getClimbEnc().get());
 
-        if(this.goalLeg.doubleValue() > startLeg.doubleValue()) {
+        if(this.goalLeg.compareTo(startLeg)>0) {
             this.speed = BigDecimal.valueOf(Config.CLIMBER_LEG_SPEED_DOWN);
-            this.leg = BigDecimal.valueOf(Math.abs(this.goalLeg.doubleValue() - startLeg.doubleValue()));
+            this.leg = this.goalLeg.subtract(startLeg).abs();
         }
-        else if(this.goalLeg.doubleValue() < startLeg.doubleValue()) {
+        else if(this.goalLeg.compareTo(startLeg)<0) {
             this.speed = BigDecimal.valueOf(Config.CLIMBER_LEG_SPEED_UP);
-            this.leg = BigDecimal.valueOf(Math.abs(this.goalLeg.doubleValue() - startLeg.doubleValue()));            
+            this.leg = this.goalLeg.subtract(startLeg).abs();            
         }
         this.setInterruptible(true);
+
         Robot.getClimberLeg().setSpeed(this.speed.doubleValue());
     }
 
@@ -54,13 +55,13 @@ public class MoveClimberLegAuto extends Command
     {
         climbPot = BigDecimal.valueOf(Robot.getClimbEnc().get());
 
-        if(Math.abs(climbPot.doubleValue() - previous_leg_enc.doubleValue()) <= 2) {
-            endLegDifference = BigDecimal.valueOf(Math.abs(startLeg.doubleValue() - climbPot.doubleValue()));
+        if(climbPot.subtract(previous_leg_enc).abs().compareTo(new BigDecimal("2")) <=0) {
+            endLegDifference = (startLeg.subtract(climbPot)).abs();
         }
         
         previous_leg_enc = climbPot;
 
-        return endLegDifference.doubleValue() >= this.leg.doubleValue();
+        return endLegDifference.compareTo(this.leg)>=0;
     }
 
     @Override

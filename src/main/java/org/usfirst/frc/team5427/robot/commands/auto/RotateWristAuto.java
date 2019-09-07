@@ -4,6 +4,8 @@ import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.command.Command;
+import java.math.BigDecimal;
+
 
 
 public class RotateWristAuto extends Command
@@ -12,18 +14,16 @@ public class RotateWristAuto extends Command
     //elevator: 390 counts/sec
     //elevator: 502 counts/sec
 
-    public double speed;
-    public double angle;
-    public double startWrist;
-    public double endAngleDifference;
-    public int counts;
-
-    public double goalAngle;
+    public BigDecimal speed = new BigDecimal("0");
+    public BigDecimal angle = new BigDecimal("0");
+    public BigDecimal startWrist = new BigDecimal("0");
+    public BigDecimal endAngleDifference = new BigDecimal("0");
+    public BigDecimal goalAngle = new BigDecimal("0");
 
     public boolean ignoreLimits;
 
 
-    public RotateWristAuto(double goalAngle)
+    public RotateWristAuto(BigDecimal goalAngle)
     {
         requires(Robot.getWrist());
 
@@ -33,7 +33,7 @@ public class RotateWristAuto extends Command
     
 
    //for ignoring limits
-   public RotateWristAuto(double goalAngle, boolean ignoreLimits)
+   public RotateWristAuto(BigDecimal goalAngle, boolean ignoreLimits)
    {
        requires(Robot.getWrist());
 
@@ -44,24 +44,25 @@ public class RotateWristAuto extends Command
     @Override
     protected void initialize()
     {
+        BigDecimal wristPotValue = BigDecimal.valueOf(Robot.getWristPot().get());
    
-        if(this.goalAngle < Robot.getWristPot().get()) {
-            this.speed = Config.WRIST_SPEED_UP;
-            this.angle = Math.abs(this.goalAngle - Robot.getWristPot().get()) - Config.angleOffsetUp_Wrist;
+        if(this.goalAngle.compareTo(wristPotValue)<0) {
+            this.speed = BigDecimal.valueOf(Config.WRIST_SPEED_UP);
+            this.angle = (this.goalAngle.subtract(wristPotValue)).subtract(BigDecimal.valueOf(Config.angleOffsetUp_Wrist));
         }
-        else if(this.goalAngle > Robot.getWristPot().get()) {
-            this.speed = Config.WRIST_SPEED_DOWN;
-            this.angle = Math.abs(this.goalAngle - Robot.getWristPot().get()) - Config.angleOffsetDown_Wrist;            
+        else if(this.goalAngle.compareTo(wristPotValue)>0) {
+            this.speed = BigDecimal.valueOf(Config.WRIST_SPEED_DOWN);
+            this.angle = (this.goalAngle.subtract(wristPotValue)).subtract(BigDecimal.valueOf(Config.angleOffsetDown_Wrist));         
         }
 
         this.setInterruptible(true);
-        startWrist = Robot.getWristPot().get();
+        startWrist = wristPotValue;
 
-        Robot.getWrist().moveWrist(this.speed);
-        endAngleDifference = 0;
+        Robot.getWrist().moveWrist(this.speed.doubleValue());
+        endAngleDifference = new BigDecimal("0");
 
-        if(this.angle < 0) {
-            this.angle = 0;
+        if(this.angle.compareTo(new BigDecimal("0"))<0) {
+            this.angle = new BigDecimal("0") ;
         }
         
     }
@@ -70,25 +71,25 @@ public class RotateWristAuto extends Command
     protected void execute()
     {
         if(!ignoreLimits)
-            Robot.getWrist().moveWrist(this.speed);
+            Robot.getWrist().moveWrist(this.speed.doubleValue());
         else
-            Robot.getWrist().moveWristNoLimits(this.speed);
+            Robot.getWrist().moveWristNoLimits(this.speed.doubleValue());
     }
-    public double previous_wrist_pot;
+    public BigDecimal previous_wrist_pot = new BigDecimal("0");
 
     @Override
     protected boolean isFinished()
     {
-        double wrist_pot = Robot.getWristPot().get();
+        BigDecimal wrist_pot = BigDecimal.valueOf(Robot.getWristPot().get());
 
-        if(Math.abs(wrist_pot - previous_wrist_pot) <= 2) {
-            endAngleDifference = Math.abs(startWrist - wrist_pot);
+        if((wrist_pot.subtract(previous_wrist_pot)).compareTo(new BigDecimal("2"))<=0) {
+            endAngleDifference = (startWrist.subtract(wrist_pot)).abs();
         }
 
         
         previous_wrist_pot = wrist_pot;
 
-        return endAngleDifference >= this.angle;
+        return endAngleDifference.compareTo(this.angle)>=0;
     }
 
     @Override
