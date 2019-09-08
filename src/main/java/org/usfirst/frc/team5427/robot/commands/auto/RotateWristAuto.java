@@ -19,6 +19,8 @@ public class RotateWristAuto extends Command
     public BigDecimal startWrist = new BigDecimal("0");
     public BigDecimal endAngleDifference = new BigDecimal("0");
     public BigDecimal goalAngle = new BigDecimal("0");
+    public BigDecimal previous_wrist_pot = new BigDecimal("0");
+
 
     public boolean ignoreLimits;
 
@@ -75,7 +77,6 @@ public class RotateWristAuto extends Command
         else
             Robot.getWrist().moveWristNoLimits(this.speed.doubleValue());
     }
-    public BigDecimal previous_wrist_pot = new BigDecimal("0");
 
     @Override
     protected boolean isFinished()

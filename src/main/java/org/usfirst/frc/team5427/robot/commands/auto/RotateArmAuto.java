@@ -19,6 +19,7 @@ public class RotateArmAuto extends Command
     public BigDecimal startArm = new BigDecimal("0");
     public BigDecimal endAngleDifference = new BigDecimal("0");
     public BigDecimal goalAngle = new BigDecimal("0");
+    public BigDecimal previous_arm_pot = new BigDecimal("0");
 
     public RotateArmAuto(BigDecimal goalAngle)
     {
@@ -57,7 +58,7 @@ public class RotateArmAuto extends Command
     {
         Robot.getArm().moveArm(this.speed.doubleValue());
     }
-    public BigDecimal previous_arm_pot = new BigDecimal("0");
+    
 
     @Override
     protected boolean isFinished()
