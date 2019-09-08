@@ -2,6 +2,8 @@ package org.usfirst.frc.team5427.robot.commands.auto;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
+import java.math.BigDecimal;
+
 
 /**
  * Waits for a given time
@@ -10,9 +12,9 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class Buffer extends Command {
     
-    public double startTime;
-	public double goalTime;
-	public Buffer(double time) {
+    public BigDecimal startTime;
+	public BigDecimal goalTime;
+	public Buffer(BigDecimal time) {
         this.goalTime = time;
 	}
 
@@ -21,7 +23,7 @@ public class Buffer extends Command {
 	 */
 	@Override
     protected void initialize() {
-		startTime = Timer.getFPGATimestamp();
+		startTime = BigDecimal.valueOf(Timer.getFPGATimestamp());
     }
 	/**
 	 * Called periodically while the command is not finished. Delivers the joystick
@@ -40,7 +42,7 @@ public class Buffer extends Command {
 	 */
 	@Override
 	protected boolean isFinished() {
-        return (Timer.getFPGATimestamp() - startTime) >= goalTime;
+        return BigDecimal.valueOf(Timer.getFPGATimestamp()).subtract(startTime).compareTo(goalTime)>=0;
 	}
 
 	/**
