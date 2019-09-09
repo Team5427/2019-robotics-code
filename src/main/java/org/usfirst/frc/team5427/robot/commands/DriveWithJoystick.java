@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.command.Command;
 public class DriveWithJoystick extends Command
 {
 
-	public static boolean lowlowgear = false;
+	private static boolean lowlowgear = false;
 
 	/**
 	 * DriveWithJoystick requires the drive train subsystem.
@@ -78,5 +78,10 @@ public class DriveWithJoystick extends Command
 	protected void interrupted()
 	{
 		end();
+	}
+
+	public boolean getLowLowGear()
+	{
+		return lowlowgear;
 	}
 }
