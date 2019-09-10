@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -7,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveIntake extends Command
 {
-    public double speed;
+    private BigDecimal speed;
 
-    public MoveIntake(double speed)
+    public MoveIntake(BigDecimal speed)
     {
         requires(Robot.getIntake());
         this.speed = speed;
@@ -30,9 +32,9 @@ public class MoveIntake extends Command
     @Override
     protected boolean isFinished()
     {
-        if (speed > 0)
+        if (speed.compareTo(new BigDecimal("0")) > 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_OUT);
-        else if (speed < 0)
+        else if (speed.compareTo(new BigDecimal("0")) < 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_INTAKE_IN);
         return false;
     }

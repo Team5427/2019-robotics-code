@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -10,7 +12,7 @@ public class Wrist extends Subsystem
 {
     /**Wrist motor component */
     private SpeedController wristMotor;
-    public double wristAngle;
+    private BigDecimal wristAngle;
 
     /**Constructor for Robot Wrist*/
     public Wrist(SpeedController wristMotor){
@@ -18,17 +20,17 @@ public class Wrist extends Subsystem
     }
     
     /**wrist movement within wrist limits */
-    public void moveWrist(double speed){
-        if((speed > 0 && Robot.getWristPot().get() >= Config.WRIST_LIMIT_TOP) 
-            || (speed < 0 && Robot.getWristPot().get() <= Config.WRIST_LIMIT_BOTTOM))          
-            wristMotor.set(speed);
+    public void moveWrist(BigDecimal speed){
+        if((speed.doubleValue() > 0 && Robot.getWristPot().get() >= Config.WRIST_LIMIT_TOP) 
+            || (speed.doubleValue() < 0 && Robot.getWristPot().get() <= Config.WRIST_LIMIT_BOTTOM))          
+            wristMotor.set(speed.doubleValue());
         else 
             wristMotor.stopMotor();    
     }
 
     /**wrist motor movement without limits */
-    public void moveWristNoLimits(double speed){
-        wristMotor.set(speed);
+    public void moveWristNoLimits(BigDecimal speed){
+        wristMotor.set(speed.doubleValue());
     }
 
     
@@ -42,11 +44,11 @@ public class Wrist extends Subsystem
     
     /**mutator for wrist angle */
     public void setWristAngle(double angle){
-        this.wristAngle = angle;
+        this.wristAngle = new BigDecimal(angle);
     }
     
     /**accessor for wrist angle */
     public double getWristAngle(){
-        return wristAngle;
+        return wristAngle.doubleValue();
     }
 }

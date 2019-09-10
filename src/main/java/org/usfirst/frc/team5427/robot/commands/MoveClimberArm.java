@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -7,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveClimberArm extends Command
 {
-    public double speed;
+    private BigDecimal speed;
 
-    public MoveClimberArm(double speed)
+    public MoveClimberArm(BigDecimal speed)
     {
         requires(Robot.getClimberArm());
         this.speed = speed;
@@ -24,15 +26,15 @@ public class MoveClimberArm extends Command
     @Override
     protected void execute()
     {
-        Robot.getClimberArm().setSpeed(speed);
+        Robot.getClimberArm().setSpeed(speed.doubleValue());
     }
 
     @Override
     protected boolean isFinished()
     {
-        if (speed > 0)
+        if (speed.compareTo(new BigDecimal("0")) > 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_ARM_DOWN);
-        else if (speed < 0)
+        else if (speed.compareTo(new BigDecimal("0")) < 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_CLIMBER_ARM_UP);
         return false;
     }

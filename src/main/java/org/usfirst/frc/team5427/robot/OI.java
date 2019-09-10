@@ -6,6 +6,8 @@
 /*----------------------------------------------------------------------------*/
 package org.usfirst.frc.team5427.robot;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.commands.*;
 import org.usfirst.frc.team5427.robot.commands.auto.presets.Travel;
 import org.usfirst.frc.team5427.util.Config;
@@ -62,17 +64,17 @@ public class OI
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
 		solenoidHatchActivate = new JoystickButton(joy1,Config.BUTTON_PNEUMATIC_ACTIVATE);
 
-		intakeOut.whileHeld(new MoveIntake(Config.INTAKE_SPEED_OUT));
-		intakeIn.whileHeld(new MoveIntake(Config.INTAKE_SPEED_IN));
-		climberArmDown.whenPressed(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_DOWN));
-		climberArmUp.whenPressed(new MoveClimberArm(Config.CLIMBER_ARM_SPEED_UP));
-		climberLegDown.whenPressed(new MoveClimberLeg(Config.CLIMBER_LEG_SPEED_DOWN));
-		climberLegUp.whenPressed(new MoveClimberLeg(Config.CLIMBER_LEG_SPEED_UP));
-		armDown.whileHeld(new RotateArm(Config.ARM_SPEED_DOWN));
-		armUp.whileHeld(new RotateArm(Config.ARM_SPEED_UP));
+		intakeOut.whileHeld(new MoveIntake(new BigDecimal(Config.INTAKE_SPEED_OUT)));
+		intakeIn.whileHeld(new MoveIntake(new BigDecimal(Config.INTAKE_SPEED_IN)));
+		climberArmDown.whenPressed(new MoveClimberArm(new BigDecimal(Config.CLIMBER_ARM_SPEED_DOWN)));
+		climberArmUp.whenPressed(new MoveClimberArm(new BigDecimal(Config.CLIMBER_ARM_SPEED_UP)));
+		climberLegDown.whenPressed(new MoveClimberLeg(new BigDecimal(Config.CLIMBER_LEG_SPEED_DOWN)));
+		climberLegUp.whenPressed(new MoveClimberLeg(new BigDecimal(Config.CLIMBER_LEG_SPEED_UP)));
+		armDown.whileHeld(new RotateArm(new BigDecimal(Config.ARM_SPEED_DOWN)));
+		armUp.whileHeld(new RotateArm(new BigDecimal(Config.ARM_SPEED_UP)));
 		lowlowgear.whenPressed(new LowLowGear());
-		wristDown.whenPressed(new RotateWrist(Config.WRIST_SPEED_DOWN));
-		wristUp.whenPressed(new RotateWrist(Config.WRIST_SPEED_UP));
+		wristDown.whenPressed(new RotateWrist(new BigDecimal(Config.WRIST_SPEED_DOWN)));
+		wristUp.whenPressed(new RotateWrist(new BigDecimal(Config.WRIST_SPEED_UP)));
 		travel.whenPressed(new Travel());
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());

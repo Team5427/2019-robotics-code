@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import java.math.BigDecimal;
+
 import edu.wpi.first.wpilibj.SpeedController;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -32,9 +34,9 @@ public class Intake extends Subsystem {
 	 * Sets the speed of each SpeedController to whatever the received speed parameter is.
 	 * @param speed the desired power to set the intake to.
 	 */
-	public void setSpeed(double speed) {
-        topFlywheel.set(-speed);
-        bottomFlywheel.set(speed);
+	public void setSpeed(BigDecimal speed) {
+        topFlywheel.set(-speed.doubleValue());
+        bottomFlywheel.set(speed.doubleValue());
 	}
 
 	/**Unused method but required by extending SubSystem class*/

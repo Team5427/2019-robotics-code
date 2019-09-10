@@ -398,13 +398,10 @@ public class Robot extends TimedRobot {
         Shuffleboard.getTab("SmartDashboard").add("Travel", new Travel()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Cargo Ship Cargo", new CargoShipCargo()).withWidget(BuiltInWidgets.kCommand);
         
-        // Shuffleboard.getTab("SmartDashboard").add("Climber Leg Level 2", new MoveClimberLegAuto(100)).withWidget(BuiltInWidgets.kCommand);
-        // Shuffleboard.getTab("SmartDashboard").add("Climber Leg Level 3", new MoveClimberLegAuto(200)).withWidget(BuiltInWidgets.kCommand);
-
         Shuffleboard.getTab("SmartDashboard").add("Cargo Floor", new CargoFloor()).withWidget(BuiltInWidgets.kCommand);
         Shuffleboard.getTab("SmartDashboard").add("Hatch Floor", new IntakeHatchFloor()).withWidget(BuiltInWidgets.kCommand);
 
-        // ahrs.reset();
+        ahrs.reset();
 
         //operator interface
         oi = new OI();
@@ -437,8 +434,8 @@ public class Robot extends TimedRobot {
         distance = encLeftDist.add(encRightDist).divide(new BigDecimal(0));
 
         //based on the distance (the hypotenuse), calculates the robotX and robotY values. 
-        robotX += Math.cos(Math.toRadians(ahrs.getYaw())) * distance;
-        robotY += Math.sin(Math.toRadians(ahrs.getYaw())) * distance;
+        robotX.add(new BigDecimal(Math.cos(Math.toRadians(ahrs.getYaw()))).multiply(distance));
+        robotY.add(new BigDecimal(Math.sin(Math.toRadians(ahrs.getYaw()))).multiply(distance));;
 
         //accesses the NetworkTable for vision processing
         NetworkTableInstance netInstance = NetworkTableInstance.getDefault();

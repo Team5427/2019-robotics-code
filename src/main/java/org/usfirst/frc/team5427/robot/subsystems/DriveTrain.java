@@ -2,6 +2,8 @@ package org.usfirst.frc.team5427.robot.subsystems;
 
 
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.commands.DriveWithJoystick;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -16,9 +18,9 @@ public class DriveTrain extends Subsystem {
 	public static boolean lowlowgear = false;
 
 	//Drive Train and SpeedController Group components
-	public DifferentialDrive drive;
-	public SpeedControllerGroup driveLeft;
-	public SpeedControllerGroup driveRight;
+	private DifferentialDrive drive;
+	private SpeedControllerGroup driveLeft;
+	private SpeedControllerGroup driveRight;
 
 	/**Constructor for the DriveTrain [Takes in SCG left, SCG right, DifferentialDrive driveTrain] */
 	public DriveTrain(SpeedControllerGroup drive_Left, SpeedControllerGroup drive_Right, DifferentialDrive drive) {
@@ -47,10 +49,10 @@ public class DriveTrain extends Subsystem {
 	}
 
 	/** Sets DriveTrain Speed */
-	public void tankDrive(double leftSpeed,double rightSpeed)
+	public void tankDrive(BigDecimal leftSpeed, BigDecimal rightSpeed)
 	{
-		driveRight.set(rightSpeed);
-		driveLeft.set(leftSpeed);
+		driveRight.set(rightSpeed.doubleValue());
+		driveLeft.set(leftSpeed.doubleValue());
 	}
 
 	/** Stop Subsystem*/

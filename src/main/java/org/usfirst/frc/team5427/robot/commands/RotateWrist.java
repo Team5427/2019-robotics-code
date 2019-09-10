@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -7,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class RotateWrist extends Command
 {
-    public double speed;
+    private BigDecimal speed;
 
-    public RotateWrist(double speed)
+    public RotateWrist(BigDecimal speed)
     {
         requires(Robot.getWrist());
         this.speed = speed;
@@ -30,9 +32,9 @@ public class RotateWrist extends Command
     @Override
     protected boolean isFinished()
     {
-        if (speed > 0)
+        if (speed.compareTo(new BigDecimal("0")) > 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_WRIST_UP);
-        else if (speed < 0)
+        else if (speed.compareTo(new BigDecimal("0")) < 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_WRIST_DOWN);
         return false;
     }

@@ -1,4 +1,6 @@
 package org.usfirst.frc.team5427.robot.subsystems;
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 import edu.wpi.first.wpilibj.SpeedController;
@@ -13,7 +15,7 @@ public class Arm extends Subsystem{
     private SpeedController armMotor;
 
     /** Value to store the angle of the arm.*/
-    private double armAngle;
+    private BigDecimal armAngle;
 
     /**
      * Constructor for the arm subsystem that initializes the arm speed controller. 
@@ -28,10 +30,10 @@ public class Arm extends Subsystem{
      * at the limits, the speed is set to 0. 
      * @param armSpeed The received speed that the arm needs to move at. 
      */
-    public void moveArm(double armSpeed){
-        if((armSpeed > 0 && Robot.getArmPot().get() >= Config.ARM_LIMIT_TOP) //if the arm is not at the limits
-        || (armSpeed < 0 && Robot.getArmPot().get() <= Config.ARM_LIMIT_BOTTOM))
-            armMotor.set(armSpeed); 
+    public void moveArm(BigDecimal armSpeed){
+        if((armSpeed.doubleValue() > 0 && Robot.getArmPot().get() >= Config.ARM_LIMIT_TOP) //if the arm is not at the limits
+        || (armSpeed.doubleValue() < 0 && Robot.getArmPot().get() <= Config.ARM_LIMIT_BOTTOM))
+            armMotor.set(armSpeed.doubleValue()); 
         else armMotor.stopMotor();  //if the arm is at or beyond the limits
     }
 
@@ -44,12 +46,12 @@ public class Arm extends Subsystem{
 
     /** Sets the arm's angle to given angle.  @param angle given angle for arm. */
     public void setArmAngle(double angle){
-        this.armAngle = angle;
+        this.armAngle = new BigDecimal(angle);
     }
 
     /** Returns the arm's angle.  @return the angle of the arm. */
     public double getArmAngle(){
-        return armAngle;
+        return armAngle.doubleValue();
     }
 
     /** Required when extending Subsystem. In this case, the arm has no default command*/

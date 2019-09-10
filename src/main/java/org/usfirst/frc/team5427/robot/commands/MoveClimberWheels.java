@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -7,9 +9,9 @@ import edu.wpi.first.wpilibj.command.Command;
 
 public class MoveClimberWheels extends Command
 {
-    public double speed;
+    private BigDecimal speed;
 
-    public MoveClimberWheels(double speed)
+    public MoveClimberWheels(BigDecimal speed)
     {
         requires(Robot.getClimberWheel());
         this.speed = speed;
@@ -26,18 +28,18 @@ public class MoveClimberWheels extends Command
     {
         if(Robot.oi.getJoy().getPOV(0) >= 315 || Robot.oi.getJoy().getPOV(0) <= 45)
         {
-            Robot.getClimberWheel().setSpeed(Config.CLIMBER_WHEEL_SPEED_FORWARD);
+            Robot.getClimberWheel().setSpeed(new BigDecimal(Config.CLIMBER_WHEEL_SPEED_FORWARD));
         }
         else if(Robot.oi.getJoy().getPOV(0) >= 135 && Robot.oi.getJoy().getPOV(0) <= 225)
         {
-            Robot.getClimberWheel().setSpeed(Config.CLIMBER_WHEEL_SPEED_BACKWARD);
+            Robot.getClimberWheel().setSpeed(new BigDecimal(Config.CLIMBER_WHEEL_SPEED_BACKWARD));
         }
     }
 
     @Override
     protected boolean isFinished()
     {
-        if (speed > 0)
+        if (speed.compareTo(new BigDecimal("0")) > 0)
             return Robot.oi.getJoy().getPOV(0) == -1;
         return false;
     }

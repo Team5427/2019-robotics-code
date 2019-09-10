@@ -65,7 +65,7 @@ public class RotateWristAuto extends Command
         this.setInterruptible(true);
 
         //actually sets the wrist to move based on previously decided speed
-        Robot.getWrist().moveWrist(this.speed.doubleValue());
+        Robot.getWrist().moveWrist(this.speed);
 
         //if the angle is less than zero, it sets it to 0
         if(this.angle.compareTo(new BigDecimal("0"))<0) {
@@ -79,9 +79,9 @@ public class RotateWristAuto extends Command
     {
         //called repeatedly until command is finished or stopped
         if(!ignoreLimits)
-            Robot.getWrist().moveWrist(this.speed.doubleValue());
+            Robot.getWrist().moveWrist(this.speed);
         else
-            Robot.getWrist().moveWristNoLimits(this.speed.doubleValue());
+            Robot.getWrist().moveWristNoLimits(this.speed);
     }
 
     @Override

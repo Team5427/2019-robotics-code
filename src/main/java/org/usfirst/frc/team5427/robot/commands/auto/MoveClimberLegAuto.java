@@ -49,14 +49,14 @@ public class MoveClimberLegAuto extends Command
         this.setInterruptible(true);
 
         //actually sets the leg to move based on previously decided speed
-        Robot.getClimberLeg().setSpeed(this.speed.doubleValue());
+        Robot.getClimberLeg().setSpeed(this.speed);
     }
 
     @Override
     protected void execute()
     {
         //called repeatedly until command is finished or stopped
-        Robot.getClimberLeg().setSpeed(this.speed.doubleValue());
+        Robot.getClimberLeg().setSpeed(this.speed);
     }
 
     @Override

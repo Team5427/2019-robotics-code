@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands.auto.presets;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.commands.auto.RotateArmAuto;
 import org.usfirst.frc.team5427.robot.commands.auto.RotateWristAuto;
 
@@ -8,7 +10,7 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 //Different
 public class HatchLevel2 extends CommandGroup {
     public HatchLevel2() {
-        addParallel(new RotateWristAuto(7));
-        addSequential(new RotateArmAuto(68));
+        addParallel(new RotateWristAuto(new BigDecimal("7")));
+        addSequential(new RotateArmAuto(new BigDecimal("68")));
     }
 }

@@ -7,6 +7,8 @@
 
 package org.usfirst.frc.team5427.robot.subsystems;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 
 import edu.wpi.first.wpilibj.SpeedController;
@@ -24,8 +26,8 @@ public class ClimberLeg extends Subsystem {
 	 * Sets the speed of each SpeedController to whatever the received speed parameter is.
 	 * @param speed the desired power to set the intake to.
 	 */
-	public void setSpeed(double speed) {
-        climberLegMotor.set(speed);
+	public void setSpeed(BigDecimal speed) {
+        climberLegMotor.set(speed.doubleValue());
 	}
 
 	/**Unused method but required by extending SubSystem class*/

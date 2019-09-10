@@ -55,14 +55,14 @@ public class RotateArmAuto extends Command
         this.setInterruptible(true);
 
         //actually sets the arm to move based on previously decided speed
-        Robot.getArm().moveArm(this.speed.doubleValue());
+        Robot.getArm().moveArm(this.speed);
     }
 
     @Override
     protected void execute()
     {
         //called repeatedly until command is finished or stopped
-        Robot.getArm().moveArm(this.speed.doubleValue());
+        Robot.getArm().moveArm(this.speed);
     }
     
 

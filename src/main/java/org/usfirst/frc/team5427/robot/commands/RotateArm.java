@@ -1,5 +1,7 @@
 package org.usfirst.frc.team5427.robot.commands;
 
+import java.math.BigDecimal;
+
 import org.usfirst.frc.team5427.robot.Robot;
 import org.usfirst.frc.team5427.util.Config;
 
@@ -13,13 +15,13 @@ public class RotateArm extends Command
     /**
      * The speed of the arm. 
      */
-    public double speed;
+    private BigDecimal speed;
 
     /**
      * Constructor for the command to rotate the arm in teleop. Stores the received speed value. 
      * @param speed the speed that the arm should be at. 
      */
-    public RotateArm(double speed)
+    public RotateArm(BigDecimal speed)
     {
         requires(Robot.getArm());
         this.speed = speed;
@@ -40,9 +42,9 @@ public class RotateArm extends Command
     @Override
     protected boolean isFinished()
     {
-        if (speed > 0)
+        if (speed.compareTo(new BigDecimal("0")) > 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_ARM_UP);
-        else if (speed < 0)
+        else if (speed.compareTo(new BigDecimal("0")) < 0)
             return !Robot.oi.getJoy().getRawButton(Config.BUTTON_ARM_DOWN);
         return false;
     }
