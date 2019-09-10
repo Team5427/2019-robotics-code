@@ -20,9 +20,11 @@ public class Wrist extends Subsystem
     }
     
     /**wrist movement within wrist limits */
-    public void moveWrist(BigDecimal speed){
-        if((speed.doubleValue() > 0 && Robot.getWristPot().get() >= Config.WRIST_LIMIT_TOP) 
-            || (speed.doubleValue() < 0 && Robot.getWristPot().get() <= Config.WRIST_LIMIT_BOTTOM))          
+    public void moveWrist(BigDecimal speed)
+    {
+        BigDecimal wristPot = new BigDecimal(Robot.getWristPot().get());
+        if((speed.compareTo(BigDecimal.valueOf(0)) > 0 && wristPot.compareTo(BigDecimal.valueOf(Config.WRIST_LIMIT_TOP)) >= 0) 
+            || (speed.compareTo(BigDecimal.valueOf(0)) < 0 && wristPot.compareTo(BigDecimal.valueOf(Config.WRIST_LIMIT_BOTTOM)) <= 0))          
             wristMotor.set(speed.doubleValue());
         else 
             wristMotor.stopMotor();    

@@ -68,7 +68,7 @@ public class RotateWristAuto extends Command
         Robot.getWrist().moveWrist(this.speed);
 
         //if the angle is less than zero, it sets it to 0
-        if(this.angle.compareTo(new BigDecimal("0"))<0) {
+        if(this.angle.compareTo(BigDecimal.valueOf(0))<0) {
             this.angle = new BigDecimal("0") ;
         }
         

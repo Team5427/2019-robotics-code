@@ -73,7 +73,7 @@ public class RotateArmAuto extends Command
         BigDecimal arm_pot = BigDecimal.valueOf(Robot.getArmPot().get());
 
         //checks if the differnce between the current pot and previous pot value(last time the method was called) is less than 2
-        if((arm_pot.subtract(previous_arm_pot)).abs().compareTo(new BigDecimal("2"))<=0) 
+        if((arm_pot.subtract(previous_arm_pot)).abs().compareTo(BigDecimal.valueOf(2))<=0) 
         {
             //sets the angle difference to the beggining position minus the current position
             endAngleDifference = startArm.subtract(arm_pot).abs();

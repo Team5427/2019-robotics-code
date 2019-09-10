@@ -66,7 +66,7 @@ public class MoveClimberLegAuto extends Command
         climbPot = BigDecimal.valueOf(Robot.getClimbEnc().get());
 
         //checks if the differnce between the current encoder and previous encoder value(last time the method was called) is less than 2
-        if(climbPot.subtract(previous_leg_enc).abs().compareTo(new BigDecimal("2")) <=0) 
+        if(climbPot.subtract(previous_leg_enc).abs().compareTo(BigDecimal.valueOf(2)) <=0) 
         {
             //sets the leg difference to the beggining position minus the current position
             endLegDifference = (startLeg.subtract(climbPot)).abs();

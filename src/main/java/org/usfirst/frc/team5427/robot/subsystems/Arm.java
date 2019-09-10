@@ -30,9 +30,11 @@ public class Arm extends Subsystem{
      * at the limits, the speed is set to 0. 
      * @param armSpeed The received speed that the arm needs to move at. 
      */
-    public void moveArm(BigDecimal armSpeed){
-        if((armSpeed.doubleValue() > 0 && Robot.getArmPot().get() >= Config.ARM_LIMIT_TOP) //if the arm is not at the limits
-        || (armSpeed.doubleValue() < 0 && Robot.getArmPot().get() <= Config.ARM_LIMIT_BOTTOM))
+    public void moveArm(BigDecimal armSpeed)
+    {
+        BigDecimal armPot = new BigDecimal(Robot.getArmPot().get());
+        if((armSpeed.compareTo(BigDecimal.valueOf(0)) > 0 && armPot.compareTo(BigDecimal.valueOf(Config.ARM_LIMIT_TOP)) >= 0) //if the arm is not at the limits
+        || (armSpeed.compareTo(BigDecimal.valueOf(0)) < 0 && armPot.compareTo(BigDecimal.valueOf(Config.ARM_LIMIT_BOTTOM)) <= 0))
             armMotor.set(armSpeed.doubleValue()); 
         else armMotor.stopMotor();  //if the arm is at or beyond the limits
     }
