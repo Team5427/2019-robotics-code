@@ -15,6 +15,7 @@ import org.usfirst.frc.team5427.util.Config;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import edu.wpi.first.wpilibj.buttons.POVButton;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -44,6 +45,8 @@ public class OI
 	private Button hatchShift;
 	private Button climberLegUp, climberLegDown;
 	private Button gearShift;
+	private POVButton climberWheelUp;
+	private POVButton climberWheelDown;
 
 	public OI()
 	{
@@ -63,6 +66,8 @@ public class OI
 		climberLegDown = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_DOWN);
 		climberLegUp = new JoystickButton(joy1, Config.BUTTON_CLIMBER_LEG_UP);
 		solenoidHatchActivate = new JoystickButton(joy1,Config.BUTTON_PNEUMATIC_ACTIVATE);
+		climberWheelUp = new POVButton(joy1, 0);
+		climberWheelDown = new POVButton(joy1, 180);
 
 		intakeOut.whileHeld(new MoveIntake(new BigDecimal(Config.INTAKE_SPEED_OUT)));
 		intakeIn.whileHeld(new MoveIntake(new BigDecimal(Config.INTAKE_SPEED_IN)));
@@ -76,6 +81,8 @@ public class OI
 		wristDown.whenPressed(new RotateWrist(new BigDecimal(Config.WRIST_SPEED_DOWN)));
 		wristUp.whenPressed(new RotateWrist(new BigDecimal(Config.WRIST_SPEED_UP)));
 		travel.whenPressed(new Travel());
+		climberWheelUp.whenPressed(new MoveClimberWheels(new BigDecimal(Config.CLIMBER_WHEEL_SPEED_FORWARD)));
+		climberWheelDown.whenPressed(new MoveClimberWheels(new BigDecimal(Config.CLIMBER_WHEEL_SPEED_BACKWARD)));
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());
 		solenoidHatchActivate.whenPressed(new ActivateSolenoidHatch());

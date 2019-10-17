@@ -54,6 +54,7 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.SPI;
 
 public class Robot extends TimedRobot {
 
@@ -250,49 +251,6 @@ public class Robot extends TimedRobot {
     private static UsbCamera cam2;
 
     /**
-     * the x coordinate of the robot. 
-     */
-    private BigDecimal robotX = new BigDecimal("0");
-
-    /**
-     * the y coordinate of the robot.
-     */
-    private BigDecimal robotY = new BigDecimal("0");
-
-    /**
-     * The previous value stored in the left encoder. 
-     */
-    private BigDecimal encLeftPrev = new BigDecimal("0");
-
-    /**
-     * The previous value stored in the right encoder. 
-     */
-    private BigDecimal encRightPrev = new BigDecimal("0");
-    
-    /**
-     * The distance travelled by the left encoder. 
-     */
-    private BigDecimal encLeftDist = new BigDecimal("0");
-
-    /**
-     * The distance travelled by the right encoder. 
-     */
-    private BigDecimal encRightDist = new BigDecimal("0");
-
-    /**
-     * The value stored to represent the left encoder reading. 
-     */
-    private BigDecimal encLeftValue = new BigDecimal("0");
-
-    /**
-     * The value stored to represent the right encoder reading. 
-     */
-    private BigDecimal encRightValue = new BigDecimal("0");
-
-    private BigDecimal distance = new BigDecimal("0");
-
-
-    /**
      * This class in called at the beginning of the robot program, once
      * there is comms with the robot. All motors, subsystems, 
      * sensors, preset command buttons, etc, used throughout the program 
@@ -418,54 +376,6 @@ public class Robot extends TimedRobot {
         //runs commands and makes sure that commands with conflicting requirements do not run at once. 
         Scheduler.getInstance().run();
 
-        //sets the current encoder values. 
-        encLeftValue = BigDecimal.valueOf(-encLeft.getDistance());
-        encRightValue = BigDecimal.valueOf(encRight.getDistance());
-
-        //calculates the distance each encoder has travelled since the last iteration.
-        encLeftDist =  encLeftValue.subtract(encLeftPrev);
-        encRightDist = encRightValue.subtract(encRightPrev);
-
-        //resets the previous values. 
-        encLeftPrev = encLeftValue;
-        encRightPrev = encRightValue;
-
-        //averages the distance values to get a read of the robot movement, when in a straight line. 
-        distance = encLeftDist.add(encRightDist).divide(new BigDecimal(0));
-
-        //based on the distance (the hypotenuse), calculates the robotX and robotY values. 
-        robotX.add(new BigDecimal(Math.cos(Math.toRadians(ahrs.getYaw()))).multiply(distance));
-        robotY.add(new BigDecimal(Math.sin(Math.toRadians(ahrs.getYaw()))).multiply(distance));;
-
-        //accesses the NetworkTable for vision processing
-        NetworkTableInstance netInstance = NetworkTableInstance.getDefault();
-        NetworkTable netTable = netInstance.getTable("ChickenVision");
-        if(netTable!=null)
-        {
-            //accesses the value to indicate that the tape is detected. 
-            boolean tapeDetected = netTable.getEntry("tapeDetected").getBoolean(false);
-
-            //
-            double yDist = 0;
-            if(tapeDetected) 
-            {
-                //accesses the tape yaw value (the angle the tape is viewed from). 
-                double tapeYaw = netTable.getEntry("tapeYaw").getDouble(-1);
-                
-                //distance on the "x-axis" to the tape, as read by the ultrasonic sensor. 
-                double xDist = ultra.getRangeInches() + 15.5;
-
-                //calculates the distance on the y-axis to the tape (sideways movement). 
-                yDist = Math.tan(Math.toRadians(tapeYaw)) * xDist;
-
-                yDist += 9.7; //offset in inches
-            }
-
-            //displays the sideways distance to the tape, if the tape was detected. 
-            SmartDashboard.putString("Tape Aim", tapeDetected ? yDist+"" : "No Tape Detected");
-
-        }
-
         //displays information about the robot periodically to the Smartdashboard
         SmartDashboard.putNumber("climb encoder", climb_enc.get());
         SmartDashboard.putNumber("arm pot wpi angle", armPot.get());
@@ -475,14 +385,14 @@ public class Robot extends TimedRobot {
         SmartDashboard.putNumber("ahrs velocity", ahrs.getVelocityX());
         SmartDashboard.putNumber("ahrs accel", ahrs.getRawAccelX());
 
-        SmartDashboard.putNumber("robotX", robotX.doubleValue());
-        SmartDashboard.putNumber("robotY", robotY.doubleValue());
-
         SmartDashboard.putNumber("Ultrasonic", ultra.getRangeInches());
         SmartDashboard.putBoolean("LowLowGear", DriveTrain.lowlowgear);
         SmartDashboard.putBoolean("Distance Hatch", ultra.getRangeInches() >= 11 && ultra.getRangeInches() <= 13);
         SmartDashboard.putBoolean("Distance Cargo Loading", ultra.getRangeInches() >= 19 && ultra.getRangeInches() <= 21);
         SmartDashboard.putBoolean("Distance Ship Shoot", ultra.getRangeInches() >= 23 && ultra.getRangeInches() <= 25);
+
+        SmartDashboard.putData(arm);
+        SmartDashboard.putData(wrist);
     }
 
     public static AnalogPotentiometer getArmPot()
