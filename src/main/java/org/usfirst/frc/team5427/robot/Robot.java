@@ -194,7 +194,12 @@ public class Robot extends TimedRobot {
     /**
      * Solenoid for the light. 
      */
-    public static Solenoid solenoidLight;   
+    public static Solenoid solenoidLight; 
+    
+    /**
+     * Solenoid for the climber.
+     */
+    public static Solenoid solenoidClimb;
 
     /**
      * Potentiometer on the wrist. 
@@ -341,6 +346,7 @@ public class Robot extends TimedRobot {
         solenoidGearShifter = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
         solenoidLight = new Solenoid(Config.PCM_ID, Config.SOLENOID_LIGHT_CHANNEL);
         solenoidHatchShifter = new Solenoid(Config.PCM_ID, Config.SOLENOID_HATCH_CHANNEL);
+        solenoidClimb = new Solenoid(Config.PCM_ID, Config.SOLENOID_CLIMB_CHANNEL);
         solenoidLight.set(true);
 
         //sensors

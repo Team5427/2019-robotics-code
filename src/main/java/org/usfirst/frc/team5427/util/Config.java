@@ -323,9 +323,14 @@ public class Config
 	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 20;
 
 	/**
-	 * The button on the joystick for the gear shifter. 
+	 * The button on the joystick for the hatch shifter. 
 	 */
 	public static final int BUTTON_PNEUMATIC_ACTIVATE = 11;
+
+	/**
+	 * The button on the joystick for the climber shifter.
+	 */
+	public static final int BUTTON_CLIMBER_SOLENOID = 9;
 
 	
 	// public static final int BUTTON_CLIMBER_WHEEL_BACKWARD = 11;
@@ -371,6 +376,7 @@ public class Config
 	public static final int SOLENOID_ONE_CHANNEL   = 0;
 	public static final int SOLENOID_LIGHT_CHANNEL = 1;
 	public static final int SOLENOID_HATCH_CHANNEL = 3;
+	public static final int SOLENOID_CLIMB_CHANNEL = -1; //need to set
 
 
 
