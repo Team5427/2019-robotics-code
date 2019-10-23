@@ -86,6 +86,8 @@ public class Robot extends TimedRobot
 
     public static Solenoid solenoidLight;
 
+    public static Solenoid solenoidClimb;
+
 
     public static AnalogPotentiometer wristPot;
     public static AnalogPotentiometer armPot;
@@ -169,6 +171,7 @@ public class Robot extends TimedRobot
         solenoidGearShifter = new Solenoid(Config.PCM_ID, Config.SOLENOID_ONE_CHANNEL);
         solenoidLight = new Solenoid(Config.PCM_ID, Config.SOLENOID_LIGHT_CHANNEL);
         solenoidHatchShifter = new Solenoid(Config.PCM_ID, Config.SOLENOID_HATCH_CHANNEL);
+        solenoidClimb = new Solenoid(Config.PCM_ID, Config.SOLENOID_CLIMB_CHANNEL);
 
         
         solenoidLight.set(true);

@@ -112,22 +112,22 @@ public class Config
 
 	public static final int BUTTON_ARM_DOWN = 3;
 
-	public static final int BUTTON_CLIMBER_ARM_DOWN = 14;
+	public static final int BUTTON_CLIMBER_ARM_DOWN = 4;
 
 	public static final int BUTTON_ARM_UP = 5;
 
-	public static final int BUTTON_CLIMBER_ARM_UP = 13;
+	public static final int BUTTON_CLIMBER_ARM_UP = 6;
 
 	public static final int BUTTON_WRIST_UP = 8;
 
 	public static final int BUTTON_WRIST_DOWN = 10;
 
-	public static final int BUTTON_TRAVEL = 9;
+	// public static final int BUTTON_TRAVEL = 9;
 
 	public static final int BUTTON_LOWLOWGEAR = 7;
 
-	public static final int BUTTON_CLIMBER_LEG_UP = 4;
-	public static final int BUTTON_CLIMBER_LEG_DOWN = 6;
+	// public static final int BUTTON_CLIMBER_LEG_UP = 4;
+	// public static final int BUTTON_CLIMBER_LEG_DOWN = 6;
 	
 	public static final int BUTTON_CLIMBER_WHEEL_FORWARD = 20;
 	public static final int BUTTON_PNEUMATIC_ACTIVATE = 11;
@@ -168,14 +168,17 @@ public class Config
 	/**
 	 * Port value for PCP
 	 */
-	public static final int PCM_JOYSTICK_PORT = 12;
+	public static final int SOLENOID_CLIMB_BUTTON = 12;
+
+	public static final int PCM_JOYSTICK_PORT = 9;
 
 	/**
 	 * Channel values for Solenoids
 	 */
-	public static final int SOLENOID_ONE_CHANNEL   = 0;
+	public static final int SOLENOID_ONE_CHANNEL   = 2;
 	public static final int SOLENOID_LIGHT_CHANNEL = 1;
 	public static final int SOLENOID_HATCH_CHANNEL = 3;
+	public static final int SOLENOID_CLIMB_CHANNEL = 0;
 
 
 

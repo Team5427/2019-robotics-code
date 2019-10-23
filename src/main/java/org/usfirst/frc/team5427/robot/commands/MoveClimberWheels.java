@@ -37,7 +37,7 @@ public class MoveClimberWheels extends Command
     @Override
     protected boolean isFinished()
     {
-        if (speed > 0)
+        if (speed != 0)
             return Robot.oi.getJoy().getPOV(0) == -1;
         return false;
     }
