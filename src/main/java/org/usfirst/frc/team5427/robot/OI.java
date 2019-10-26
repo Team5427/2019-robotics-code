@@ -97,6 +97,7 @@ public class OI
 
 		solenoidActivate.whenPressed(new ActivateSolenoid());
 		solenoidHatchActivate.whenPressed(new ActivateSolenoidHatch());
+		solenoidClimb.whenPressed(new ActivateSolenoidClimb());
 
 	}
 

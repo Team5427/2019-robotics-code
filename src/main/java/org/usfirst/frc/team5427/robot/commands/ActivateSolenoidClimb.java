@@ -13,7 +13,7 @@ public class ActivateSolenoidClimb extends Command
 
     protected void initialize() 
     {
-        Robot.solenoidGearShifter.set(b);
+        Robot.solenoidClimb.set(b);
     }
 
     protected void execute() 
