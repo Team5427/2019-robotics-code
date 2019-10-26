@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
 public class HatchLevel1 extends CommandGroup {
     public HatchLevel1() {
 
-        addParallel(new RotateWristAuto(11));
-        addSequential(new RotateArmAuto(99));
+        addParallel(new RotateWristAuto(14.9));
+        addSequential(new RotateArmAuto(106.9));
         
     }
 
