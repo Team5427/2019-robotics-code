@@ -17,20 +17,9 @@ public class ActivateSolenoidClimb extends Command
     }
 
     protected void execute() 
-    {
-            // Robot.solenoidGearShifter.set(true);
-        
-            // b = !b;
-    }
-
-    // protected void isInterrupted() 
-    // {
-    //     end();
-    // }
-
+    {}
     protected void end() 
     {
-        // Robot.solenoidOne.set(false);
         b = !b;
     }
 

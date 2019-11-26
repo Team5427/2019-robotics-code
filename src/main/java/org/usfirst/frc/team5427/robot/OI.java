@@ -7,7 +7,6 @@
 package org.usfirst.frc.team5427.robot;
 
 import org.usfirst.frc.team5427.robot.commands.*;
-import org.usfirst.frc.team5427.robot.commands.auto.presets.Travel;
 import org.usfirst.frc.team5427.util.Config;
 
 import edu.wpi.first.wpilibj.Joystick;
